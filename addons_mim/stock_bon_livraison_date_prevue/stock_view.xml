@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		<record id="view_move_picking_tree_inherit_add_date_prevue" model="ir.ui.view">
+			<field name="name">stock.view.move.picking.tree.inherit1</field>
+			<field name="model">stock.move</field>
+			<field name="inherit_id" ref="stock.view_move_picking_tree" />
+			<field name="arch" type="xml">    
+			    <xpath expr="/tree/field[@name='location_dest_id']" position="before">
+						<field name="date_expected"/>
+				</xpath>
+			</field>
+		</record>
+	</data>
+</openerp>

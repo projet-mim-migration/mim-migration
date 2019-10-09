@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+        <data>
+                <report
+                        id="report_crm_claim"
+                        string="Rapport réclamation"
+                        model="crm.claim"
+                        name="crm.claim"
+                        rml="crm_claim_inherit/report/claim.rml"
+                        auto="False"
+                        header="True"/>
+        </data>
+</openerp>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+<data>
+	<record id="view_date_planned_form" model="ir.ui.view">
+      <field name="name">Confirmer ordre de fabrication</field>
+      <field name="model">mrp.configuration</field>
+	  <field name="arch" type="xml">
+	      <form string="Entrer la date plannifiée de la livraison" version="7.0">
+	            <group>
+	                <field name="date_planned"/>
+	            </group>
+	            <footer>
+		  			<button name="update_move_data" string="Confirmer et Créer les ordres de fabication" type="object" class="oe_highlight"/>
+	                 or
+	                <button string="Annuler" class="oe_link" special="cancel" />
+	           	</footer>
+	        </form>  
+      </field>
+    </record>
+</data>
+</openerp>

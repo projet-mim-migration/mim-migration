@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record model="workflow" id="wkf_session">
+            <field name="name">workflow livrer articles</field>
+            <field name="osv">stock.move</field>
+            <field name="on_create">True</field>
+        </record>
+
+        <record model="workflow.activity" id="draft">
+            <field name="name">draft</field>
+            <field name="wkf_id" ref="wkf_session"/>
+            <field name="flow_start" eval="True"/>
+            <field name="kind">dummy</field>
+            <field name="action"></field>
+        </record>
+        <record model="workflow.activity" id="waiting">
+            <field name="name">waiting</field>
+            <field name="wkf_id" ref="wkf_session"/>
+            <field name="kind">function</field>
+            <field name="action">action_confirm()</field>
+        </record>
+        <record model="workflow.activity" id="contre_mesure">
+            <field name="name">contre_mesure</field>
+            <field name="wkf_id" ref="wkf_session"/>
+            <field name="kind">function</field>
+            <field name="action">write({'state':'contre_mesure'})</field>
+        </record>
+        <record model="workflow.activity" id="fiche_debit">
+            <field name="name">fiche_debit</field>
+            <field name="wkf_id" ref="wkf_session"/>
+            <field name="kind">function</field>
+            <field name="action">write({'state':'flowsheeting'})</field>
+        </record>
+        <record model="workflow.activity" id="waiting2">
+            <field name="name">waiting2</field>
+            <field name="wkf_id" ref="wkf_session"/>
+            <field name="flow_start" eval="True"/>
+            <field name="kind">dummy</field>
+            <field name="action"></field>
+        </record>
+        <record model="workflow.activity" id="confirmed">
+            <field name="name">confirmed</field>
+            <field name="wkf_id" ref="wkf_session"/>
+            <field name="kind">function</field>
+            <field name="action">force_assign()</field>
+        </record>
+        <record model="workflow.activity" id="done">
+            <field name="name">done</field>
+            <field name="wkf_id" ref="wkf_session"/>
+            <field name="flow_stop">True</field>
+            <field name="kind">function</field>
+            <field name="action">action_done()</field>
+        </record>
+		
+		
+		<record model="workflow.transition" id="session_draft_to_waiting">
+            <field name="act_from" ref="draft"/>
+            <field name="act_to" ref="waiting"/>
+            <field name="signal">action_confirm</field>
+        </record>
+        <record model="workflow.transition" id="session_waiting_to_contre_mesure">
+            <field name="act_from" ref="waiting"/>
+            <field name="act_to" ref="contre_mesure"/>
+            <field name="signal">contre_mesure</field>
+        </record>
+        <record model="workflow.transition" id="session_contre_mesure_to_waiting">
+            <field name="act_from" ref="contre_mesure"/>
+            <field name="act_to" ref="waiting"/>
+            <field name="signal">annuler_contre_mesure</field>
+        </record>
+        <record model="workflow.transition" id="session_waiting2_to_contre_mesure">
+            <field name="act_from" ref="waiting2"/>
+            <field name="act_to" ref="contre_mesure"/>
+            <field name="signal">contre_mesure</field>
+        </record>
+        <record model="workflow.transition" id="session_contre_mesure_to_fiche_debit">
+            <field name="act_from" ref="contre_mesure"/>
+            <field name="act_to" ref="fiche_debit"/>
+            <field name="signal">flow_sheet</field>
+        </record>
+        <record model="workflow.transition" id="session_fiche_debit_to_contre_mesure">
+            <field name="act_from" ref="fiche_debit"/>
+            <field name="act_to" ref="contre_mesure"/>
+            <field name="signal">flow_sheet_cancel</field>
+        </record>
+        <record model="workflow.transition" id="session_fiche_debit_to_confirmed">
+            <field name="act_from" ref="fiche_debit"/>
+            <field name="act_to" ref="confirmed"/>
+            <field name="signal">force_assign</field>
+        </record>
+        <record model="workflow.transition" id="session_confirmed_to_done">
+            <field name="act_from" ref="confirmed"/>
+            <field name="act_to" ref="done"/>
+            <field name="signal">action_done</field>
+            <!--<field name="group_id" ref="base.group_hr_user" />-->
+        </record>
+    </data>
+</openerp>

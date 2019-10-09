@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+<data>
+	<record model="ir.ui.view" id="view_choice_config_form">
+	            <field name="name">choice.configuration.form</field>
+	            <field name="model">choice.configuration</field>
+	            <field name="arch" type="xml">
+	                <form string="Veuillez cocher la case si la fiche de débit est une fiche standard" version="7.0">
+	                    <group col="1">
+	                        <field name="is_printable"/>
+	                    </group>
+	                    <footer>
+							<button name="update_move_data" string="Confirmer et Créer l'ordre de fabication" type="object" class="oe_highlight"/>
+	                         or
+	                        <button string="Annuler" class="oe_link" special="cancel" />
+                    	</footer>
+	                </form>
+	            </field>
+	</record>
+</data>
+</openerp>

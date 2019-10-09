@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<openerp>
+   <data>
+       
+       <record id="base.mrp_set_draft" model="res.groups">
+            <field name="name">MRP-Bouton : Remettre à nouveau</field>
+       </record>
+       
+       <record id="base.mrp_calculer" model="res.groups">
+            <field name="name">MRP-Bouton : Calculer</field>
+       </record>
+       <record id="base.mrp_confirmer" model="res.groups">
+            <field name="name">MRP-Bouton : Confirmer la consommation</field>
+       </record>
+       <record id="base.mrp_annuler" model="res.groups">
+            <field name="name">MRP-Bouton : Annuler la production</field>
+       </record>
+       <record id="base.mrp_forcer" model="res.groups">
+            <field name="name">MRP-Bouton : Forcer la réservation</field>
+       </record>
+       <record id="base.mrp_fabriquer" model="res.groups">
+            <field name="name">MRP-Bouton : Fabriquer</field>
+       </record>
+       
+       <record id="base.mrp_valider" model="res.groups">
+            <field name="name">MRP-Bouton : Valider la fiche de débit</field>
+       </record>
+       <record id="base.mrp_verifier" model="res.groups">
+            <field name="name">MRP-Bouton : Mettre à fiche de débit vérifiée</field>
+       </record>
+       
+       <record id="mrp_production_product_form_inherit_view" model="ir.ui.view">
+            <field name="name">mrp.production.product.line.inherit.form</field>
+            <field name="model">mrp.production.product.line</field>
+            <field name="inherit_id" ref="mrp.mrp_production_product_form_view" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='product_id']" position="replace">
+						<field name="product_id" on_change="product_id_change(product_id)"/>
+				</xpath>
+            </field>
+        </record>
+       
+       <record id="mrp_production_product_fiche_debit_tree_view" model="ir.ui.view">
+			<field name="name">mrp.production.product.line.fiche_debit.tree</field>
+			<field name="model">mrp.production.product.line</field>
+			<field name="inherit_id" ref="mrp.mrp_production_product_tree_view" />
+			<field name="arch" type="xml">
+		     	<xpath expr="//field[@name='product_uos']" position="after">
+						<field name="is_accessory"/>
+				</xpath>
+			</field>
+		</record>
+       
+       <record id="mrp_production_fiche_debit_form_view" model="ir.ui.view">
+			<field name="name">mrp.production.fiche_debit.form</field>
+			<field name="model">mrp.production</field>
+			<field name="inherit_id" ref="mrp.mrp_production_form_view" />
+			<field name="arch" type="xml">
+			    <data>
+			        
+			        <!-- Les boutons du workflow -->
+			        <xpath expr="//field[@name='bom_id']" position="replace">
+						<field name="bom_id" domain="[('product_id','=',product_id)]" context="{'default_product_id': product_id}" on_change="bom_id_change(bom_id)"/>
+					</xpath>
+					
+				    <xpath expr="//button[@name='button_confirm']" position="replace">
+								<button name="button_confirm" attrs="{'invisible': [('state','not in',('validated'))]}" string="Confirmer la consommation" class="oe_highlight" groups="base.mrp_confirmer"/>
+					</xpath>
+					
+				    
+					<xpath expr="//button[@name='force_production']" position="replace">
+				    	<button name="force_production" states="confirmed" string="Forcer la réservation" type="object" class="oe_highlight" groups="base.mrp_forcer"/>
+				    </xpath>
+				    
+				    <xpath expr="//button[@name='button_cancel']" position="replace">
+				    	<button name="button_cancel" states="draft,ready,in_production,picking_except" string="Cancel Production" groups="base.mrp_annuler"/>
+				    </xpath>
+				    <xpath expr="//button[@name='action_cancel']" position="replace">
+				    	<button name="action_cancel" type="object" states="confirmed,validated" string="Cancel Production" groups="base.mrp_annuler"/>
+				    </xpath>
+				    <xpath expr="//button[@name='button_confirm']" position="before">
+							<button name="action_compute" 
+							    string="Calculer" 
+							    type="object" 
+							    class="oe_highlight" 
+							    icon="terp-stock_format-scientific" 
+							    groups="base.mrp_calculer"
+							    attrs="{'invisible': ['|',('is_printable','=',False),('state','not in',('draft'))]}"/>
+					</xpath>
+					<xpath expr="//button[@name='action_compute']" position="replace">
+							<button name="action_compute" 
+                                string="Compute Data" 
+                                type="object"
+                                icon="terp-stock_format-scientific" 
+                                groups="base.mrp_calculer" attrs="{'invisible': ['|',('is_printable','=',False),('state','not in',('draft'))]}"/>
+					</xpath>
+					
+					<xpath expr="//button[@name='%(mrp.act_mrp_product_produce)d']" position="replace">
+				    	<button name="%(mrp.act_mrp_product_produce)d" states="ready,in_production" string="Produce" type="action" class="oe_highlight" groups="base.mrp_fabriquer"/>
+				    </xpath>
+				    
+					<xpath expr="//field[@name='state']" position="replace">
+			        	<field name="state" widget="statusbar" statusbar_visible="draft,verified,validated,ready,in_production,done" statusbar_colors='{"picking_except":"red","confirmed":"blue"}'/>
+			        </xpath>
+			        <xpath expr="/form/header/button[@name='button_confirm']" position="before">
+			            <button name="set_draft" type="object" states="verified" string="Remettre à Nouveau" groups="base.mrp_set_draft"/>
+						<button 
+						    name="sheet_verified" 
+						    attrs="{'invisible': ['|','&amp;',('is_calculated','=',False),('is_printable','=',True),('state','not in',('draft'))]}" 
+						    string="Fiche vérifiée" 
+						    class="oe_highlight"
+						    groups="base.mrp_verifier"/>
+						<button name="cancel_validation" string="Annuler la validation" states="validated" groups="base.mrp_valider"/>
+						<button name="button_validate" string="Valider la fiche de débit" states="verified" class="oe_highlight" groups="base.mrp_valider"/>
+					</xpath>
+					<!--  -->
+					
+				    <!-- Les données de configuration de la fiche de débit -->
+			     	<xpath expr="/form/sheet/group" position="after">
+			     	    <group string="Données en entrée" col="2">
+			     	        <group>
+			     	            <field name="is_printable" attrs="{'readonly': [('state','not in',('draft'))]}"/>
+			     	            <field name="largeur" readonly="True"/>
+								<field name="hauteur" readonly="True"/>
+								<field name="tms" attrs="{'readonly': [('state','not in',('draft'))]}"/>
+								<field name="style" attrs="{'readonly': [('state','not in',('draft'))]}"/>
+								<field name="vitre" attrs="{'readonly': [('state','not in',('draft'))]}"/>
+								<field name="remplissage_vitre" attrs="{'readonly': [('state','not in',('draft'))]}"/>
+			     	        </group>
+			     	        <group>
+								<field name="intermediaire" attrs="{'readonly': [('state','not in',('draft'))]}"/>
+								<field name="type_intermediaire" attrs="{'readonly': [('state','not in',('draft'))]}"/>
+								<field name="moustiquaire" attrs="{'readonly': [('state','not in',('draft'))]}"/>
+								<field name="division" attrs="{'readonly': [('state','not in',('draft'))]}"/>
+								<field name="nb_division" attrs="{'readonly': [('state','not in',('draft'))]}" />
+								<field name="batis_id" attrs="{'readonly': [('state','not in',('draft'))]}" />
+								<field name="longueur_barre" attrs="{'readonly': [('state','not in',('draft'))]}"/>
+								<field name="is_calculated" invisible="1"/>
+								
+								<field name="partner_name"/>
+							</group>
+							<!--  
+							<field name="dimension" attrs="{'readonly': [('state','not in',('draft'))]}"/>
+							<field name="vitre" attrs="{'readonly': [('state','not in',('draft'))]}"/>
+							<field name="type_vitre" attrs="{'readonly': [('state','not in',('draft'))]}"/>
+							<field name="decoratif" attrs="{'readonly': [('state','not in',('draft'))]}"/>
+							<field name="poigne" attrs="{'readonly': [('state','not in',('draft'))]}"/>
+							<field name="nb_poigne" attrs="{'readonly': [('state','not in',('draft'))]}"/>
+							<field name="serr" attrs="{'readonly': [('state','not in',('draft'))]}"/>
+							<field name="nb_serr" attrs="{'readonly': [('state','not in',('draft'))]}"/>
+							<field name="oscillo_battant" attrs="{'readonly': [('state','not in',('draft'))]}"/>
+							<field name="va_et_vient" attrs="{'readonly': [('state','not in',('draft'))]}"/>
+							<field name="butoir" attrs="{'readonly': [('state','not in',('draft'))]}"/>
+							<field name="type_fixe" attrs="{'readonly': [('state','not in',('draft'))]}"/>
+							<field name="inegalite" attrs="{'readonly': [('state','not in',('draft'))]}"/>
+							<field name="cintre" attrs="{'readonly': [('state','not in',('draft'))]}"/>
+							<field name="triangle" attrs="{'readonly': [('state','not in',('draft'))]}"/>
+							<field name="division" attrs="{'readonly': [('state','not in',('draft'))]}"/>
+							<field name="nb_division" attrs="{'readonly': [('state','not in',('draft'))]}"/>
+							<field name="laque" attrs="{'readonly': [('state','not in',('draft'))]}"/>
+							<field name="type_moustiquaire" attrs="{'readonly': [('state','not in',('draft'))]}"/>
+							<field name="intermediaire" attrs="{'readonly': [('state','not in',('draft'))]}"/>
+							-->
+						</group>
+						<!--  -->
+					</xpath>
+					<xpath expr="//field[@name='bom_id']" position="after">
+					    <field name="description" attrs="{'readonly': [('state','not in',('draft'))]}"/>
+				    </xpath>
+				    <xpath expr="//field[@name='bom_id']" position="before">
+					    <field name="partner_id" attrs="{'readonly': [('state','not in',('draft'))]}"/>
+					</xpath>
+					
+					<xpath expr="//page[@string='Scheduled Products']" position="after">
+					    <page string="Articles et accessoires">
+                            <label for="product_lines1"/>
+                            <field name="product_lines1" readonly="1"/>
+                            <label for="product_lines2"/>
+                            <field name="product_lines2" readonly="1"/>
+                        </page>
+					</xpath>
+				</data>
+			</field>
+		</record>
+		<record id="mrp_bom_fiche_debit_form_view1" model="ir.ui.view">
+			<field name="name">mrp.bom.fiche_debit.form1</field>
+			<field name="model">mrp.bom</field>
+			<field name="inherit_id" ref="mrp.mrp_bom_form_view" />
+			<field name="arch" type="xml">
+			    <data>
+			     	<xpath expr="/form/notebook/page/field/tree/field[@name='product_id']" position="after">
+			     	    	<button name="open_view_component" type="object" string="Ajouter les sous-composants" icon="gtk-justify-fill"/>
+					</xpath>
+					<xpath expr="/form/notebook/page/field/tree/field[@name='product_id']" position="before">
+			     	    	<field name="sequence"/>
+			     	</xpath>
+					<xpath expr="/form/notebook/page/field[@name='bom_line_ids']/tree/field[@name='product_uom']" position="after">
+			     	    	<field name="is_accessory"/>
+     	    		</xpath>
+				</data>
+			</field>
+		</record>
+		
+        <record id="mrp_configuration_component_form_view2" model="ir.ui.view">
+            <field name="name">mrp.configuration.component.form</field>
+            <field name="model">mrp.component</field>
+            <field name="arch" type="xml">
+                <form string="Configuration des sous-composants" version="7.0">
+	               	<group>
+		                <field name="product_parent_id"/>
+		                <field name="component_exist" invisible="1"/>
+	                </group>
+	                <group string="Insértion Calcul (Code python)"> 
+		               	<field name="variable" readonly="1"/>
+	               	</group>
+	               	<group> 
+		               	<field name="sub_component_ids" nolabel="1">
+	               	   			<tree editable="bottom">
+			                       <field name="name"/>
+			                       <field name="python_product_qty"/>
+			                       <field name="python_product_qty_total"/>
+			                       <field name="python_len_unit"/>
+		                    	   <field name="python_len_total"/>
+		                       </tree>
+		                </field>
+	                </group>
+	                <footer>
+                        <button name="save_component" string="Enregistrer" type="object" class="oe_highlight" attrs="{'invisible':[('component_exist','!=',False)]}"/>
+                        <button name="write" string="Enregistrer" type="object" class="oe_highlight" attrs="{'invisible':[('component_exist','=',False)]}"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        
+        <record id="mrp_production_product_component_tree_view" model="ir.ui.view">
+            <field name="name">mrp.production.product.component.line.tree</field>
+            <field name="model">mrp.production.product.component.line</field>
+            <field name="arch" type="xml">
+                <tree string="Articles" editable="bottom">
+                    <field name="ref"/>
+                    <field name="name"/>
+                    <field name="product_qty"/>
+                    <field name="product_qty_total"/>
+                    <field name="len_unit"/>
+                    <field name="len_total"/>
+                </tree>
+            </field>
+        </record>
+        
+        <record id="mrp_production_product_accessory_tree_view" model="ir.ui.view">
+            <field name="name">mrp.production.product.accessory.line.tree</field>
+            <field name="model">mrp.production.product.accessory.line</field>
+            <field name="arch" type="xml">
+                <tree string="Articles" editable="bottom">
+                    <field name="ref"/>
+                    <field name="name"/>
+                    <field name="product_qty"/>
+                    <field name="product_qty_total"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Ajout filtre Messages non-lus -->
+        <record id="view_mrp_production_filter2" model="ir.ui.view">
+			<field name="name">mrp.production.select</field>
+			<field name="model">mrp.production</field>
+			<field name="inherit_id" ref="mrp.view_mrp_production_filter" />
+			<field name="arch" type="xml">
+		     	<xpath expr="/search/field[@name='name']" position="after">
+						<filter icon="terp-mail-message-new" string="Messages non-lus" name="message_unread" domain="[('message_unread','=',True)]"/>
+				</xpath>
+			</field>
+		</record>
+		
+        <!-- Modification domaine action -->
+        <record id="mrp.mrp_production_action_planning" model="ir.actions.act_window">
+            <field name="name">Manufacturing Orders</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">mrp.production</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">calendar,tree,form,graph</field>
+            <field name="domain">[('state','in',('draft','verified','validated','ready','confirmed','in_production'))]</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to start a new manufacturing order. 
+              </p><p>
+                A manufacuring order, based on a bill of materials, will
+                consume raw materials and produce finished products.
+              </p><p>
+                Manufacturing orders are usually proposed automatically based
+                on customer requirements or automated rules like the minimum
+                stock rule.
+              </p>
+            </field>
+        </record>
+        <!-- Ajout couleur selon l'etat de l'ordre de fabrication -->
+        <record id="view_production_calendar2" model="ir.ui.view">
+			<field name="name">mrp.production.calendar</field>
+			<field name="model">mrp.production</field>
+			<field name="inherit_id" ref="mrp.view_production_calendar" />
+			<field name="arch" type="xml">
+		     	<xpath expr="/calendar" position="attributes">
+						<attribute name="color">state</attribute>
+                </xpath>
+                
+                <!-- Mettre le document d'origine et le nom du client dans la vue calendar 
+                <xpath expr="/calendar/field[@name='product_id']" position="replace">
+						<field name="product_id" invisible="1"/>
+				</xpath>
+				<xpath expr="/calendar/field[@name='product_qty']" position="replace">
+                    	<field name="product_qty" invisible="1"/>
+                </xpath>-->
+                <xpath expr="/calendar/field[@name='name']" position="after">
+                    	<field name="origin"/>
+                    	<field name="partner_name"/>
+                </xpath>
+			</field>
+		</record>
+		
+		<record id="view_mrp_production_filter2" model="ir.ui.view">
+            <field name="name">mrp.production.select</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id" ref="mrp.view_mrp_production_filter" />
+            <field name="arch" type="xml">
+	            <filter string="Scheduled Month" position="after">
+	                <filter 
+	                    string="Jour planifié" 
+	                    icon="terp-go-month" 
+	                    domain="[('state', 'not in', ('cancel', 'done'))]" 
+	                    context="{'group_by':'date_planned:day'}" 
+	                    help="Date planifié, par jour"/>
+	            </filter>
+            </field>
+        </record>
+        
+	</data>		
+</openerp>

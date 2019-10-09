@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		<record id="view_picking_form_duree_pose2" model="ir.ui.view">
+			<field name="name">stock.picking.form.duree_pose2</field>
+			<field name="model">stock.picking.out</field>
+			<field name="inherit_id" ref="stock.view_picking_out_form" />
+			<field name="arch" type="xml">    
+			    <xpath expr="/form[@string='Internal Picking List']/sheet/group/group/field[@name='stock_journal_id']" position="replace">
+						<field name="stock_journal_id" readonly="1"/>
+				</xpath>
+			</field>
+		</record>
+	</data>
+</openerp>

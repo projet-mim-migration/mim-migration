@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+		<report
+			    auto="False"
+			    header="False"
+			    id="ostie"
+			    model="ostie"
+			    name="ostie"
+			    rml="Gestion_de_paie_etat_salaire/report/ostie.rml"
+			    string="OSTIE" />
+		<report
+			    auto="False"
+			    header="False"
+			    id="irsa2"
+			    model="irsa2"
+			    name="irsa2"
+			    rml="Gestion_de_paie_etat_salaire/report/irsa.rml"
+			    string="IRSA" />
+		<report
+			    auto="False"
+			    header="False"
+			    id="cnaps3"
+			    model="cnaps2"
+			    name="cnaps3"
+			    rml="Gestion_de_paie_etat_salaire/report/cnaps.rml"
+			    string="CNAPS" />
+	</data>
+</openerp>

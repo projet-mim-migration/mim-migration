@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record id="view_stock_split_details" model="ir.ui.view">
+            <field name="name">Split details</field>
+            <field name="model">stock.split_details</field>
+            <field name="arch" type="xml">
+                <form string="Detail de la division" version="7">
+                    <group string="Mouvement de stock à diviser">
+                        <div class="oe_grey">
+                             Mettre les details de la division du mouvement de stock 
+                        </div>
+                    </group>
+                    <group>
+	                    <field name="item_ids" nolabel="1">
+                            <tree editable="bottom" create="false">
+                                <field name="product_id" readonly="True"/>
+                                <field name="name" readonly="True"/>
+                                <field name="quantity"/>
+<!--                                 <button  -->
+<!--                                     name="split"  -->
+<!--                                     string="Diviser"  -->
+<!--                                     type="object"  -->
+<!--                                     icon="STOCK_PREFERENCES"  -->
+<!--                                     attrs="{'invisible': [('quantity', '=', 1)]}"/> -->
+                                <field name="product_uom_id" options="{&quot;no_open&quot;: True}" groups="product.group_uom" readonly="True"/>
+                                <field name="sourceloc_id" invisible="1"/>
+                                <field name="destinationloc_id" invisible="1"/>
+                            </tree>
+                        </field>
+                    </group>
+                    <footer>
+                        <button name="do_split" string="Appliquer" type="object" class="oe_highlight"/>
+                        or
+                        <button string="_Cancel" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</openerp>

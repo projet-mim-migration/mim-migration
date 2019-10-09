@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record model="workflow" id="wkf_session">
+            <field name="name">workflow.crm.claim</field>
+            <field name="osv">crm.claim</field>
+            <field name="on_create">True</field>
+        </record>
+
+        <record model="workflow.activity" id="draft">
+            <field name="name">draft</field>
+            <field name="wkf_id" ref="wkf_session"/>
+            <field name="flow_start" eval="True"/>
+            <field name="kind">function</field>
+            <field name="action">action_set_to_draft()</field>
+        </record>
+        <record model="workflow.activity" id="waiting">
+            <field name="name">waiting</field>
+            <field name="wkf_id" ref="wkf_session"/>
+            <field name="kind">function</field>
+            <field name="action">action_confirm()</field>
+        </record>
+        <record model="workflow.activity" id="open">
+            <field name="name">open</field>
+            <field name="wkf_id" ref="wkf_session"/>
+            <field name="kind">function</field>
+            <field name="action">action_open()</field>
+        </record>
+        <record model="workflow.activity" id="done">
+            <field name="name">done</field>
+            <field name="wkf_id" ref="wkf_session"/>
+            <field name="flow_stop">True</field>
+            <field name="kind">function</field>
+            <field name="action">action_done()</field>
+        </record>
+        
+        <record model="workflow.activity" id="cancel">
+            <field name="name">cancel</field>
+            <field name="wkf_id" ref="wkf_session"/>
+            <field name="kind">function</field>
+            <field name="action">action_cancel()</field>
+        </record>
+		
+		
+		<record model="workflow.transition" id="session_draft_to_waiting">
+            <field name="act_from" ref="draft"/>
+            <field name="act_to" ref="waiting"/>
+            <field name="signal">action_confirm</field>
+        </record>
+        <record model="workflow.transition" id="session_waiting_to_open">
+            <field name="act_from" ref="waiting"/>
+            <field name="act_to" ref="open"/>
+            <field name="signal">action_open</field>
+        </record>
+        <record model="workflow.transition" id="session_open_to_done">
+            <field name="act_from" ref="open"/>
+            <field name="act_to" ref="done"/>
+            <field name="signal">action_done</field>
+        </record>
+   		
+        <record model="workflow.transition" id="session_open_to_cancel">
+            <field name="act_from" ref="open"/>
+            <field name="act_to" ref="cancel"/>
+            <field name="signal">action_cancel</field>
+        </record>
+        <record model="workflow.transition" id="session_waiting_to_cancel">
+            <field name="act_from" ref="waiting"/>
+            <field name="act_to" ref="cancel"/>
+            <field name="signal">action_cancel</field>
+        </record>
+        <record model="workflow.transition" id="session_cancel_to_draft">
+            <field name="act_from" ref="cancel"/>
+            <field name="act_to" ref="draft"/>
+            <field name="signal">action_set_to_draft</field>
+        </record>
+        
+    </data>
+</openerp>

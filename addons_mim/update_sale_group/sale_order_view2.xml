@@ -1,0 +1,20 @@
+<openerp>
+	<data>
+	    
+	    <record id="base.group_noro" model="res.groups">
+            <field name="name">Ventes</field>
+        </record>
+    
+	    <record id="view_order_form_inherit2" model="ir.ui.view">
+			<field name="name">sale.order.form.inherit2</field>
+			<field name="model">sale.order</field>
+			<field name="inherit_id" ref="sale.view_order_form" />
+			<field name="groups_id" eval="[(4, ref('base.group_noro'))]"/>
+			<field name="arch" type="xml">
+				<xpath expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='price_unit']" position="replace">
+					<field name="price_unit" readonly="0"/>
+				</xpath>
+			</field>
+		</record>    
+	</data>
+</openerp>

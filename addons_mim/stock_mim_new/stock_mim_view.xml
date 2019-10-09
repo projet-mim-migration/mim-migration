@@ -1,0 +1,34 @@
+<openerp>
+	<data>
+		<record id="base.group_frederic" model="res.groups">
+            <field name="name">Groupe de Frederic</field>
+        </record>
+		<record id="view_move_form2" model="ir.ui.view">
+			<field name="name">stock.move.form.inherit2</field>
+			<field name="model">stock.move</field>
+			<field name="inherit_id" ref="stock.view_move_form" />
+			<field name="arch" type="xml">
+				<!--  <data>-->
+					<xpath expr="/form/header/button[@name='force_assign']" position="after">
+						<button name="flow_sheet" states="contre_mesure" string="Fiche Débit" class="oe_highlight" />
+						<button name="flow_sheet_cancel" states="flowsheeting" string="Annuler Fiche Débit" />
+						<button name="contre_mesure" states="confirmed" string="Contre mesure" class="oe_highlight" groups="base.group_frederic"/>
+						<button name="annuler_contre_mesure" states="contre_mesure" string="Annuler contre mesure" groups="base.group_frederic"/>
+					</xpath >
+					<!--<xpath expr="/form/header/button[@name='flow_sheet']" position="replace">
+					 	<button name="flow_sheet" states="contre_mesure" string="Fiche Débit" class="oe_highlight" />   
+					</xpath>
+					<xpath expr="/form/header/button[@name='flow_sheet_cancel']" position="replace">
+					 	<button name="flow_sheet_cancel" states="flowsheeting" string="Annuler Fiche Débit" />
+					</xpath>
+					<xpath expr="/form/header/field[@name='state']" position="replace">
+						<field name="state" widget="statusbar" statusbar_visible="draft,confirmed,contre_mesure,flowsheeting,assigned,done" statusbar_colors='{"waiting":"blue","confirmed":"blue"}' />
+					</xpath>-->
+					<field name="state" position="replace">
+                    	<field name="state" widget="statusbar" statusbar_visible="draft,confirmed,contre_mesure,flowsheeting,assigned,done" statusbar_colors='{"waiting":"blue","confirmed":"blue"}'/>
+                	</field>
+				<!--</data>-->
+			</field>
+		</record>
+	</data>
+</openerp>

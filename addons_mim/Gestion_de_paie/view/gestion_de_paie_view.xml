@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<openerp>
+    <data>
+
+     <record id="hr_contract_view_form_l10n_mg_paye" model="ir.ui.view">
+            <field name="name">hr.contract.view.form.l10n.mg.paye</field>
+            <field name="model">hr.contract</field>
+            <field name="priority">20</field>
+			
+            <field name="inherit_id" ref="hr_payroll.hr_contract_form_inherit"/>
+			
+            <field name="arch" type="xml">
+				 				 
+	         <field name="struct_id" position="after">
+                    <field name="categorie"/>
+                    <field name="echellon"/>
+                    <field name="indice"/>
+                 </field>
+				<field name="working_hours" position="after">
+				    <field name="horaire_hebdo" string="Horaire hebdomadaire"/>
+					<field name="payment_mode"/>
+				  </field>
+            </field>
+        </record>
+		
+		<record id="res_company_form_l10n_mg_paye" model="ir.ui.view">
+            <field name="name">res.company.form.l10n.mg.paye</field>
+            <field name="model">res.company</field>
+            <field name="priority">20</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">
+            <data>
+                 <xpath expr="//group[@name='account_grp']" position="after">
+                    <group string="Paie">
+                            <field name="seuil_irsa"/>
+                            <field name="taux_irsa"/>
+                            <field name="abat_irsa"/>
+                            <newline/>
+                            <field name="num_cnaps_patr"/>
+                            <field name="plafond_cnaps"/>
+                            <field name="cotisation_cnaps_patr"/>
+                            <field name="cotisation_cnaps_emp"/>
+                            <newline/>
+                            <field name="org_sante"/>
+                            <field name="cotisation_sante_patr"/>
+                            <field name="cotisation_sante_emp"/>
+                            <newline/>
+                            <field name="conge_mens"/>
+                    </group>
+                 </xpath>
+            </data>
+            </field>
+        </record>
+		
+		<record id="hr_employee_form_l10n_mg_paye" model="ir.ui.view">
+            <field name="name">hr.employee.form.l10n.mg.paye</field>
+            <field name="model">hr.employee</field>
+            <field name="priority">30</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+
+				  <field name="identification_id" position="replace">
+				    <field name="num_cnaps_emp" string="N° CNAPS"/>
+				  </field>					 				 
+				  <field name="bank_account_id" position="after">
+				    <field name="num_cin"/>
+				  </field>    			
+				  <field name="otherid" position="replace">
+				    <field name="num_emp" string="N° Matricule"/>
+				  </field>
+           			
+				
+			</field>
+		</record>
+		
+		<report
+            auto="False"
+            header="False"
+            id="fiche_paye"
+            model="hr.payslip"
+            name="fiche.paye"
+            rml="Gestion_de_paie/report/fiche_paye_mg.rml"
+            string="Fiche de Paie Malagasy" />	
+			<!--  <report
+            auto="False"
+            header="False"
+            id="irsa"
+            model="irsa"
+            name="etat.irsa"
+            rml="Gestion_de_paie/report/rapport_irsa.rml"
+            string="rapport Irsa" />-->
+        <report
+                        id="report_irsa"
+                        string="Rapport IRSA"
+                        model="irsa"
+                        name="irsa"
+                        rml="Gestion_de_paie/report/irsa.rml"
+                        auto="False"
+                        header="True"/>    
+		<report
+            auto="False"
+            header="False"
+            id="cnaps"
+            model="cnaps"
+            name="cnaps2"
+            rml="Gestion_de_paie/report/rapport_cnaps.rml"
+            string="CNAPS Malagasy" />			
+    </data>
+</openerp>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+	    <record id="picking_out_create_edit" model="res.groups">
+            <field name="name">Masquer Créer et Editer/stock.picking</field>
+        </record>
+	    <record id="purchase_order_create_edit" model="res.groups">
+            <field name="name">Masquer Créer et Editer/purchase.order</field>
+        </record>
+        
+	   <record id="view_picking_out_form_inherit11" model="ir.ui.view">
+			<field name="name">stock.picking.form.inherit11</field>
+			<field name="model">stock.picking</field>
+			<field name="inherit_id" ref="stock.view_picking_form" />
+			<field name="groups_id" eval="[(4, ref('picking_out_create_edit'))]"/>
+			<field name="arch" type="xml">    
+			    <xpath expr="//form" position="attributes">
+						<attribute name="create">false</attribute>
+                		<attribute name="edit">false</attribute>
+           		</xpath>
+			</field>
+		</record>
+		<record id="view_picking_out_tree_inherit11" model="ir.ui.view">
+			<field name="name">stock.picking.tree.inherit11</field>
+			<field name="model">stock.picking</field>
+			<field name="inherit_id" ref="stock.vpicktree" />
+			<field name="groups_id" eval="[(4, ref('picking_out_create_edit'))]"/>
+			<field name="arch" type="xml">    
+			    <xpath expr="//tree" position="attributes">
+						<attribute name="create">false</attribute>
+                		<attribute name="edit">false</attribute>
+           		</xpath>
+			</field>
+		</record>
+		
+		<!--  <record id="view_picking_out_tree_inherit12" model="ir.ui.view">
+			<field name="name">stock.picking.tree.inherit12</field>
+			<field name="model">stock.picking</field>
+			<field name="inherit_id" ref="stock.vpicktree" />
+			<field name="arch" type="xml">    
+			    <xpath expr="//tree" position="attributes">
+						<attribute name="default_order">create_date</attribute>
+                </xpath>
+			</field>
+		</record>
+		-->
+		
+		<record id="purchase_order_form_inherit1" model="ir.ui.view">
+			<field name="name">purchase.order.form.inherit</field>
+			<field name="model">purchase.order</field>
+			<field name="inherit_id" ref="purchase.purchase_order_form" />
+			<field name="groups_id" eval="[(4, ref('purchase_order_create_edit'))]"/>
+			<field name="arch" type="xml">    
+			    <xpath expr="//form" position="attributes">
+						<attribute name="create">false</attribute>
+                		<attribute name="edit">false</attribute>
+           		</xpath>
+			</field>
+		</record>
+		<record id="purchase_order_tree_inherit1" model="ir.ui.view">
+			<field name="name">purchase.order.tree.inherit</field>
+			<field name="model">purchase.order</field>
+			<field name="inherit_id" ref="purchase.purchase_order_tree"/>
+			<field name="groups_id" eval="[(4, ref('purchase_order_create_edit'))]"/>
+			<field name="arch" type="xml">    
+			    <xpath expr="/tree" position="attributes">
+						<attribute name="create">false</attribute>
+                		<attribute name="edit">false</attribute>
+           		</xpath>
+			</field>
+		</record>
+	</data>
+</openerp>

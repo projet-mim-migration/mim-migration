@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!-- <template id="assets_backend" name="project assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/crm_lead/static/src/js/sale.js"></script>
+            </xpath>
+        </template> -->
+        
+        <record model="ir.ui.view" id="view_order_form">
+            <field name="name">sale.order.form</field>
+            <field name="model">sale.order</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="sale.view_order_form" />
+            <field name="arch" type="xml">
+                <button name="action_button_confirm" position="replace">
+                    <button name="action_button_confirm2" states="draft" string="Confirm Sale" type="object" groups="base.group_user"/>
+                </button>
+                <xpath expr="//button[@name='action_button_confirm'][1]" position="replace">
+                    <button name="action_button_confirm2" states="sent" string="Confirm Sale" class="oe_highlight" type="object" groups="base.group_user"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="sale_order_delete_wizard_form" model="ir.ui.view">
+            <field name="name">sale.order.delete.form</field>
+            <field name="model">sale.order.delete</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="name" invisible="1" />
+                        <field name="order_id" readonly="1" />
+                    </group>
+                    <notebook>
+                        <page string="Merci de sélectionner les devis à annuler">
+                            <field name="order_ids" readonly="1" context="{'source_id': order_id}">
+                                <tree>
+                                    <button name="check_uncheck" type="object" string="Cocher/Décocher" icon="gtk-ok"/>
+                                    <field name="to_cancel"/>
+                                    <field name="name" readonly="1"/>
+                                    <field name="date_order" readonly="1"/>
+                                    <field name="partner_id" readonly="1"/>
+                                    <field name="user_id" readonly="1"/>
+                                    <field name="amount_total" readonly="1"/>
+                                    <field name="state" readonly="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                    <footer>
+                        <button name="confirm" string="Confirmer le devis source" type="object" class="oe_highlight" />
+                        or
+                        <button name="cancel_and_confirm" string="Annuler les devis sélectionnés et Confirmer le devis source" type="object" class="oe_highlight" />
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</openerp>

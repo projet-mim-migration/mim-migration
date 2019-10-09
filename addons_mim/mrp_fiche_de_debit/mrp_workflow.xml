@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+		<!-- Activity -->
+        <record id="validated" model="workflow.activity">
+            <field name="wkf_id" ref="mrp.wkf_prod"/>
+            <field name="name">validated</field>
+            <field name="action">write({'state':'validated'})</field>
+            <field name="kind">function</field>
+        </record>
+        <record id="verified" model="workflow.activity">
+            <field name="wkf_id" ref="mrp.wkf_prod"/>
+            <field name="name">verified</field>
+<!--             <field name="action">write({'state':'verified'})</field> -->
+            <field name="kind">function</field>
+            <field name="action">action_verified()</field>
+        </record>
+        <!-- Fin activity -->
+        
+        <!-- Transition -->
+        <record id="draft_validated" model="workflow.transition">
+            <field name="act_from" ref="mrp.prod_act_draft"/>
+            <field name="act_to" ref="validated"/>
+            <field name="signal">button_validate</field>
+        </record>
+        <record id="validated_prod_act_picking" model="workflow.transition">
+            <field name="act_from" ref="validated"/>
+            <field name="act_to" ref="mrp.prod_act_confirmed"/>
+            <field name="signal">button_confirm</field>
+        </record>
+        <record id="draft_verified" model="workflow.transition">
+            <field name="act_from" ref="mrp.prod_act_draft"/>
+            <field name="act_to" ref="verified"/>
+            <field name="signal">sheet_verified</field>
+        </record>
+        <record id="verified_validated" model="workflow.transition">
+            <field name="act_from" ref="verified"/>
+            <field name="act_to" ref="validated"/>
+            <field name="signal">button_validate</field>
+        </record>
+        <record id="validated_verified" model="workflow.transition">
+            <field name="act_from" ref="validated"/>
+            <field name="act_to" ref="verified"/>
+            <field name="signal">cancel_validation</field>
+        </record>
+        <!-- Fin transition -->
+	</data>
+</openerp>

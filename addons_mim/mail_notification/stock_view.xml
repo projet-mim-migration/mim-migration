@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+   <data>
+        <!-- Mettre en gras les enregistrements qui contiennent des messages non-lus -->
+		<record id="view_picking_tree_unread_bold" model="ir.ui.view">
+			<field name="name">stock.picking.tree</field>
+			<field name="model">stock.picking</field>
+			<field name="inherit_id" ref="stock.vpicktree" />
+			<field name="arch" type="xml">
+			    <xpath expr="//field[@name='name']" position="before">
+					<field name="message_unread" invisible="1"/>
+				</xpath>
+				<xpath expr="/tree" position="attributes">
+					<attribute name="fonts">bold:message_unread==True</attribute>
+	        	</xpath>
+			</field>
+		</record>
+		
+		<!-- Ajout filtre Messages non-lus -->
+		<record id="view_picking_search3" model="ir.ui.view">
+			<field name="name">stock.picking.search3</field>
+			<field name="model">stock.picking</field>
+			<field name="inherit_id" ref="stock.view_picking_internal_search" />
+			<field name="arch" type="xml">
+			    <xpath expr="//field[@name='name']" position="after">
+					<filter icon="terp-mail-message-new" string="Messages non-lus" name="message_unread" domain="[('message_unread','=',True)]"/>
+				</xpath>
+			</field>
+		</record>
+	</data>
+</openerp>
