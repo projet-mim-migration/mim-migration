@@ -15,7 +15,7 @@
     # Check https://github.com/odoo/odoo/blob/12.0/odoo/addons/base/data/ir_module_category_data.xml
     # for the full list
     # any module necessary for this one to work correctly
-    'depends': ['sale'],
+    'depends': ['sale','sale_management'],
 
     # always loaded
     'data': [
@@ -23,7 +23,7 @@
         'views/sale_view.xml',
         'views/mim_module_view.xml',
         'data/article.categorie.csv',
-            'data/mim.article.csv',
+        'data/mim.article.csv',
     ],
     # only loaded in demonstration mode
     'test':[],

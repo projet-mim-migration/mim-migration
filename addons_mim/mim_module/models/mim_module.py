@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api
-import openerp.addons.decimal_precision as dp
+import odoo.addons.decimal_precision as dp
 
 
 
@@ -76,7 +76,7 @@ class mim_wizard(models.TransientModel):
 	moustiquaire = fields.Boolean('Moustiquaire')
 	tms = fields.Float('TMS')
 	type_moustiquaire = fields.Selection([('fixe','Fixe'),('coulissante','Coulissante')], string="Type de moustiquaire")
-	total = fields.Float('Total', readonly=True, digits_compute= dp.get_precision('Account'))
+	total = fields.Float('Total', readonly=True, digits= dp.get_precision('Account'))
 		####fin des diffÃ©rents propriÃ©tÃ©s####
 	totalcacher = fields.Float('Total')#est utilisÃ© pour cacher/afficher le field totalcacher 
 	hidder_autre_option = fields.Boolean('Cacher les autres options')#est utilisÃ© pour cacher/afficher le group Autres option dans mim_module_view.xml
@@ -85,39 +85,40 @@ class mim_wizard(models.TransientModel):
 	
 	
 	####cette fonction permet la crÃ©ation d'une ligne de commande grÃ¢ce Ã  sale_order_line_obj.create(cr, uid, {'name': name,'order_id':rec_ref, 'price_unit' : rec_total})####
+	@api.multi
 	def order_line_create(self):
 		
 		sale_order_line_obj = self.env['sale.order.line']#on recupÃ¨re l'objet sale.order.line pour l'utiliser avec la fonction ORM create 
 		#### dÃ©but de la rÃ©cupÃ¨ration des diffÃ©rents paramÃ¨tres saisi sur le pop-up####
-		select_type = self.browse()[0].select_type
-		type_fix = self.browse()[0].type_fixe
-		inegalite = self.browse()[0].inegalite
-		vitrage = self.browse()[0].vitre
-		type_vitre = self.browse()[0].type_vitre
-		decoratif = self.browse()[0].decoratif
-		serr = self.browse()[0].serr
-		poigne = self.browse()[0].poigne
-		nb_poigne = self.browse()[0].nb_poigne
-		nb_serr = self.browse()[0].nb_serr
-		oscillo_battant = self.browse()[0].oscillo_battant
-		va_et_vient = self.browse()[0].va_et_vient
-		butoir = self.browse()[0].butoir
-		remplissage_vitre = self.browse()[0].remplissage_vitre
-		cintre = self.browse()[0].cintre
-		triangle = self.browse()[0].triangle
-		division = self.browse()[0].division
-		nb_division = self.browse()[0].nb_division
-		laque = self.browse()[0].laque
-		moustiquaire = self.browse()[0].moustiquaire
-		type_moustiquaire = self.browse()[0].type_moustiquaire
-		tms = self.browse()[0].tms
-		rec_largeur = self.browse()[0].largeur
-		rec_hauteur = self.browse()[0].hauteur
-		intermediaire = self.browse()[0].intermediaire
-		rec_dimension = self.browse()[0].dimension
-		rec_pu_ttc = self.browse()[0].pu_ttc
-		rec_ref = self.browse()[0].order_ref
-		rec_qty = self.browse()[0].quantity
+		select_type = self.select_type
+		type_fix = self.type_fixe
+		inegalite = self.inegalite
+		vitrage = self.vitre
+		type_vitre = self.type_vitre
+		decoratif = self.decoratif
+		serr = self.serr
+		poigne = self.poigne
+		nb_poigne = self.nb_poigne
+		nb_serr = self.nb_serr
+		oscillo_battant = self.oscillo_battant
+		va_et_vient = self.va_et_vient
+		butoir = self.butoir
+		remplissage_vitre = self.remplissage_vitre
+		cintre = self.cintre
+		triangle = self.triangle
+		division = self.division
+		nb_division = self.nb_division
+		laque = self.laque
+		moustiquaire = self.moustiquaire
+		type_moustiquaire = self.type_moustiquaire
+		tms = self.tms
+		rec_largeur = self.largeur
+		rec_hauteur = self.hauteur
+		intermediaire = self.intermediaire
+		rec_dimension = self.dimension
+		rec_pu_ttc = self.pu_ttc
+		rec_ref = self.order_ref
+		rec_qty = self.quantity
 		#rec_total = self.browse()[0].totalcacher
 		total = self.calcul( rec_largeur, rec_hauteur,rec_dimension, rec_pu_ttc, rec_qty, select_type.id , vitrage.id,
 				type_vitre, decoratif.id,  poigne.id, serr.id,nb_poigne,nb_serr,oscillo_battant,
@@ -332,16 +333,19 @@ class mim_wizard(models.TransientModel):
 		sale_order_line_obj.create({
 			'product_id':select_type.id,
 			'name': name,
-			'order_id':rec_ref+1, 
+			'order_id':rec_ref, 
 			'product_uom_qty': rec_qty,
 			'price_subtotal' : total['totalcacher'], 
 			'price_unit': total['totalcacher']/rec_qty
-			})
+			})#'price_unit': total['totalcacher']/rec_qty
 		
 		return True
 	
 	####cette fonction est appellÃ©e pour mettre Ã  jour le total sur le pop-up Ã  chaque modification d'un champ sans quiter la fenÃªtre####
-	
+	'''@api.onchange('largeur', 'hauteur', 'dimension', 'pu_ttc', 'quantity', 'select_type', 'vitre',
+			'type_vitre','decoratif', 'poigne', 'serr', 'nb_poigne', 'nb_serr', 'oscillo_battant',
+			'va_et_vient', 'butoir', 'remplissage_vitre', 'cintre', 'triangle', 'division', 'nb_division', 'laque',
+			'moustiquaire', 'type_moustiquaire', 'tms')'''
 	def onchange_fields(self, largeur, hauteur, dimension, pu_ttc, quantity, select_type, vitre,
 			type_vitre,decoratif, poigne, serr,nb_poigne,nb_serr,oscillo_battant,
 			va_et_vient, butoir,remplissage_vitre, cintre, triangle,division,nb_division, laque,
@@ -568,20 +572,21 @@ class sale_order(models.Model):
 	entete = fields.Text('Sujet')
 	
 	####cette fonction permet de rÃ©cupÃ©rer la rÃ©fÃ©rence du devis en cours de modification par ex SO003####
-	@api.one
+	@api.multi
 	def action_mim_wizard(self):
 	  
 		mod_obj = self.env['ir.model.data']
-		res = mod_obj.ref('mim_module.view_mim_wizard').id
-		res_id = res and res[1] or False
+		#res = mod_obj.env.ref('mim_module.view_mim_wizard').id
+		#res_id = res and res[1] or False
 		ctx = dict()
-		sujet = self.browse()[0].name
-		order_ref = self.browse()[0].name
+		sujet = self.name
+		order_ref = self.name
 		order_ref = sujet[2:]
 		ctx.update({
 			'default_sujet': 'Devis ' + sujet,
 			'default_order_ref':order_ref,
 		})
+		
 	####permet la crÃ©ation de la nouvelle fenÃªtre pop-up###
 		return {
 			'name': 'Mim Wizard',
