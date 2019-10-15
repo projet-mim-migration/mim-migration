@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_mim_module_majoration_mim_module_majoration,mim_module_majoration.mim_module_majoration,model_mim_module_majoration_mim_module_majoration,,1,0,0,0
