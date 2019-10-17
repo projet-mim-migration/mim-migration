@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <record id="sale_order_mim_form_inherit" model="ir.ui.view">
+      <field name="name">sale.order.mim.form</field>
+      <field name="model">sale.order</field>
+      <field name="view_type">form</field>
+      <field name="priority">1000</field>
+      <field name="inherit_id" ref="sale.view_order_form" />
+      <field name="arch" type="xml">
+         <xpath expr="//field[@name='partner_id']" position="after">
+           <field name="crm_lead_id" required="1"/>
+         </xpath>
+      </field>
+    </record>
+  </data>
+</odoo>
