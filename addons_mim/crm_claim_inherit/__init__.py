@@ -1,2 +1,4 @@
-import crm_claim
-import report
+# -*- coding: utf-8 -*-
+
+from . import report
+from . import models

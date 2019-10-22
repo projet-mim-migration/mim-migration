@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--<>-->
+
+<odoo>
+    <report 
+        id="report_crm_claim"
+        model="crm.claim"
+        string="Rapport réclamation"
+        name="crm_claim_inherit.report_claim"
+        file="crm_claim_inherit.report_claim"
+        report_type="qweb-pdf" 
+        />
+
+    <template id="report_claim">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2 style="text-align:center;font-weight:bold;">Rapport de réclamation</h2>
+                        <br/>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-4">Objet de réclamation : </div>
+                                <div class="col-8" t-field="doc.name"/>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">Date de réclamation</div>
+                                <div class="col-8" t-field="doc.date"/>    
+                            </div>
+                            <div class="row">
+                                <div class="col-4">Résponsable</div>
+                                <div class="col-8" t-field="doc.user_id.name"/>     
+                            </div>
+                            <div class="row">
+                                <div class="col-4">Priorité</div>
+                                <div class="col-8" t-esc="get_selection_value('crm.claim','priority',doc.priority)"/>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">Echéance</div>
+                                <div class="col-8" t-field="doc.date_deadline"/>    
+                            </div>
+                        </div>
+                        <br/>
+
+                        <h3>Rédacteur de la réclamation</h3>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-4">Partenaire</div>
+                                <div class="col-8" t-field="doc.partner_id.name"/>    
+                            </div>
+                            <div class="row">
+                                <div class="col-4">Téléphone</div>
+                                <div class="col-8" t-field="doc.partner_phone"/>    
+                            </div>
+                        </div>
+                        <br/>
+
+                        <h3>Résponsabilités</h3>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-4">Intervenant</div>
+                                <div class="col-8" t-field="doc.user_fault"/>    
+                            </div>
+                            <div class="row">
+                                <div class="col-4">Catégorie</div>
+                                <div class="col-8" t-field="doc.categ_id.name"/>    
+                            </div>
+                        </div>
+                        <br/>
+                        <!-- ref dont exist so i remove that :D -->
+                        
+                        <h3>Déscription de la réclamation</h3>
+                        <p><t t-esc="doc.description"/></p>
+                        <br/>
+
+                        <h3>Actions</h3>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-4">Date prochaine action</div>
+                                <div class="col-8" t-field="doc.date_action_next"/>    
+                            </div>
+                            <div class="row">
+                                <div class="col-4">Action suivante</div>
+                                <div class="col-8" t-field="doc.action_next"/>    
+                            </div>
+                        </div>
+                        <br/>
+
+                        <h3>Actions de résolution</h3>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-4">Type d'action</div>
+                                <div class="col-8" t-field="doc.resolution"/>    
+                            </div>
+                        </div>
+                        <br/>
+                        <br/>
+
+                        <table class="table table-bordered">
+                            <tr>
+                                <td>Intervenant</td>
+                                <td>Client</td>
+                            </tr>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>
