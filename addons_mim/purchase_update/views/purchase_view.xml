@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+    <record id="purchase_order_tree_color" model="ir.ui.view">
+            <field name="name">purchase.order.tree.inherit</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree" position="attributes">
+                  <attribute name="colors">
+                      red:state not in ('cancel','done') and date_planned &lt; current_date;
+                      grey:state in ('cancel','done');
+                      blue:state == 'to approve' and date_planned &gt;= current_date 
+                  </attribute>
+                </xpath>
+            </field>
+        </record>
+        <record id="view_purchase_order_filter_inherit" model="ir.ui.view">
+        <field name="name">purchase.order.list.select.inherit</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.view_purchase_order_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='activities_my']" position="before">
+                <filter 
+                    name="late" string="En retard" 
+                    domain="[('date_planned','&lt;', time.strftime('%%Y-%%m-%%d %%H:%%M:%%S')),('state','not in',('cancel','done'))]" 
+                    help="Bons de commande en retard"/>
+                <separator/>
+            </xpath>
+        </field>
+    </record>
+  </data>
+</odoo>
