@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_confirmed_approved_confirmed_approved,confirmed_approved.confirmed_approved,model_confirmed_approved_confirmed_approved,,1,0,0,0
