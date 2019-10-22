@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
+<odoo>
     <data>
         
-        <record id="base.group_confirmer_reclamation" model="res.groups">
+        <record id="group_confirmer_reclamation" model="res.groups">
             <field name="name">Groupe confirmer reclamation</field>
         </record>
         
-        <record id="base.group_mettre_reclamation" model="res.groups">
+        <record id="group_mettre_reclamation" model="res.groups">
             <field name="name">Groupe mettre en cours reclamation</field>
         </record>
         
-        <record id="base.group_resoudre_reclamation" model="res.groups">
+        <record id="group_resoudre_reclamation" model="res.groups">
             <field name="name">Groupe resoudre reclamation</field>
         </record>
         
@@ -20,23 +20,55 @@
             <field name="case_default" eval="True"/>
         </record>
         
-        <record id="crm_case_claims_form_view_inherit1" model="ir.ui.view">
+        <record id="crm_case_claims_form_view1_inherit1" model="ir.ui.view">
 			<field name="name">CRM - Claims Form inherit1</field>
 			<field name="model">crm.claim</field>
-			<field name="inherit_id" ref="crm_claim.crm_case_claims_form_view" />
+			<field name="inherit_id" ref="bi_crm_claim.crm_case_claims_form_view1" />
 			<field name="arch" type="xml">
 			    <data> 
+			         <!-- track_visibility bug :(  -->
 			        <xpath expr="/form/header/field[@name='stage_id']" position="before">
-					    <button name="action_confirm" string="Confirmer" class="oe_highlight" attrs="{'invisible':[('stage_id','not in',(1))]}" groups="base.group_confirmer_reclamation"/>
-					    <button name="action_open" string="Mettre en cours" class="oe_highlight" attrs="{'invisible':[('stage_id','not in',(%(crm_claim_inherit.stage_claim4)d))]}" groups="base.group_mettre_reclamation"/>
-					    <button name="action_done" string="Résoudre" class="oe_highlight" attrs="{'invisible':[('stage_id','not in',(2))]}" groups="base.group_resoudre_reclamation"/>
-					    <button name="action_cancel" string="Refuser" class="oe_highlight" attrs="{'invisible':[('stage_id','in',(1,4,3))]}"/>
-					     <button name="action_set_to_draft" string="Remettre à Nouveau" class="oe_highlight" attrs="{'invisible':[('stage_id','not in',(4))]}"/>
+					    <button 
+					    	name="action_confirm" 
+					    	string="Confirmer" 
+					    	class="oe_highlight"
+					    	type="object"
+					    	attrs="{'invisible':[('stage_id','not in',(1))]}"
+					    	/>
+					    <button 
+					    	name="action_open" 
+					    	string="Mettre en cours" 
+					    	class="oe_highlight"
+					    	type="object"
+					    	attrs="{'invisible':[('stage_id','not in',(%(crm_claim_inherit.stage_claim4)d))]}"
+					    	/>
+					    <button 
+					    	name="action_done" 
+					    	string="Résoudre" 
+					    	class="oe_highlight"
+					    	type="object" 
+							attrs="{'invisible':[('stage_id','not in',(2))]}"
+					    	/>
+					    <button 
+					    	name="action_cancel" 
+					    	string="Refuser" 
+					    	class="oe_highlight"
+					    	type="object"
+					    	attrs="{'invisible':[('stage_id','in',(1,4,3))]}"					
+					    	/>
+					     <button 
+					     	name="action_set_to_draft" 
+					     	string="Remettre à Nouveau" 
+					     	class="oe_highlight"
+					     	type="object" 
+							attrs="{'invisible':[('stage_id','not in',(4))]}"
+					     	 />
 					</xpath>   
+				    
 				    <xpath expr="/form/header/field[@name='stage_id']" position="replace">
 							  <field name="stage_id" widget="statusbar" readonly="True"/>
 					</xpath>
-					 
+					
 					
 					<xpath expr="/form/sheet/group/field[@name='name']" position="replace">
 							  <field name="name" attrs="{'readonly':[('stage_id','in',(3))]}"/>
@@ -53,8 +85,8 @@
 				  	<xpath expr="/form/sheet/group/field[@name='priority']" position="replace">
 							  <field name="priority" attrs="{'readonly':[('stage_id','in',(3))]}"/>
 				  	</xpath>
-				  	<xpath expr="/form/sheet/group/field[@name='section_id']" position="replace">
-							  <field name="section_id" attrs="{'readonly':[('stage_id','in',(3))]}"/>
+				  	<xpath expr="/form/sheet/group/field[@name='team_id']" position="replace">
+							  <field name="team_id" attrs="{'readonly':[('stage_id','in',(3))]}"/>
 				  	</xpath>
 				  	<xpath expr="/form/sheet/group/field[@name='date_deadline']" position="replace">
 							  <field name="date_deadline" attrs="{'readonly':[('stage_id','in',(3))]}"/>
@@ -63,54 +95,59 @@
 				  	<xpath expr="/form/sheet/group/field[@name='date_deadline']" position="replace">
 							  <field name="date_deadline" attrs="{'readonly':[('stage_id','in',(3))]}"/>
 				  	</xpath>
-				  	<xpath expr="/form/sheet/group/notebook/page[@string='Claim Description']/group/field[@name='partner_id']" position="replace">
+				  	<xpath expr="/form/sheet/group/notebook/page/group/field[@name='partner_id']" position="replace">
 							  <field name="partner_id" string="Partner" on_change="onchange_partner_id(partner_id)" attrs="{'readonly':[('stage_id','in',(3))]}"/>
 				  	</xpath>
-				  	<xpath expr="/form/sheet/group/notebook/page[@string='Claim Description']/group/field[@name='partner_phone']" position="replace">
+				  	<xpath expr="/form/sheet/group/notebook/page/group/field[@name='partner_phone']" position="replace">
 							  <field name="partner_phone" attrs="{'readonly':[('stage_id','in',(3))]}"/>
 				  	</xpath>
-				  	<xpath expr="/form/sheet/group/notebook/page[@string='Claim Description']/group/field[@name='email_from']" position="replace">
+				  	<xpath expr="/form/sheet/group/notebook/page/group/field[@name='email_from']" position="replace">
 							  <field name="email_from" widget="email" attrs="{'readonly':[('stage_id','in',(3))]}"/>
 				  	</xpath>
-				  	<xpath expr="/form/sheet/group/notebook/page[@string='Claim Description']/group/field[@name='user_fault']" position="replace">
+				  	<xpath expr="/form/sheet/group/notebook/page/group/field[@name='user_fault']" position="replace">
 							  <field name="user_fault" attrs="{'readonly':[('stage_id','in',(3))]}"/>
 				  	</xpath>
-				  	<xpath expr="/form/sheet/group/notebook/page[@string='Claim Description']/group/field[@name='categ_id']" position="replace">
-							  <field name="categ_id" widget="selection" domain="[('object_id.model', '=', 'crm.claim')]"  attrs="{'readonly':[('stage_id','in',(3))]}"/>
-				  	</xpath>
-				  	<xpath expr="/form/sheet/group/notebook/page[@string='Claim Description']/group/field[@name='ref']" position="replace">
-							  <field name="ref" attrs="{'readonly':[('stage_id','in',(3))]}"/>
-				  	</xpath>
-				  	<xpath expr="/form/sheet/group/notebook/page[@string='Claim Description']/field[@name='description']" position="replace">
-							  <field name="description" colspan="4" nolabel="1" attrs="{'readonly':[('stage_id','in',(3))]}"/>
-				  	</xpath>
-				  	<xpath expr="/form/sheet/group/notebook/page[@string='Follow Up']/group/field[@name='date_action_next']" position="replace">
-							  <field name="date_action_next" attrs="{'readonly':[('stage_id','in',(3))]}"/>
-				  	</xpath>
-				  	<xpath expr="/form/sheet/group/notebook/page[@string='Follow Up']/group/field[@name='action_next']" position="replace">
-							  <field name="action_next" attrs="{'readonly':[('stage_id','in',(3))]}"/>
-				  	</xpath>
-				  	<xpath expr="/form/sheet/group/notebook/page[@string='Follow Up']/group/field[@name='create_date']" position="replace">
-							  <field name="create_date" attrs="{'readonly':[('stage_id','in',(3))]}"/>
-				  	</xpath>
-				  	<xpath expr="/form/sheet/group/notebook/page[@string='Follow Up']/group/field[@name='date_closed']" position="replace">
-							  <field name="date_closed" attrs="{'readonly':[('stage_id','in',(3))]}"/>
-				  	</xpath>
-				  	<xpath expr="/form/sheet/group/notebook/page[@string='Follow Up']/group/field[@name='write_date']" position="replace">
-							  <field name="write_date" attrs="{'readonly':[('stage_id','in',(3))]}"/>
-				  	</xpath>
-				  	<xpath expr="/form/sheet/group/notebook/page[@string='Follow Up']/group/field[@name='cause']" position="replace">
-							  <field name="cause" colspan="2" nolabel="1" attrs="{'readonly':[('stage_id','in',(3))]}"/>
-				  	</xpath>
-				  	<xpath expr="/form/sheet/group/notebook/page[@string='Follow Up']/group/field[@name='type_action']" position="replace">
-							  <field name="type_action" attrs="{'readonly':[('stage_id','in',(3))]}"/>
-				  	</xpath>
-				  	<xpath expr="/form/sheet/group/notebook/page[@string='Follow Up']/group/field[@name='resolution']" position="replace">
-							  <field name="resolution" colspan="2" nolabel="1" attrs="{'readonly':[('stage_id','in',(3))]}"/>
+				  	<xpath expr="/form/sheet/group/notebook/page/group/field[@name='categ_id']" position="replace">
+							  <field name="categ_id" widget="selection" attrs="{'readonly':[('stage_id','in',(3))]}"/>
 				  	</xpath>
 				  	
+				  	<!-- Attribute 'ref' don't exist !! -->
+
+				  	<!-- <xpath expr="/form/sheet/group/notebook/page/group/field[@name='ref']" position="replace">
+							  <field name="ref" attrs="{'readonly':[('stage_id','in',(3))]}"/>
+				  	</xpath> 
+					-->
+
+				  	<xpath expr="/form/sheet/group/notebook/page/field[@name='description']" position="replace">
+							  <field name="description" colspan="4" nolabel="1" attrs="{'readonly':[('stage_id','in',(3))]}"/>
+				  	</xpath>
+				  	<xpath expr="/form/sheet/group/notebook/page/group/field[@name='date_action_next']" position="replace">
+							  <field name="date_action_next" attrs="{'readonly':[('stage_id','in',(3))]}"/>
+				  	</xpath>
+				  	<xpath expr="/form/sheet/group/notebook/page/group/field[@name='action_next']" position="replace">
+							  <field name="action_next" attrs="{'readonly':[('stage_id','in',(3))]}"/>
+				  	</xpath>
+				  	<xpath expr="/form/sheet/group/notebook/page/group/field[@name='create_date']" position="replace">
+							  <field name="create_date" attrs="{'readonly':[('stage_id','in',(3))]}"/>
+				  	</xpath>
+				  	<xpath expr="/form/sheet/group/notebook/page/group/field[@name='date_closed']" position="replace">
+							  <field name="date_closed" attrs="{'readonly':[('stage_id','in',(3))]}"/>
+				  	</xpath>
+				  	<xpath expr="/form/sheet/group/notebook/page/group/field[@name='write_date']" position="replace">
+							  <field name="write_date" attrs="{'readonly':[('stage_id','in',(3))]}"/>
+				  	</xpath>
+				  	<xpath expr="/form/sheet/group/notebook/page/group/field[@name='cause']" position="replace">
+							  <field name="cause" colspan="2" nolabel="1" attrs="{'readonly':[('stage_id','in',(3))]}"/>
+				  	</xpath>
+				  	<xpath expr="/form/sheet/group/notebook/page/group/field[@name='type_action']" position="replace">
+							  <field name="type_action" attrs="{'readonly':[('stage_id','in',(3))]}"/>
+				  	</xpath>
+				  	<xpath expr="/form/sheet/group/notebook/page/group/field[@name='resolution']" position="replace">
+							  <field name="resolution" colspan="2" nolabel="1" attrs="{'readonly':[('stage_id','in',(3))]}"/>
+				  	</xpath>
+				  	 
 				</data>
 			</field> 
 		</record>		
     </data>
-</openerp>
+</odoo>
