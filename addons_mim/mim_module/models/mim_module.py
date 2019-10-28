@@ -49,11 +49,11 @@ class mim_wizard(models.TransientModel):
 	 #,domain=[('categ_id','=','Types')]
 	
 	####les diffÃ©rent propriÃ©tÃ©s####
-	largeur = fields.Float('Largeur',default=1.0)
-	hauteur = fields.Float('Hauteur',default=1.0)
-	dimension = fields.Float('Dimension')
-	pu_ttc = fields.Float('PU TTC')
-	quantity = fields.Integer('Quantité',default=1)
+	largeur = fields.Float('Largeur',default = 1.0)
+	hauteur = fields.Float('Hauteur',default = 1.0)
+	dimension = fields.Float('Dimension',default= 0.0)
+	pu_ttc = fields.Float('PU TTC',default= 0.0)
+	quantity = fields.Integer('Quantité')
 	vitre = fields.Many2one('mim.article', string='Vitre', domain=[('category_ids', '=', 'Vitrage')])
 	type_vitre = fields.Selection([('simple','Simple'),('double','Double')], string="")
 	decoratif = fields.Many2one('mim.article', string='Décoratif', domain=[('category_ids', '=', 'Decoratif')])
@@ -74,7 +74,7 @@ class mim_wizard(models.TransientModel):
 	nb_division = fields.Integer('Nombre division',default=1)
 	laque = fields.Boolean('Laqué')
 	moustiquaire = fields.Boolean('Moustiquaire')
-	tms = fields.Float('TMS')
+	tms = fields.Float('TMS',default= 0.0)
 	type_moustiquaire = fields.Selection([('fixe','Fixe'),('coulissante','Coulissante')], string="Type de moustiquaire")
 	total = fields.Float('Total', readonly=True, digits= dp.get_precision('Account'))
 		####fin des diffÃ©rents propriÃ©tÃ©s####
@@ -84,6 +84,7 @@ class mim_wizard(models.TransientModel):
 	intermediaire = fields.Selection([('sans',u'Sans intermédiaire'),('avec',u'Avec intermédiaire')], string=u"Intermédiaire")
 	
 	
+
 	####cette fonction permet la crÃ©ation d'une ligne de commande grÃ¢ce Ã  sale_order_line_obj.create(cr, uid, {'name': name,'order_id':rec_ref, 'price_unit' : rec_total})####
 	@api.multi
 	def order_line_create(self):
@@ -342,26 +343,48 @@ class mim_wizard(models.TransientModel):
 		return True
 	
 	####cette fonction est appellÃ©e pour mettre Ã  jour le total sur le pop-up Ã  chaque modification d'un champ sans quiter la fenÃªtre####
-	'''@api.onchange('largeur', 'hauteur', 'dimension', 'pu_ttc', 'quantity', 'select_type', 'vitre',
-			'type_vitre','decoratif', 'poigne', 'serr', 'nb_poigne', 'nb_serr', 'oscillo_battant',
-			'va_et_vient', 'butoir', 'remplissage_vitre', 'cintre', 'triangle', 'division', 'nb_division', 'laque',
-			'moustiquaire', 'type_moustiquaire', 'tms')'''
-	def onchange_fields(self, largeur, hauteur, dimension, pu_ttc, quantity, select_type, vitre,
-			type_vitre,decoratif, poigne, serr,nb_poigne,nb_serr,oscillo_battant,
-			va_et_vient, butoir,remplissage_vitre, cintre, triangle,division,nb_division, laque,
-			moustiquaire, type_moustiquaire, tms):
+	@api.onchange('largeur', 'hauteur', 'dimension', 'pu_ttc', 'quantity', 'select_type', 'vitre',
+			'type_vitre','decoratif', 'poigne', 'serr','nb_poigne','nb_serr','oscillo_battant',
+			'va_et_vient', 'butoir','remplissage_vitre', 'cintre', 'triangle','division','nb_division', 'laque',
+			'moustiquaire', 'type_moustiquaire', 'tms')
+	def onchange_fields(self):
+		dict_total = self.calcul()
 		
-	#syntaxe doit etre comme return {'value':{'champ1':'valeur1','champ2':'valeur2'}}
-		return {'value': self.calcul(largeur, hauteur, dimension, pu_ttc, quantity, select_type, vitre,
-				type_vitre,decoratif, poigne, serr,nb_poigne,nb_serr,oscillo_battant,
-				va_et_vient, butoir,remplissage_vitre, cintre, triangle,division,nb_division, laque,
-				moustiquaire, type_moustiquaire, tms)}
+		#return {'total' : val_total* quantity ,'totalcacher' : val_total* quantity, 'cacher' : cacher, 'hidder_autre_option': hidder_autre_option}
+		print(dict_total)
+		self.total = dict_total['total']
+		self.totalcacher = dict_total['totalcacher']
+		self.cacher = dict_total['cacher']
+		self.hidder_autre_option = dict_total['hidder_autre_option']
 	####cette fonction permet de faire le calcul comme dans Excel, elle est appellÃ©e dÃ¨s qu'on veut faire un calcul####
-	def calcul(self, largeur, hauteur, dimension, pu_ttc, quantity, select_type, vitre,
-			type_vitre,decoratif, poigne, serr,nb_poigne,nb_serr,oscillo_battant,
-			va_et_vient, butoir,remplissage_vitre, cintre, triangle,division,nb_division, laque,
-			moustiquaire, type_moustiquaire, tms):
-		
+	def calcul(self):
+		######################
+		largeur = self.largeur
+		hauteur = self.hauteur
+		dimension = self.dimension
+		pu_ttc = self.pu_ttc
+		quantity = self.quantity
+		select_type = self.select_type
+		vitre = self.vitre
+		type_vitre = self.type_vitre
+		decoratif = self.decoratif
+		poigne = self.poigne
+		serr = self.serr
+		nb_poigne = self.nb_poigne
+		nb_serr = self.nb_serr
+		oscillo_battant = self.oscillo_battant
+		va_et_vient = self.va_et_vient
+		butoir = self.butoir
+		remplissage_vitre = self.remplissage_vitre
+		cintre = self.cintre
+		triangle = self.triangle
+		division = self.division
+		nb_division = self.nb_division
+		laque = self.laque
+		moustiquaire = self.moustiquaire
+		type_moustiquaire = self.type_moustiquaire
+		tms = self.tms
+		######################
 		val_total = 0.0
 		val_types = 0.0
 		val_vitre = 0.0
@@ -525,7 +548,9 @@ class mim_wizard(models.TransientModel):
 			if type_moustiquaire == 'coulissante':
 				val_total = ((((largeur/nb_division)*hauteur)/1000000*81000)*1.2*1.08)*nb_division
 
-		if types == 'Naco': 
+		if types == 'Naco':
+			
+			print("*************AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA*****************")
 			if moustiquaire:
 				val_moustiquaire = ((((largeur*hauteur)/1000000*13500)*1.2*1.08*1.4))
 			if division:

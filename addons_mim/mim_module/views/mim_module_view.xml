@@ -119,43 +119,15 @@
             
                         <group string="Désignation">
                 
-                <field name="select_type" on_change="onchange_fields(largeur, hauteur, dimension, pu_ttc, quantity, select_type, 
-                                        vitre, type_vitre,decoratif, poigne, serr,nb_poigne,
-                                        nb_serr,oscillo_battant, va_et_vient, butoir,
-                                        remplissage_vitre, cintre, triangle,division, nb_division, laque,
-                                        moustiquaire, type_moustiquaire, tms)" />
+                <field name="select_type"  />
                 <field name="type_fixe" attrs="{'invisible':[('select_type','!=','fixe')]}"/>
                 <field name="type_poteau" attrs="{'invisible':[('select_type','!=','poteau_rect_angle')]}"/>
-                <field name="largeur"  on_change="onchange_fields(largeur, hauteur, dimension, pu_ttc, quantity, select_type, 
-                                        vitre, type_vitre,decoratif, poigne, serr,nb_poigne,
-                                        nb_serr,oscillo_battant, va_et_vient, butoir,
-                                        remplissage_vitre, cintre, triangle,division, nb_division, laque,
-                                        moustiquaire, type_moustiquaire, tms)" attrs="{'invisible':[('select_type','=','poteau_rect_angle')]}"/>
-                <field name="dimension" on_change="onchange_fields(largeur, hauteur, dimension, pu_ttc, quantity, select_type, 
-                                        vitre, type_vitre,decoratif, poigne, serr,nb_poigne,
-                                        nb_serr,oscillo_battant, va_et_vient, butoir,
-                                        remplissage_vitre, cintre, triangle,division, nb_division, laque,
-                                        moustiquaire, type_moustiquaire, tms)" attrs="{'invisible':[('select_type','!=','poteau_rect_angle')]}"/>
-                <field name="pu_ttc" on_change="onchange_fields(largeur, hauteur, dimension, pu_ttc, quantity, select_type, 
-                                        vitre, type_vitre,decoratif, poigne, serr,nb_poigne,
-                                        nb_serr,oscillo_battant, va_et_vient, butoir,
-                                        remplissage_vitre, cintre, triangle,division, nb_division, laque,
-                                        moustiquaire, type_moustiquaire, tms)" attrs="{'invisible':[('select_type','!=','poteau_rect_angle')]}"/>
-                            <field name="hauteur" on_change="onchange_fields(largeur, hauteur, dimension, pu_ttc, quantity, select_type, 
-                                        vitre, type_vitre,decoratif, poigne, serr,nb_poigne,
-                                        nb_serr,oscillo_battant, va_et_vient, butoir,
-                                        remplissage_vitre, cintre, triangle,division, nb_division, laque,
-                                        moustiquaire, type_moustiquaire, tms)" attrs="{'invisible':[('select_type','=','poteau_rect_angle')]}"/>
-              <field name="type_moustiquaire" on_change="onchange_fields(largeur, hauteur, dimension, pu_ttc, quantity, select_type, 
-                                        vitre, type_vitre,decoratif, poigne, serr,nb_poigne,
-                                        nb_serr,oscillo_battant, va_et_vient, butoir,
-                                        remplissage_vitre, cintre, triangle,division, nb_division, laque,
-                                        moustiquaire, type_moustiquaire, tms)" attrs="{'invisible':[('select_type','!=','moustiquaire_independant')]}" />
-                    <field name="quantity" on_change="onchange_fields(largeur, hauteur, dimension, pu_ttc, quantity, select_type, 
-                                        vitre, type_vitre,decoratif, poigne, serr,nb_poigne,
-                                        nb_serr,oscillo_battant, va_et_vient, butoir,
-                                        remplissage_vitre, cintre, triangle,division, nb_division, laque,
-                                        moustiquaire, type_moustiquaire, tms)" />
+                <field name="largeur"   attrs="{'invisible':[('select_type','=','poteau_rect_angle')]}"/>
+                <field name="dimension"  attrs="{'invisible':[('select_type','!=','poteau_rect_angle')]}"/>
+                <field name="pu_ttc"  attrs="{'invisible':[('select_type','!=','poteau_rect_angle')]}"/>
+                            <field name="hauteur"  attrs="{'invisible':[('select_type','=','poteau_rect_angle')]}"/>
+              <field name="type_moustiquaire"  attrs="{'invisible':[('select_type','!=','moustiquaire_independant')]}" />
+                    <field name="quantity"  />
 
                         </group>
             <group class="oe_right" string="Total en Ariary">
@@ -163,110 +135,38 @@
                
                         </group>
                         <group string ="Vitrage" attrs="{'invisible':[('cacher','=',True)]}">
-                            <field name="vitre" on_change="onchange_fields(largeur, hauteur, dimension, pu_ttc, quantity, select_type, 
-                                        vitre, type_vitre,decoratif, poigne, serr,nb_poigne,
-                                        nb_serr,oscillo_battant, va_et_vient, butoir,
-                                        remplissage_vitre, cintre, triangle,division, nb_division, laque,
-                                        moustiquaire, type_moustiquaire, tms)"  />
-                <field name="type_vitre" string="Simple/Double" on_change="onchange_fields(largeur, hauteur, dimension, pu_ttc, quantity, select_type, 
-                                        vitre, type_vitre,decoratif, poigne, serr,nb_poigne,
-                                        nb_serr,oscillo_battant, va_et_vient, butoir,
-                                        remplissage_vitre, cintre, triangle,division, nb_division, laque,
-                                        moustiquaire, type_moustiquaire, tms)"/>
-                <field name="decoratif" on_change="onchange_fields(largeur, hauteur, dimension, pu_ttc, quantity, select_type, 
-                                        vitre, type_vitre,decoratif, poigne, serr,nb_poigne,
-                                        nb_serr,oscillo_battant, va_et_vient, butoir,
-                                        remplissage_vitre, cintre, triangle,division, nb_division, laque,
-                                        moustiquaire, type_moustiquaire, tms)"/>
+                            <field name="vitre"   />
+                <field name="type_vitre" string="Simple/Double" />
+                <field name="decoratif" />
                         </group>
             <group string ="Accessoires" attrs="{'invisible':[('cacher','=',True)]}">
                 <group>
-                <field name="poigne" on_change="onchange_fields(largeur, hauteur, dimension, pu_ttc, quantity, select_type, 
-                                        vitre, type_vitre,decoratif, poigne, serr,nb_poigne,
-                                        nb_serr,oscillo_battant, va_et_vient, butoir,
-                                        remplissage_vitre, cintre, triangle,division, nb_division, laque,
-                                        moustiquaire, type_moustiquaire, tms)"/>
-                <field name="nb_poigne" on_change="onchange_fields(largeur, hauteur, dimension, pu_ttc, quantity, select_type, 
-                                        vitre, type_vitre,decoratif, poigne, serr,nb_poigne,
-                                        nb_serr,oscillo_battant, va_et_vient, butoir,
-                                        remplissage_vitre, cintre, triangle,division, nb_division, laque,
-                                        moustiquaire, type_moustiquaire, tms)" attrs="{'invisible':[('poigne','=',False)]}"/>
+                <field name="poigne" />
+                <field name="nb_poigne"  attrs="{'invisible':[('poigne','=',False)]}"/>
                 </group>
                 
                 <group>
-                <field name="serr" on_change="onchange_fields(largeur, hauteur, dimension, pu_ttc, quantity, select_type, 
-                                        vitre, type_vitre,decoratif, poigne, serr,nb_poigne,
-                                        nb_serr,oscillo_battant, va_et_vient, butoir,
-                                        remplissage_vitre, cintre, triangle,division, nb_division, laque,
-                                        moustiquaire, type_moustiquaire, tms)" />
-                <field name="nb_serr" on_change="onchange_fields(largeur, hauteur, dimension, pu_ttc, quantity, select_type, 
-                                        vitre, type_vitre,decoratif, poigne, serr,nb_poigne,
-                                        nb_serr,oscillo_battant, va_et_vient, butoir,
-                                        remplissage_vitre, cintre, triangle,division, nb_division, laque,
-                                        moustiquaire, type_moustiquaire, tms)" attrs="{'invisible':[('serr','=',False)]}" />
+                <field name="serr"  />
+                <field name="nb_serr"  attrs="{'invisible':[('serr','=',False)]}" />
                 </group>
                 <group>
-                <field name="oscillo_battant" on_change="onchange_fields(largeur, hauteur, dimension, pu_ttc, quantity, select_type, 
-                                        vitre, type_vitre,decoratif, poigne, serr,nb_poigne,
-                                        nb_serr,oscillo_battant, va_et_vient, butoir,
-                                        remplissage_vitre, cintre, triangle,division, nb_division, laque,
-                                        moustiquaire, type_moustiquaire, tms)"/>
-                <field name="va_et_vient" on_change="onchange_fields(largeur, hauteur, dimension, pu_ttc, quantity, select_type, 
-                                        vitre, type_vitre,decoratif, poigne, serr,nb_poigne,
-                                        nb_serr,oscillo_battant, va_et_vient, butoir,
-                                        remplissage_vitre, cintre, triangle,division, nb_division, laque,
-                                        moustiquaire, type_moustiquaire, tms)"/>
-                <field name="butoir" on_change="onchange_fields(largeur, hauteur, dimension, pu_ttc, quantity, select_type, 
-                                        vitre, type_vitre,decoratif, poigne, serr,nb_poigne,
-                                        nb_serr,oscillo_battant, va_et_vient, butoir,
-                                        remplissage_vitre, cintre, triangle,division, nb_division, laque,
-                                        moustiquaire, type_moustiquaire, tms)"/>
+                <field name="oscillo_battant" />
+                <field name="va_et_vient" />
+                <field name="butoir" />
                 </group>
                         </group>
             <group string ="Autres options" attrs="{'invisible':[('hidder_autre_option','=',True)]}">
-                            <field name ="remplissage_vitre" on_change="onchange_fields(largeur, hauteur, dimension, pu_ttc, quantity, select_type, 
-                                        vitre, type_vitre,decoratif, poigne, serr,nb_poigne,
-                                        nb_serr,oscillo_battant, va_et_vient, butoir,
-                                        remplissage_vitre, cintre, triangle,division, nb_division, laque,
-                                        moustiquaire, type_moustiquaire, tms)" attrs="{'invisible':[('cacher','=',True)]}"/>
+                            <field name ="remplissage_vitre"  attrs="{'invisible':[('cacher','=',True)]}"/>
                 <field name="intermediaire" attrs="{'invisible':[('remplissage_vitre','=',None)]}"/>
                 <field name="type_fixe"/>
                 <field name="inegalite"/>
-                <field name="cintre" on_change="onchange_fields(largeur, hauteur, dimension, pu_ttc, quantity, select_type, 
-                                        vitre, type_vitre,decoratif, poigne, serr,nb_poigne,
-                                        nb_serr,oscillo_battant, va_et_vient, butoir,
-                                        remplissage_vitre, cintre, triangle,division, nb_division, laque,
-                                        moustiquaire, type_moustiquaire, tms)" attrs="{'invisible':[('cacher','=',True)]}"/>
-                <field name="triangle" on_change="onchange_fields(largeur, hauteur, dimension, pu_ttc, quantity, select_type, 
-                                        vitre, type_vitre,decoratif, poigne, serr,nb_poigne,
-                                        nb_serr,oscillo_battant, va_et_vient, butoir,
-                                        remplissage_vitre, cintre, triangle,division, nb_division, laque,
-                                        moustiquaire, type_moustiquaire, tms)" attrs="{'invisible':[('cacher','=',True)]}"/>
-                <field name="division" on_change="onchange_fields(largeur, hauteur, dimension, pu_ttc, quantity, select_type, 
-                                        vitre, type_vitre,decoratif, poigne, serr,nb_poigne,
-                                        nb_serr,oscillo_battant, va_et_vient, butoir,
-                                        remplissage_vitre, cintre, triangle,division, nb_division, laque,
-                                        moustiquaire, type_moustiquaire, tms)"/>
-                <field name="nb_division" on_change="onchange_fields(largeur, hauteur, dimension, pu_ttc, quantity, select_type, 
-                                        vitre, type_vitre,decoratif, poigne, serr,nb_poigne,
-                                        nb_serr,oscillo_battant, va_et_vient, butoir,
-                                        remplissage_vitre, cintre, triangle,division, nb_division, laque,
-                                        moustiquaire, type_moustiquaire, tms)" attrs="{'invisible':[('division','=',False)]}"/>
-                <field name="laque" on_change="onchange_fields(largeur, hauteur, dimension, pu_ttc, quantity, select_type, 
-                                        vitre, type_vitre,decoratif, poigne, serr,nb_poigne,
-                                        nb_serr,oscillo_battant, va_et_vient, butoir,
-                                        remplissage_vitre, cintre, triangle,division, nb_division, laque,
-                                        moustiquaire, type_moustiquaire, tms)" attrs="{'invisible':[('select_type','=','moustiquaire_independant')]}"/>
-                <field name="moustiquaire" on_change="onchange_fields(largeur, hauteur, dimension, pu_ttc, quantity, select_type, 
-                                        vitre, type_vitre,decoratif, poigne, serr,nb_poigne,
-                                        nb_serr,oscillo_battant, va_et_vient, butoir,
-                                        remplissage_vitre, cintre, triangle,division, nb_division, laque,
-                                        moustiquaire, type_moustiquaire, tms)" attrs="{'invisible':[('cacher','=',True)]}"/>
-                <field name="tms" on_change="onchange_fields(largeur, hauteur, dimension, pu_ttc, quantity, select_type, 
-                                        vitre, type_vitre,decoratif, poigne, serr,nb_poigne,
-                                        nb_serr,oscillo_battant, va_et_vient, butoir,
-                                        remplissage_vitre, cintre, triangle,division, nb_division, laque,
-                                        moustiquaire, type_moustiquaire, tms)" attrs="{'invisible':[('cacher','=',True)]}" />
+                <field name="cintre"  attrs="{'invisible':[('cacher','=',True)]}"/>
+                <field name="triangle"  attrs="{'invisible':[('cacher','=',True)]}"/>
+                <field name="division" />
+                <field name="nb_division"  attrs="{'invisible':[('division','=',False)]}"/>
+                <field name="laque"  attrs="{'invisible':[('select_type','=','moustiquaire_independant')]}"/>
+                <field name="moustiquaire"  attrs="{'invisible':[('cacher','=',True)]}"/>
+                <field name="tms"  attrs="{'invisible':[('cacher','=',True)]}" />
                
                         </group>
                     </group>
