@@ -12,10 +12,10 @@
     """,
 
     'author': "INGENOSYA",
-    'website': "http://mim-madagascar.com",
+    'website': "http://www.ingenosya.com",
 
     'category': 'Uncategorized',
-    'version': '0.1',
+    'version': '2.0',
 
     'depends': ['sale'],
 
