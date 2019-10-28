@@ -121,10 +121,7 @@ class mim_wizard(models.TransientModel):
 		rec_ref = self.order_ref
 		rec_qty = self.quantity
 		#rec_total = self.browse()[0].totalcacher
-		total = self.calcul( rec_largeur, rec_hauteur,rec_dimension, rec_pu_ttc, rec_qty, select_type.id , vitrage.id,
-				type_vitre, decoratif.id,  poigne.id, serr.id,nb_poigne,nb_serr,oscillo_battant,
-				va_et_vient, butoir,remplissage_vitre, cintre, triangle,division,nb_division, laque,
-				moustiquaire, type_moustiquaire, tms)
+		total = self.calcul()
 		#### dÃ©but de formatisation de champ select_type pour evitÃ© d'afficher par ex coullissante2vtx ####
 		types = select_type.name
 		vitre = ''
@@ -364,12 +361,12 @@ class mim_wizard(models.TransientModel):
 		dimension = self.dimension
 		pu_ttc = self.pu_ttc
 		quantity = self.quantity
-		select_type = self.select_type
-		vitre = self.vitre
+		select_type = self.select_type.id
+		vitre = self.vitre.id
 		type_vitre = self.type_vitre
-		decoratif = self.decoratif
-		poigne = self.poigne
-		serr = self.serr
+		decoratif = self.decoratif.id
+		poigne = self.poigne.id
+		serr = self.serr.id
 		nb_poigne = self.nb_poigne
 		nb_serr = self.nb_serr
 		oscillo_battant = self.oscillo_battant
@@ -549,8 +546,6 @@ class mim_wizard(models.TransientModel):
 				val_total = ((((largeur/nb_division)*hauteur)/1000000*81000)*1.2*1.08)*nb_division
 
 		if types == 'Naco':
-			
-			print("*************AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA*****************")
 			if moustiquaire:
 				val_moustiquaire = ((((largeur*hauteur)/1000000*13500)*1.2*1.08*1.4))
 			if division:
