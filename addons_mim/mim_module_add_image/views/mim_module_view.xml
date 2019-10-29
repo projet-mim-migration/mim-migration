@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+		<record model="ir.ui.view" id="view_mim_wizard_inherit">
+			<field name="name">mim.wizard.inherit</field>
+			<field name="model">mim.wizard</field>
+			<field name="inherit_id" ref="mim_module.view_mim_wizard" />
+			<field name="arch" type="xml">
+				<xpath expr="/form/group/group/field[@name='select_type']" position="before">
+						<field name="image" widget="image" class="style_image"/>
+				</xpath>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_sale_order_inherit">
+			<field name="name">sale.order.inherit</field>
+			<field name="model">sale.order</field>
+			<field name="inherit_id" ref="sale.view_order_form" />
+			<field name="arch" type="xml">
+				<xpath expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='product_id']" position="before">
+						<field name="image" widget="image" class="oe_avatar oe_left" />
+				</xpath>
+			</field>
+		</record>
+		
+		<record model="ir.ui.view" id="view_mim_wizard_inherit1">
+			<field name="name">mim.wizard.inherit1</field>
+			<field name="model">mim.wizard</field>
+			<field name="inherit_id" ref="mim_module.view_mim_wizard" />
+			<field name="arch" type="xml">
+				<xpath expr="/form/group/group/field[@name='largeur']" position="replace">
+						<field name="largeur"   attrs="{'invisible':[('select_type','=','poteau_rect_angle')]}"/>
+				</xpath>
+				<xpath expr="/form/group/group/field[@name='dimension']" position="replace">
+				<field name="dimension"  attrs="{'invisible':[('select_type','!=','poteau_rect_angle')]}"/>
+				</xpath>
+				<xpath expr="/form/group/group/field[@name='pu_ttc']" position="replace">
+			    <field name="pu_ttc"  attrs="{'invisible':[('select_type','!=','poteau_rect_angle')]}"/>
+			    </xpath>
+			    <xpath expr="/form/group/group/field[@name='hauteur']" position="replace">
+                            <field name="hauteur"  attrs="{'invisible':[('select_type','=','poteau_rect_angle')]}"/>
+                </xpath>
+              <xpath expr="/form/group/group/field[@name='type_moustiquaire']" position="replace">
+			  <field name="type_moustiquaire"  attrs="{'invisible':[('select_type','!=','moustiquaire_independant')]}" />
+			  </xpath>
+			  <xpath expr="/form/group/group/field[@name='quantity']" position="replace">
+      			    <field name="quantity"  />
+	    	  </xpath>
+      			    
+			  
+			  
+			  <xpath expr="/form/group/group/field[@name='vitre']" position="replace">
+			      <field name="vitre"   />
+			      </xpath>
+			      <xpath expr="/form/group/group/field[@name='type_vitre']" position="replace">
+		    			<field name="type_vitre" string="Simple/Double" />
+			    </xpath>
+			    <xpath expr="/form/group/group/field[@name='decoratif']" position="replace">
+			    <field name="decoratif" />
+                  </xpath>
+			
+			
+			
+			
+			
+			
+			<xpath expr="/form/group/group/group/field[@name='poigne']" position="replace">
+				<field name="poigne" />
+				</xpath>
+				<xpath expr="/form/group/group/group/field[@name='nb_poigne']" position="replace">
+				<field name="nb_poigne"  attrs="{'invisible':[('poigne','=',False)]}"/>
+				</xpath>
+			      
+				
+				
+				
+				<xpath expr="/form/group/group/group/field[@name='serr']" position="replace">
+				<field name="serr"  />
+				</xpath>
+				<xpath expr="/form/group/group/group/field[@name='nb_serr']" position="replace">
+				<field name="nb_serr"  attrs="{'invisible':[('serr','=',False)]}" />
+				</xpath>
+				
+				
+				<xpath expr="/form/group/group/group/field[@name='oscillo_battant']" position="replace">
+				<field name="oscillo_battant" />
+				</xpath>
+				
+				<xpath expr="/form/group/group/group/field[@name='va_et_vient']" position="replace">
+				<field name="va_et_vient" />
+				</xpath>
+				
+				<xpath expr="/form/group/group/group/field[@name='butoir']" position="replace">
+				<field name="butoir" />
+				</xpath>
+				
+				
+				
+				<xpath expr="/form/group/group/field[@name='remplissage_vitre']" position="replace">
+				<field name ="remplissage_vitre"  attrs="{'invisible':[('cacher','=',True)]}"/>
+				</xpath>
+				<xpath expr="/form/group/group/field[@name='intermediaire']" position="replace">
+				<field name ="intermediaire"  attrs="{'invisible':[('remplissage_vitre','=',None)]}"/>
+				</xpath>
+			    
+			    <xpath expr="/form/group/group/field[@name='cintre']" position="replace">
+			    <field name="cintre"  attrs="{'invisible':[('cacher','=',True)]}"/>
+			    </xpath>
+			    <xpath expr="/form/group/group/field[@name='triangle']" position="replace">
+			    <field name="triangle"  attrs="{'invisible':[('cacher','=',True)]}"/>
+			    </xpath>
+			    <xpath expr="/form/group/group/field[@name='division']" position="replace">
+			    <field name="division" />
+			    </xpath>
+			    <xpath expr="/form/group/group/field[@name='nb_division']" position="replace">
+			    <field name="nb_division"  attrs="{'invisible':[('division','=',False)]}"/>
+			    </xpath>
+			    <xpath expr="/form/group/group/field[@name='laque']" position="replace">
+			    <field name="laque"  attrs="{'invisible':[('select_type','=','moustiquaire_independant')]}"/>
+			    </xpath>
+			    <xpath expr="/form/group/group/field[@name='moustiquaire']" position="replace">
+			    <field name="moustiquaire"  attrs="{'invisible':[('cacher','=',True)]}"/>
+			    </xpath>
+			    <xpath expr="/form/group/group/field[@name='tms']" position="replace">
+			    <field name="tms"  attrs="{'invisible':[('cacher','=',True)]}" />
+			    </xpath>
+			</field>
+		</record>
+		
+	</data>
+</odoo>

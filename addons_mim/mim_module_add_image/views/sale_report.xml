@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<openerp>
+<odoo>
     <data>
         <report auto="False" id="report_sale_order3" model="sale.order" name="sale.order.line"
                 rml="mim_module_add_image/report/sale_order.rml" string="Devis / Commande avancé" />
     </data>
-</openerp>
+</odoo>
