@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_mim_module_correction_id_contremesure,mim_module_correction_id.mim_module_contremesure,model_contremesure,,1,1,1,1

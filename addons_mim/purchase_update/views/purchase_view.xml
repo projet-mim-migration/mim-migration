@@ -7,10 +7,10 @@
             <field name="inherit_id" ref="purchase.purchase_order_tree"/>
             <field name="arch" type="xml">
                 <xpath expr="//tree" position="attributes">
-                  <attribute name="colors">
+                  <attribute name="colors">"
                       red:state not in ('cancel','done') and date_planned &lt; current_date;
                       grey:state in ('cancel','done');
-                      blue:state == 'to approve' and date_planned &gt;= current_date 
+                      blue:state == 'to approve' and date_planned &gt;= current_date"
                   </attribute>
                 </xpath>
             </field>

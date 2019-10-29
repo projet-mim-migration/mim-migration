@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_mim_module_add_image_mim_module_add_image,mim_module_add_image.mim_module_add_image,model_mim_module_add_image_mim_module_add_image,,1,0,0,0

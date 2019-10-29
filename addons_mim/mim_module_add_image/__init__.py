@@ -1,3 +1,5 @@
-import mim_module
-import report
-#import res_currency
+# -*- coding: utf-8 -*-
+
+from . import controllers
+from . import models
+#from . import report

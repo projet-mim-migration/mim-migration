@@ -1,0 +1,60 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+    <!--
+    <record model="ir.ui.view" id="mim_module_update_total.list">
+      <field name="name">mim_module_update_total list</field>
+      <field name="model">mim_module_update_total.mim_module_update_total</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="value"/>
+          <field name="value2"/>
+        </tree>
+      </field>
+    </record>
+    -->
+
+    <!-- actions opening views on models -->
+    <!--
+    <record model="ir.actions.act_window" id="mim_module_update_total.action_window">
+      <field name="name">mim_module_update_total window</field>
+      <field name="res_model">mim_module_update_total.mim_module_update_total</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    -->
+
+    <!-- server action to the one above -->
+    <!--
+    <record model="ir.actions.server" id="mim_module_update_total.action_server">
+      <field name="name">mim_module_update_total server</field>
+      <field name="model_id" ref="model_mim_module_update_total_mim_module_update_total"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": self._name,
+        }
+      </field>
+    </record>
+    -->
+
+    <!-- Top menu item -->
+    <!--
+    <menuitem name="mim_module_update_total" id="mim_module_update_total.menu_root"/>
+    -->
+    <!-- menu categories -->
+    <!--
+    <menuitem name="Menu 1" id="mim_module_update_total.menu_1" parent="mim_module_update_total.menu_root"/>
+    <menuitem name="Menu 2" id="mim_module_update_total.menu_2" parent="mim_module_update_total.menu_root"/>
+    -->
+    <!-- actions -->
+    <!--
+    <menuitem name="List" id="mim_module_update_total.menu_1_list" parent="mim_module_update_total.menu_1"
+              action="mim_module_update_total.action_window"/>
+    <menuitem name="Server to list" id="mim_module_update_total" parent="mim_module_update_total.menu_2"
+              action="mim_module_update_total.action_server"/>
+    -->
+  </data>
+</odoo>
