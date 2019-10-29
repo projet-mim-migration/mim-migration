@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+	<data>
+	    <record id="etat_salaire2_tree_filter" model="ir.ui.view">
+            <field name="name">etat_salaire2.tree.filter</field>
+            <field name="model">etat.salaire2</field>
+            <field name="arch" type="xml">	
+				<search string="Recherche">
+					<field name="num_emp" string="Matricule"/>
+					<field name="num_cin" string="CIN"/>
+					<group expand="0" string="Group By...">
+                        <filter string="Début période" icon="terp-personal+" domain="[]" context="{'group_by':'date_from'}"/>
+                    </group>
+				</search>
+            </field>
+        </record>
+		<record id="etat_salaire2_tree" model="ir.ui.view">
+            <field name="name">etat_salaire2.tree</field>
+            <field name="model">etat.salaire2</field>
+            <field name="arch" type="xml">
+			    <tree string="Etat global des salaires">
+                    <field name="num_emp"/>
+					<field name="name_related"/>
+					<field name="num_cin"/>
+					<field name="basic"/>
+					<field name="brut"/>
+					<field name="cnaps"/>
+					<field name="cnapsemp"/>
+					<field name="omsi"/>
+					<field name="omsiemp"/>
+					<field name="irsa"/>
+					<field name="net"/>
+					<field name="date_from"/>
+					<field name="date_to"/>
+					<!--  <button name="refresh" string="Actualiser" type="object" icon="gtk-ok" />-->
+                </tree>
+            </field>
+        </record>		
+		<record id="action_etat_salaire2" model="ir.actions.act_window">
+            <field name="name">Etat global du salaire</field>
+            <field name="res_model">etat.salaire2</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="etat_salaire2_tree"/>
+        </record>
+		
+        <menuitem id="menu_etat_salaire"
+            action="action_etat_salaire2"
+            parent="hr_payroll.menu_hr_root_payroll"
+            sequence="18"/>
+	</data>
+</odoo>

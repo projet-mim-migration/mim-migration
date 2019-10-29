@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+    <data>
+        <record id="paperformat_report_landscape" model="report.paperformat">
+            <field name="name">European A4 low margin</field>
+            <field name="default" eval="True" />
+            <field name="format">A4</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">8</field>
+            <field name="margin_bottom">8</field>
+            <field name="margin_left">8</field>
+            <field name="margin_right">8</field>
+            <field name="header_line" eval="False" />
+            <field name="header_spacing">0</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <report 
+            id="report_ostie"
+            model="ostie"
+            string="OSTIE"
+            name="gestion_de_paie_etat_salaire.report_ostie_view"
+            file="gestion_de_paie_etat_salaire.report_ostie"
+            report_type="qweb-pdf"
+            paperformat="paperformat_report_landscape"
+        />
+        <report 
+            id="report_irsa2"
+            model="irsa2"
+            string="IRSA"
+            name="gestion_de_paie_etat_salaire.report_irsa2_view"
+            file="gestion_de_paie_etat_salaire.report_irsa2"
+            report_type="qweb-pdf"
+            paperformat="paperformat_report_landscape"
+        />
+        <report 
+            id="report_cnaps3"
+            model="cnaps2"
+            string="CNAPS"
+            name="gestion_de_paie_etat_salaire.report_cnaps3_view"
+            file="gestion_de_paie_etat_salaire.report_cnaps3"
+            report_type="qweb-pdf"
+            paperformat="paperformat_report_landscape"
+        />
+    </data>
+</odoo>

@@ -1,3 +1,1 @@
-import ostie
-import irsa
-import cnaps
+from . import cnaps

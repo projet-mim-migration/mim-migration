@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "Gestion d'affichage des boutons Créer et Modifier",
+    'name': "Vente modification",
 
     'summary': """
     """,
@@ -11,18 +11,19 @@
     'sequence':1,
 
     'author': "INGENOSYA",
-    'website': "http://www.ingenosya.com",
+    'website': "http://mim-madagascar.com",
 
     'category': 'Uncategorized',
-    'version': '2.0',
+    'version': '0.1',
 
-    'depends': ['stock','purchase','mrp'],
+    'depends': ['sale'],
 
-    
+    # always loaded
     'data': [
-        'views/all_view.xml',
+        
+        'views/sale_view.xml',
     ],
-    
+
     'installable':True,
     'application':True,
 }

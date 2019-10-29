@@ -1,2 +1,3 @@
 # -*- coding: utf-8 -*-
-import hr_holidays
+
+from . import models

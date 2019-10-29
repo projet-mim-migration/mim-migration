@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "Gestion d'affichage des boutons Créer et Modifier",
+    'name': "Validation des congés par hierarchie",
 
     'summary': """
     """,
@@ -8,21 +8,18 @@
     'description': """
     """,
 
-    'sequence':1,
-
     'author': "INGENOSYA",
     'website': "http://www.ingenosya.com",
 
     'category': 'Uncategorized',
-    'version': '2.0',
+    'version': '0.1',
 
-    'depends': ['stock','purchase','mrp'],
+    'depends': ['hr_holidays'],
 
-    
     'data': [
-        'views/all_view.xml',
+        'views/hr_holidays_view.xml',
     ],
-    
+
     'installable':True,
     'application':True,
 }

@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "Gestion d'affichage des boutons Créer et Modifier",
+    'name': "Modification Comptabilite/Paiements client /ajout mise a jour",
 
     'summary': """
     """,
 
     'description': """
+        A installer après l'installation du module account_voucher_inherit
     """,
 
     'sequence':1,
@@ -16,11 +17,10 @@
     'category': 'Uncategorized',
     'version': '2.0',
 
-    'depends': ['stock','purchase','mrp'],
+    'depends': ['sale','sale_crm'],
 
-    
     'data': [
-        'views/all_view.xml',
+        'views/view_sale_advance_payment_inv.xml',
     ],
     
     'installable':True,

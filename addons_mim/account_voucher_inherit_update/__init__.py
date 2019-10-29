@@ -1,1 +1,3 @@
-import sale_make_invoice_advance
+# -*- coding: utf-8 -*-
+
+from . import models
