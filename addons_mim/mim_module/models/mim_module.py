@@ -348,7 +348,7 @@ class mim_wizard(models.TransientModel):
 		dict_total = self.calcul()
 		
 		#return {'total' : val_total* quantity ,'totalcacher' : val_total* quantity, 'cacher' : cacher, 'hidder_autre_option': hidder_autre_option}
-		print(dict_total)
+		
 		self.total = dict_total['total']
 		self.totalcacher = dict_total['totalcacher']
 		self.cacher = dict_total['cacher']

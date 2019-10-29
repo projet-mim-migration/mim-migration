@@ -10,9 +10,9 @@
                     <button name="flow_sheet" states="draft,confirmed,flowsheeting,assigned,done" string="Fiche Débit" class="oe_highlight"/>
                     <button name="flow_sheet_cancel" states="draft,confirmed,flowsheeting,assigned,done" string="Annuler Fiche Débit"/>
                 </xpath>
-                <field name="state" position="replace">
+                <xpath expr="//form/header/field[@name='state']" position="replace">
                     <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,flowsheeting,assigned,done" statusbar_colors='{"waiting":"blue","confirmed":"blue"}'/>
-                </field>
+                </xpath>
             </field>
         </record>
     </data>

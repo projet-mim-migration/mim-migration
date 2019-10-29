@@ -10,7 +10,7 @@
 			<field name="inherit_id" ref="purchase.purchase_order_form" />
 			<field name="arch" type="xml">
 				<xpath expr="/form/header/button[@name='button_approve' and @states='to approve']" position="replace">
-					<button name="button_approve" states="to approve" string="Approve Order" class="oe_highlight" groups="base.group_approbation" type="object"/>
+					<button name="button_approve" type="object" states="to approve" string="Approve Order" class="oe_highlight" groups="base.group_approbation"/>
 				</xpath>
 			</field>
 		</record>

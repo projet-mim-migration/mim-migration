@@ -28,11 +28,35 @@ class mim_wizard(models.TransientModel):
    
 	_inherit = 'mim.wizard'
 	
-	def calcul(self,largeur, hauteur, dimension, pu_ttc, quantity, select_type, vitre,
-			type_vitre,decoratif, poigne, serr,nb_poigne,nb_serr,oscillo_battant,
-			va_et_vient, butoir,remplissage_vitre, cintre, triangle,division,nb_division, laque,
-			moustiquaire, type_moustiquaire, tms, intermediaire):
-			 
+	def calcul(self):
+		######################
+		largeur = self.largeur
+		hauteur = self.hauteur
+		dimension = self.dimension
+		pu_ttc = self.pu_ttc
+		quantity = self.quantity
+		select_type = self.select_type.id
+		vitre = self.vitre.id
+		type_vitre = self.type_vitre
+		decoratif = self.decoratif.id
+		poigne = self.poigne.id
+		serr = self.serr.id
+		nb_poigne = self.nb_poigne
+		nb_serr = self.nb_serr
+		oscillo_battant = self.oscillo_battant
+		va_et_vient = self.va_et_vient
+		butoir = self.butoir
+		remplissage_vitre = self.remplissage_vitre
+		cintre = self.cintre
+		triangle = self.triangle
+		division = self.division
+		nb_division = self.nb_division
+		laque = self.laque
+		moustiquaire = self.moustiquaire
+		type_moustiquaire = self.type_moustiquaire
+		tms = self.tms
+		intermediaire = self.intermediaire
+		######################	 
 		val_total = 0.0
 		val_types = 0.0
 		val_vitre = 0.0
