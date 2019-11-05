@@ -1,5 +1,5 @@
-<?xml version="1.0"?>
-<openerp>
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
 	<data>
         <record id="group_approbation" model="res.groups">
             <field name="name">Approbations</field>
@@ -10,9 +10,9 @@
 			<field name="inherit_id" ref="purchase.purchase_order_form" />
 			<field name="arch" type="xml">
 				<xpath expr="/form/header/button[@name='button_approve' and @states='to approve']" position="replace">
-					<button name="button_approve" type="object" states="to approve" string="Approve Order" class="oe_highlight" groups="base.group_approbation"/>
+					<button name="button_approve" type="object" states="to approve" string="Approve Order" class="oe_highlight" groups="confirmed_approved.group_approbation"/>
 				</xpath>
 			</field>
 		</record>
 	</data>
-</openerp>
+</odoo>

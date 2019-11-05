@@ -29,6 +29,9 @@ class mim_wizard(models.TransientModel):
 	_inherit = 'mim.wizard'
 	
 	def calcul(self):
+		print("**************************************************************************")
+		print("******************In mim_module_majoration*********************************")
+		print("**************************************************************************")
 		######################
 		largeur = self.largeur
 		hauteur = self.hauteur
@@ -274,6 +277,7 @@ class mim_wizard(models.TransientModel):
 			
 		##############################################Atout modification Ando#######################################################
 		image_name = 'image0.png'
+		
 		if types == 'A soufflet':
 			image_name='image1.png'
 			if nb_division==2:
@@ -345,26 +349,28 @@ class mim_wizard(models.TransientModel):
 		else :
 			if types == 'Coulissante 1VTL': 
 				image_name='image42.png'
-			if types == 'Coulissante 2VTX':
-				image_name='image43.png'
-				if (remplissage_vitre and remplissage_vitre!='standard') :
-					if remplissage_vitre == u'pleine_bardage':
-						if intermediaire == 'avec':
-							image_name='image38.png'
-						else : image_name='image0.png'
-					if remplissage_vitre == u'pleine_2_3':
-						image_name='image0.png'
-					if remplissage_vitre == u'pleine_1_2':
-						image_name='image39.png'
-					if remplissage_vitre == u'pleine_1_3':
-						image_name='image40.png'
-				elif intermediaire == 'avec':
-					image_name='image41.png'
+		
+		if types == 'Coulissante 2VTX':
+			image_name='image43.png'
+			if (remplissage_vitre and remplissage_vitre!='standard') :
+				if remplissage_vitre == u'pleine_bardage':
+					if intermediaire == 'avec':
+						image_name='image38.png'
+					else : image_name='image0.png'
+				if remplissage_vitre == u'pleine_2_3':
+					image_name='image0.png'
+				if remplissage_vitre == u'pleine_1_2':
+					image_name='image39.png'
+				if remplissage_vitre == u'pleine_1_3':
+					image_name='image40.png'
+			elif intermediaire == 'avec':
+				image_name='image41.png'
 					
-			if types == 'Coulissante 3VTX':
-				image_name='image44.png'
-			if types == 'Coulissante 4VTX':                
-				image_name='image45.png'
+		if types == 'Coulissante 3VTX':
+			image_name='image44.png'
+		
+		if types == 'Coulissante 4VTX':                
+			image_name='image45.png'
 				 
 		img_path = modules.get_module_resource('mim_module_add_image', 'static/src/img', (image_name))
 		with open(img_path, 'rb') as f:
@@ -402,13 +408,14 @@ class sale_order(models.Model):
 	
 	
 	#ajout commentaire si la/les majorations existent
-	def create(self,vals):
+	@api.model
+	def create(self,values):
 		#your code
-		res_id = super(sale_order, self).create(vals)
+		res_id = super(sale_order, self).create(values)
 		#your code
-		major1 = self.browse(res_id)[0].partner_id.major1
-		major2 = self.browse(res_id)[0].user_id.major2
-		maj_globale = self.browse(res_id)[0].company_id.maj_globale
+		major1 = self.partner_id.major1
+		major2 = self.user_id.major2
+		maj_globale = self.company_id.maj_globale
 		majoration_text = ""
 		
 #         if(maj_globale != 0.0):

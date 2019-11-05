@@ -442,8 +442,8 @@ class mim_wizard(models.TransientModel):
 		if va_et_vient:
 			if select_type == 'porte_ouvrante2vtx':
 				val_va_et_vient = 480000
-		else:
-			val_va_et_vient = 240000
+			else:
+				val_va_et_vient = 240000
 
 		if butoir:
 			val_butoir = 21000
@@ -476,111 +476,113 @@ class mim_wizard(models.TransientModel):
 			types = prod.name
 				
 
-		if types == 'Coulissante 2VTX':
-			if moustiquaire:
-				val_moustiquaire = (((largeur/2*hauteur)/1000000*13500)*1.2*1.08*1.4)
-		val_total = (((((largeur*hauteur)/1000000*(170000+val_vitre*val_type_vitre+val_decoratif)*(1+(tms / 100))*val_remplissage_vitre)+29700+val_poigne+val_serr+val_oscillo_battant+val_va_et_vient+val_butoir)*0.95*1.1*1.08*val_cintre*val_triangle)+val_moustiquaire)*val_laque
-		#raise osv.except_osv('Error!','Please define sales journal for this company: "%s" .' % (types))
-			
-
-		if types == 'Coulissante 1VTL':
-			if moustiquaire:
-				val_moustiquaire = (((largeur/2*hauteur)/1000000*13500)*1.2*1.08*1.4)
-		val_total = ((((((largeur*2)*hauteur)/1000000*(170000+val_vitre*val_type_vitre+val_decoratif+val_autre_vitrage)*(1+(tms / 100))*val_remplissage_vitre)+29700+val_poigne+val_serr+val_oscillo_battant+val_va_et_vient+val_butoir)*0.95*1.1*1.08*val_cintre/2)*val_laque)+val_moustiquaire
-
-		if types == 'Coulissante 3VTX':
-			if moustiquaire:
-				val_moustiquaire = (((largeur/3*hauteur)/1000000*13500)*1.2*1.08*1.4)
-		val_total = ((((largeur*hauteur)/1000000*(180000*(1+(tms / 100))+val_vitre*val_type_vitre+val_decoratif+val_autre_vitrage)+val_remplissage_vitre)+29700+val_poigne+val_serr+val_oscillo_battant+val_va_et_vient+val_butoir)*1.025*1.08*val_cintre+val_moustiquaire)*val_laque
-
-		if types == 'Coulissante 4VTX':
-			if moustiquaire:
-				val_moustiquaire = (((largeur/2*hauteur)/1000000*13500)*1.2*1.08*1.4)
-		val_total = (((largeur*hauteur)/1000000*(180000/2*(1+(tms / 100))*val_remplissage_vitre+val_vitre*val_type_vitre+val_decoratif+val_autre_vitrage)*2+29700+val_poigne+val_serr+val_oscillo_battant+val_va_et_vient+val_butoir)*1.05*1.025*1.08*val_cintre*val_laque)+val_moustiquaire
-			
-	
-		if types == 'Porte ouvrante 2VTX':
-			if moustiquaire:
-				val_moustiquaire = (((largeur/hauteur)/1000000*13500)*1.2*1.08*1.4)
-		val_total = (((largeur*hauteur)/1000000*((210222+val_vitre*val_type_vitre+val_decoratif+val_autre_vitrage)*(1+(tms / 100)))*val_remplissage_vitre+92884+val_poigne+val_serr+val_oscillo_battant+val_va_et_vient+val_butoir)*1.15*1.08*val_cintre*val_laque)+val_moustiquaire
-
-		if types == 'Porte ouvrante 1VTL':
-			if moustiquaire:
-				val_moustiquaire = (((largeur/2*hauteur)/1000000*13500)*1.2*1.08*1.4)
-		val_total = ((((largeur*hauteur)/1000000*(210000+val_vitre*val_type_vitre+val_decoratif+val_autre_vitrage)*(1+(tms / 100))*val_remplissage_vitre)+58652+val_poigne+val_serr+val_oscillo_battant+val_va_et_vient+val_butoir)*1.15*1.08*val_cintre+val_moustiquaire)*val_laque
-		if types == u'Fenêtre ouvrante 1VTL':
-			if moustiquaire:
-				val_moustiquaire = (((largeur/2*hauteur)/1000000*13500)*1.2*1.08*1.4)
-		val_total = ((((largeur*hauteur)/1000000*(210000+val_vitre*val_type_vitre+val_decoratif+val_autre_vitrage)*(1+(tms / 100))*val_remplissage_vitre)+58652+val_poigne+val_serr+val_oscillo_battant+val_va_et_vient+val_butoir)*1.15*1.08*val_cintre+val_moustiquaire)*val_laque
-
-		if types == u'Fenêtre ouvrante 2VTX':   
-			if moustiquaire:
-				val_moustiquaire = (((largeur/hauteur)/1000000*13500)*1.2*1.08*1.4)
-		val_total = ((((largeur*hauteur)/1000000*(210222+val_vitre*val_type_vitre+val_decoratif+val_autre_vitrage)*(1+(tms / 100)))*val_remplissage_vitre+92884+val_poigne+val_serr+val_oscillo_battant+val_va_et_vient+val_butoir+40000)*1.15*1.08*val_cintre*val_laque)+val_moustiquaire
-	
-		if types == 'A soufflet':
-			if division:
-				val_total = (((((largeur/nb_division)*hauteur)/1000000*(163000+val_vitre*val_type_vitre+val_decoratif+val_autre_vitrage)*(1+(tms / 100)))*val_remplissage_vitre+58500+val_poigne+val_serr+val_oscillo_battant+val_va_et_vient+val_butoir)*1.1*1.05*1.25*1.08*val_cintre)*nb_division
-			else:
+			if types == 'Coulissante 2VTX':
 				if moustiquaire:
-					val_moustiquaire = ((((largeur*hauteur)/1000000*13500)*1.2*1.08*1.4))
-				val_total = ((((largeur*hauteur)/1000000*(163000+val_vitre*val_type_vitre+val_decoratif+val_autre_vitrage)*(1+(tms/100))*val_remplissage_vitre+58500+val_poigne+val_serr+val_oscillo_battant+val_va_et_vient+val_butoir)*1.1*1.05*1.25*1.08*val_cintre)*val_laque)+val_moustiquaire
-		if types == 'Projetant':
-			if division:
-				val_total = (((((largeur/nb_division)*hauteur)/1000000*(163000+val_vitre*val_type_vitre+val_decoratif+val_autre_vitrage)*(1+(tms / 100)))*val_remplissage_vitre+58500+val_poigne+val_serr+val_oscillo_battant+val_va_et_vient+val_butoir)*1.1*1.05*1.25*1.08*val_cintre)*nb_division
-			else:
+					val_moustiquaire = (((largeur/2*hauteur)/1000000*13500)*1.2*1.08*1.4)
+				val_total = (((((largeur*hauteur)/1000000*(170000+val_vitre*val_type_vitre+val_decoratif)*(1+(tms / 100))*val_remplissage_vitre)+29700+val_poigne+val_serr+val_oscillo_battant+val_va_et_vient+val_butoir)*0.95*1.1*1.08*val_cintre*val_triangle)+val_moustiquaire)*val_laque
+			#raise osv.except_osv('Error!','Please define sales journal for this company: "%s" .' % (types))
+				
+
+			if types == 'Coulissante 1VTL':
 				if moustiquaire:
-					val_moustiquaire = ((((largeur*hauteur)/1000000*13500)*1.2*1.08*1.4))
-				val_total = ((((largeur*hauteur)/1000000*(163000+val_vitre*val_type_vitre+val_decoratif+val_autre_vitrage)*(1+(tms/100))*val_remplissage_vitre+58500+val_poigne+val_serr+val_oscillo_battant+val_va_et_vient+val_butoir)*1.1*1.05*1.25*1.08*val_cintre)*val_laque)+val_moustiquaire
-			
-		if types == 'Fixe': 
-			if moustiquaire:
-				val_moustiquaire = (((largeur/2*hauteur)/1000000*13500)*1.2*1.08*1.4)
-			val_total = ((largeur*hauteur)/1000000*(150000+val_vitre*val_type_vitre+val_decoratif+val_autre_vitrage)*val_remplissage_vitre*1.15*1.08*val_cintre*val_triangle*val_laque)+val_moustiquaire
+					val_moustiquaire = (((largeur/2*hauteur)/1000000*13500)*1.2*1.08*1.4)
+				val_total = ((((((largeur*2)*hauteur)/1000000*(170000+val_vitre*val_type_vitre+val_decoratif+val_autre_vitrage)*(1+(tms / 100))*val_remplissage_vitre)+29700+val_poigne+val_serr+val_oscillo_battant+val_va_et_vient+val_butoir)*0.95*1.1*1.08*val_cintre/2)*val_laque)+val_moustiquaire
 
-		if types == 'Moustiquaire':
-			cacher = True
-			if type_moustiquaire == 'fixe':
-				val_total = ((((largeur/nb_division)*hauteur)/1000000*13500)*1.2*1.08*1.4)*nb_division
-			if type_moustiquaire == 'coulissante':
-				val_total = ((((largeur/nb_division)*hauteur)/1000000*81000)*1.2*1.08)*nb_division
+			if types == 'Coulissante 3VTX':
+				if moustiquaire:
+					val_moustiquaire = (((largeur/3*hauteur)/1000000*13500)*1.2*1.08*1.4)
+				val_total = ((((largeur*hauteur)/1000000*(180000*(1+(tms / 100))+val_vitre*val_type_vitre+val_decoratif+val_autre_vitrage)+val_remplissage_vitre)+29700+val_poigne+val_serr+val_oscillo_battant+val_va_et_vient+val_butoir)*1.025*1.08*val_cintre+val_moustiquaire)*val_laque
 
-		if types == 'Naco':
-			if moustiquaire:
-				val_moustiquaire = ((((largeur*hauteur)/1000000*13500)*1.2*1.08*1.4))
-			if division:
-
-				val_total =(((largeur/nb_division)*hauteur)/1000000*(150000+val_decoratif+val_autre_vitrage+(3000*(hauteur/100))))*1.15*1.08*val_cintre*val_laque*nb_division
-			else:
+			if types == 'Coulissante 4VTX':
+				if moustiquaire:
+					val_moustiquaire = (((largeur/2*hauteur)/1000000*13500)*1.2*1.08*1.4)
+				val_total = (((largeur*hauteur)/1000000*(180000/2*(1+(tms / 100))*val_remplissage_vitre+val_vitre*val_type_vitre+val_decoratif+val_autre_vitrage)*2+29700+val_poigne+val_serr+val_oscillo_battant+val_va_et_vient+val_butoir)*1.05*1.025*1.08*val_cintre*val_laque)+val_moustiquaire
+				
 		
-				val_total =((((largeur*hauteur)/1000000*(150000+val_vitre*val_type_vitre+val_autre_vitrage+(3000*(hauteur/100))))*1.15*1.08*val_cintre*val_laque))+val_moustiquaire
+			if types == 'Porte ouvrante 2VTX':
+				if moustiquaire:
+					val_moustiquaire = (((largeur/hauteur)/1000000*13500)*1.2*1.08*1.4)
+				val_total = (((largeur*hauteur)/1000000*((210222+val_vitre*val_type_vitre+val_decoratif+val_autre_vitrage)*(1+(tms / 100)))*val_remplissage_vitre+92884+val_poigne+val_serr+val_oscillo_battant+val_va_et_vient+val_butoir)*1.15*1.08*val_cintre*val_laque)+val_moustiquaire
 
-
-		if types == 'Poteau rectangle':
-			cacher = True
-			if laque == True:
-				val_total = ((dimension/1000)*pu_ttc)*val_laque
-			if laque == False:
-				val_total = ((dimension/1000)*pu_ttc)*1
-
-		if types == 'Poteau d\'angle':
-			cacher = True
-			if laque == True:
-				val_total = ((dimension/1000)*pu_ttc)*val_laque
-			if laque == False:
-				val_total = ((dimension/1000)*pu_ttc)*1
-
-		if types == 'Tendeur':
-			cacher = True
-			if laque == True:
-				val_total = ((dimension/1000)*pu_ttc)*val_laque
-			if laque == False:
-				val_total = ((dimension/1000)*pu_ttc)*1
+			if types == 'Porte ouvrante 1VTL':
+				if moustiquaire:
+					val_moustiquaire = (((largeur/2*hauteur)/1000000*13500)*1.2*1.08*1.4)
+				val_total = ((((largeur*hauteur)/1000000*(210000+val_vitre*val_type_vitre+val_decoratif+val_autre_vitrage)*(1+(tms / 100))*val_remplissage_vitre)+58652+val_poigne+val_serr+val_oscillo_battant+val_va_et_vient+val_butoir)*1.15*1.08*val_cintre+val_moustiquaire)*val_laque
 			
-		if types == 'Bardage PVC':
-			cacher = True
-			hidder_autre_option = True 
-			val_total = ((largeur*hauteur)/1000000)*45000/1.2 
+			if types == u'Fenêtre ouvrante 1VTL':
+				if moustiquaire:
+					val_moustiquaire = (((largeur/2*hauteur)/1000000*13500)*1.2*1.08*1.4)
+				val_total = ((((largeur*hauteur)/1000000*(210000+val_vitre*val_type_vitre+val_decoratif+val_autre_vitrage)*(1+(tms / 100))*val_remplissage_vitre)+58652+val_poigne+val_serr+val_oscillo_battant+val_va_et_vient+val_butoir)*1.15*1.08*val_cintre+val_moustiquaire)*val_laque
+
+			if types == u'Fenêtre ouvrante 2VTX':   
+				if moustiquaire:
+					val_moustiquaire = (((largeur/hauteur)/1000000*13500)*1.2*1.08*1.4)
+				val_total = ((((largeur*hauteur)/1000000*(210222+val_vitre*val_type_vitre+val_decoratif+val_autre_vitrage)*(1+(tms / 100)))*val_remplissage_vitre+92884+val_poigne+val_serr+val_oscillo_battant+val_va_et_vient+val_butoir+40000)*1.15*1.08*val_cintre*val_laque)+val_moustiquaire
+		
+			if types == 'A soufflet':
+				if division:
+					val_total = (((((largeur/nb_division)*hauteur)/1000000*(163000+val_vitre*val_type_vitre+val_decoratif+val_autre_vitrage)*(1+(tms / 100)))*val_remplissage_vitre+58500+val_poigne+val_serr+val_oscillo_battant+val_va_et_vient+val_butoir)*1.1*1.05*1.25*1.08*val_cintre)*nb_division
+				else:
+					if moustiquaire:
+						val_moustiquaire = ((((largeur*hauteur)/1000000*13500)*1.2*1.08*1.4))
+					val_total = ((((largeur*hauteur)/1000000*(163000+val_vitre*val_type_vitre+val_decoratif+val_autre_vitrage)*(1+(tms/100))*val_remplissage_vitre+58500+val_poigne+val_serr+val_oscillo_battant+val_va_et_vient+val_butoir)*1.1*1.05*1.25*1.08*val_cintre)*val_laque)+val_moustiquaire
+			
+			if types == 'Projetant':
+				if division:
+					val_total = (((((largeur/nb_division)*hauteur)/1000000*(163000+val_vitre*val_type_vitre+val_decoratif+val_autre_vitrage)*(1+(tms / 100)))*val_remplissage_vitre+58500+val_poigne+val_serr+val_oscillo_battant+val_va_et_vient+val_butoir)*1.1*1.05*1.25*1.08*val_cintre)*nb_division
+				else:
+					if moustiquaire:
+						val_moustiquaire = ((((largeur*hauteur)/1000000*13500)*1.2*1.08*1.4))
+					val_total = ((((largeur*hauteur)/1000000*(163000+val_vitre*val_type_vitre+val_decoratif+val_autre_vitrage)*(1+(tms/100))*val_remplissage_vitre+58500+val_poigne+val_serr+val_oscillo_battant+val_va_et_vient+val_butoir)*1.1*1.05*1.25*1.08*val_cintre)*val_laque)+val_moustiquaire
+				
+			if types == 'Fixe': 
+				if moustiquaire:
+					val_moustiquaire = (((largeur/2*hauteur)/1000000*13500)*1.2*1.08*1.4)
+				val_total = ((largeur*hauteur)/1000000*(150000+val_vitre*val_type_vitre+val_decoratif+val_autre_vitrage)*val_remplissage_vitre*1.15*1.08*val_cintre*val_triangle*val_laque)+val_moustiquaire
+
+			if types == 'Moustiquaire':
+				cacher = True
+				if type_moustiquaire == 'fixe':
+					val_total = ((((largeur/nb_division)*hauteur)/1000000*13500)*1.2*1.08*1.4)*nb_division
+				if type_moustiquaire == 'coulissante':
+					val_total = ((((largeur/nb_division)*hauteur)/1000000*81000)*1.2*1.08)*nb_division
+
+			if types == 'Naco':
+				if moustiquaire:
+					val_moustiquaire = ((((largeur*hauteur)/1000000*13500)*1.2*1.08*1.4))
+				if division:
+
+					val_total =(((largeur/nb_division)*hauteur)/1000000*(150000+val_decoratif+val_autre_vitrage+(3000*(hauteur/100))))*1.15*1.08*val_cintre*val_laque*nb_division
+				else:
+			
+					val_total =((((largeur*hauteur)/1000000*(150000+val_vitre*val_type_vitre+val_autre_vitrage+(3000*(hauteur/100))))*1.15*1.08*val_cintre*val_laque))+val_moustiquaire
+
+
+			if types == 'Poteau rectangle':
+				cacher = True
+				if laque == True:
+					val_total = ((dimension/1000)*pu_ttc)*val_laque
+				if laque == False:
+					val_total = ((dimension/1000)*pu_ttc)*1
+
+			if types == 'Poteau d\'angle':
+				cacher = True
+				if laque == True:
+					val_total = ((dimension/1000)*pu_ttc)*val_laque
+				if laque == False:
+					val_total = ((dimension/1000)*pu_ttc)*1
+
+			if types == 'Tendeur':
+				cacher = True
+				if laque == True:
+					val_total = ((dimension/1000)*pu_ttc)*val_laque
+				if laque == False:
+					val_total = ((dimension/1000)*pu_ttc)*1
+				
+			if types == 'Bardage PVC':
+				cacher = True
+				hidder_autre_option = True 
+				val_total = ((largeur*hauteur)/1000000)*45000/1.2 
 	
 		return {'total' : val_total* quantity ,'totalcacher' : val_total* quantity, 'cacher' : cacher, 'hidder_autre_option': hidder_autre_option}
 

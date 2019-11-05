@@ -7,7 +7,7 @@
     'author': 'Ando',
     'sequence':1,
     'website': 'http://mim-madagascar.com',
-    'depends': ['sale','base','mim_module'],
+    'depends': ['sale','base','mim_module','mim_module_update_total','mim_module_correction_id'],
 
     # always loaded
     'data': [

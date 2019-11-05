@@ -11,12 +11,12 @@
     'author': 'Ando',
     'sequence':1,
     'website': 'http://mim-madagascar.com',
-    'depends': ['sale','stock'],
+    'depends': ['sale','stock','mim_module','mim_module_add_image'],
     
 
     # always loaded
     'data': [
-        # 'security/ir.model.access.csv',
+        'security/ir.model.access.csv',
         'views/stock_mim_view_move_picking.xml',
         'views/contre_mesure_view.xml',
     ],

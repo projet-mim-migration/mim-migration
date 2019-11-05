@@ -1,5 +1,5 @@
-<?xml version="1.0"?>
-<openerp>
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
 	<data>
 		<record id="group_confirmation" model="res.groups">
 			<field name="name">Confirmations</field>
@@ -10,9 +10,9 @@
 			<field name="inherit_id" ref="purchase.purchase_order_form" />
 			<field name="arch" type="xml">
 				<xpath expr="/form/header/button[@name='button_confirm' and @states='draft']" position="replace">
-					<button name="button_confirm" states="draft" string="Confirm Order" groups="base.group_confirmation" id="draft_confirm" type="object"/>
+					<button name="button_confirm" states="draft" string="Confirm Order" groups="confirmed_approved.group_confirmation" id="draft_confirm" type="object"/>
 				</xpath>
 			</field>
 		</record>
 	</data>
-</openerp>
+</odoo>

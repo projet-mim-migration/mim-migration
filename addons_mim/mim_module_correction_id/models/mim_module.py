@@ -51,10 +51,7 @@ class mim_wizard(models.TransientModel):
 		rec_qty = self.quantity
 		image = self.image
 		#rec_total = self.browse(cr, uid, ids, context=context)[0].totalcacher
-		total = self.calcul(rec_largeur, rec_hauteur,rec_dimension, rec_pu_ttc, rec_qty, select_type.id , vitrage.id,
-				type_vitre, decoratif.id,  poigne.id, serr.id,nb_poigne,nb_serr,oscillo_battant,
-				va_et_vient, butoir,remplissage_vitre, cintre, triangle,division,nb_division, laque,
-				moustiquaire, type_moustiquaire, tms, intermediaire)
+		total = self.calcul()
 		#### dÃ©but de formatisation de champ select_type pour evitÃ© d'afficher par ex coullissante2vtx ####
 		order_id = self.order_id
 			
@@ -303,6 +300,7 @@ class mim_wizard(models.TransientModel):
 		self.totalcacher = dict_total['totalcacher']
 		self.cacher = dict_total['cacher']
 		self.hidder_autre_option = dict_total['hidder_autre_option']
+		self.image = dict_total['image']
 	####cette fonction permet de faire le calcul comme dans Excel, elle est appellÃ©e dÃ¨s qu'on veut faire un calcul####    
 	def calcul(self):
 		######################
@@ -553,6 +551,7 @@ class mim_wizard(models.TransientModel):
 			
 			##############################################ando ajout modification pour l'ajout de l'image#######################################################
 		image_name = 'image0.png'
+		
 		if types == 'A soufflet':
 			image_name='image1.png'
 			if nb_division==2:
@@ -659,7 +658,7 @@ class sale_order(models.Model):
 	_inherit = "sale.order"
 	
 	####cette fonction permet de rÃ©cupÃ©rer la rÃ©fÃ©rence du devis en cours de modification par ex SO003####
-	@api.one
+	@api.multi
 	def action_mim_wizard(self):
 	  
 		mod_obj = self.env['ir.model.data']

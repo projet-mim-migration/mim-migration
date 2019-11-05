@@ -12,7 +12,10 @@ class mim_wizard(models.TransientModel):
 	
 	####cette fonction permet la crÃ©ation d'une ligne de commande grÃ¢ce Ã  sale_order_line_obj.create(cr, uid, {'name': name,'order_id':rec_ref, 'price_unit' : rec_total})####
 	def order_line_create(self):
-		
+		print("****************************************************************************************************")
+		print("***************************order_line_create in mim_module_update_total*****************************")
+		print("****************************************************************************************************")
+
 		sale_order_line_obj = self.env['sale.order.line']#on recupÃ¨re l'objet sale.order.line pour l'utiliser avec la fonction ORM create 
 		#### dÃ©but de la rÃ©cupÃ¨ration des diffÃ©rents paramÃ¨tres saisi sur le pop-up####
 		select_type = self.select_type
@@ -242,7 +245,7 @@ class mim_wizard(models.TransientModel):
 		name = lxh
 		
 		res_image = tools.image_resize_image(image, (64, 64), 'base64', 'PNG', False)
-		sale_order_line_obj.create({'product_id':select_type.id,'name': name,'order_id':rec_ref+1, 'product_uom_qty': rec_qty, 'price_subtotal' : total['totalcacher'], 'price_unit': total['totalcacher']/rec_qty,'image':res_image})
+		sale_order_line_obj.create({'product_id':select_type.id,'name': name,'order_id':rec_ref, 'product_uom_qty': rec_qty, 'price_subtotal' : total['totalcacher'], 'price_unit': total['totalcacher']/rec_qty,'image':res_image})
 		return True
 	
 	####cette fonction est appellÃ©e pour mettre Ã  jour le total sur le pop-up Ã  chaque modification d'un champ sans quiter la fenÃªtre####
@@ -251,7 +254,6 @@ class mim_wizard(models.TransientModel):
 			'va_et_vient', 'butoir','remplissage_vitre', 'cintre', 'triangle','division','nb_division', 'laque',
 			'moustiquaire', 'type_moustiquaire', 'tms')
 	def onchange_fields(self):
-		
 		dict_total = self.calcul()
 		
 		#return {'total' : val_total* quantity* 1.10 ,'totalcacher' : val_total* quantity* 1.10, 'cacher' : cacher, 'hidder_autre_option': hidder_autre_option,'image': res_image}
@@ -263,6 +265,9 @@ class mim_wizard(models.TransientModel):
 		self.image = dict_total['image']		
 	####cette fonction permet de faire le calcul comme dans Excel, elle est appellÃ©e dÃ¨s qu'on veut faire un calcul####
 	def calcul(self):
+		print("**************************************************************************")
+		print("******************In mim_module_update_total*********************************")
+		print("**************************************************************************")
 		
 		######################
 		largeur = self.largeur
@@ -290,6 +295,8 @@ class mim_wizard(models.TransientModel):
 		moustiquaire = self.moustiquaire
 		type_moustiquaire = self.type_moustiquaire
 		tms = self.tms
+		res_image = self.image
+		intermediaire = self.intermediaire
 		######################
 
 		val_total = 0.0
@@ -511,103 +518,106 @@ class mim_wizard(models.TransientModel):
 		
 			
 			##############################################Atout modification Ando#######################################################
-			image_name = 'image0.png'
-			if types == 'A soufflet':
-				image_name='image1.png'
-				if nb_division==2:
-					image_name='image3.png'
-					
-			if types == 'Projetant':
-				image_name='image2.png'
-				if nb_division==2:
-					image_name='image4.png'
-							
-			if types == u'Fenêtre ouvrante 1VTL':
-				image_name='image11.png'
+		image_name = 'image0.png'
+		
+		if types == 'A soufflet':
+			image_name='image1.png'
+			if nb_division==2:
+				image_name='image3.png'
+				
+		if types == 'Projetant':
+			image_name='image2.png'
+			if nb_division==2:
+				image_name='image4.png'
+						
+		if types == u'Fenêtre ouvrante 1VTL':
+			image_name='image11.png'
+			if remplissage_vitre == 'pleine_bardage':
+				image_name='image12.png'
+				
+		if types == u'Fenêtre ouvrante 2VTX': 
+			image_name='image13.png'
+			if remplissage_vitre:                
 				if remplissage_vitre == 'pleine_bardage':
-					image_name='image12.png'
+					image_name='image14.png'
+		
+		if types == 'Fixe':
+			image_name='image17.png'
+			if nb_division==2:
+				image_name='image18.png'
+			if nb_division==3:
+				image_name='image19.png'
+		#intermediaire = self.browse(cr, uid, ids, context=context)[0].intermediaire
+		
+		if types == 'Porte ouvrante 1VTL':
+			image_name='image26.png'
+			if (remplissage_vitre and remplissage_vitre!='standard') :
+				if remplissage_vitre == u'pleine_bardage':
+					if intermediaire == 'avec':
+						image_name='image21.png'
+					else : image_name='image20.png'
+				if remplissage_vitre == u'pleine_2_3':
+					image_name='image22.png'
+				if remplissage_vitre == u'pleine_1_2':
+					image_name='image23.png'
+				if remplissage_vitre == u'pleine_1_3':
+					image_name='image24.png'
+			elif intermediaire == 'avec':
+					image_name='image25.png'
 					
-			if types == u'Fenêtre ouvrante 2VTX': 
-				image_name='image13.png'
-				if remplissage_vitre:                
-					if remplissage_vitre == 'pleine_bardage':
-						image_name='image14.png'
-			
-			if types == 'Fixe':
-				image_name='image17.png'
-				if nb_division==2:
-					image_name='image18.png'
-				if nb_division==3:
-					image_name='image19.png'
-			#intermediaire = self.browse(cr, uid, ids, context=context)[0].intermediaire
-			
-			if types == 'Porte ouvrante 1VTL':
-				image_name='image26.png'
-				if (remplissage_vitre and remplissage_vitre!='standard') :
-					if remplissage_vitre == u'pleine_bardage':
-						if intermediaire == 'avec':
-							image_name='image21.png'
-						else : image_name='image20.png'
-					if remplissage_vitre == u'pleine_2_3':
-						image_name='image22.png'
-					if remplissage_vitre == u'pleine_1_2':
-						image_name='image23.png'
-					if remplissage_vitre == u'pleine_1_3':
-						image_name='image24.png'
-				elif intermediaire == 'avec':
-						image_name='image25.png'
-						
-			if types == 'Porte ouvrante 2VTX':
-				image_name='image33.png'
-				if (remplissage_vitre and remplissage_vitre!='standard') :
-					if remplissage_vitre == u'pleine_bardage':
-						if intermediaire == 'avec':
-							image_name='image28.png'
-						else : image_name='image27.png'
-					if remplissage_vitre == u'pleine_2_3':
-						image_name='image29.png'
-					if remplissage_vitre == u'pleine_1_2':
-						image_name='image30.png'
-					if remplissage_vitre == u'pleine_1_3':
-						image_name='image31.png'
-				elif intermediaire == 'avec':
-						image_name='image32.png'        
-						
-			if tms == 0.0:
-				if types == 'Coulissante 2VTX':
-					image_name='image34.png'
-				if types == 'Coulissante 3VTX':
-					image_name='image36.png'
-				if types == 'Coulissante 4VTX':                
-					image_name='image35.png'
-			else :
-				if types == 'Coulissante 1VTL': 
-					image_name='image42.png'
-				if types == 'Coulissante 2VTX':
-					image_name='image43.png'
-					if (remplissage_vitre and remplissage_vitre!='standard') :
-						if remplissage_vitre == u'pleine_bardage':
-							if intermediaire == 'avec':
-								image_name='image38.png'
-							else : image_name='image0.png'
-						if remplissage_vitre == u'pleine_2_3':
-							image_name='image0.png'
-						if remplissage_vitre == u'pleine_1_2':
-							image_name='image39.png'
-						if remplissage_vitre == u'pleine_1_3':
-							image_name='image40.png'
-					elif intermediaire == 'avec':
-						image_name='image41.png'
-						
-				if types == 'Coulissante 3VTX':
-					image_name='image44.png'
-				if types == 'Coulissante 4VTX':                
-					image_name='image45.png'
+		if types == 'Porte ouvrante 2VTX':
+			image_name='image33.png'
+			if (remplissage_vitre and remplissage_vitre!='standard') :
+				if remplissage_vitre == u'pleine_bardage':
+					if intermediaire == 'avec':
+						image_name='image28.png'
+					else : image_name='image27.png'
+				if remplissage_vitre == u'pleine_2_3':
+					image_name='image29.png'
+				if remplissage_vitre == u'pleine_1_2':
+					image_name='image30.png'
+				if remplissage_vitre == u'pleine_1_3':
+					image_name='image31.png'
+			elif intermediaire == 'avec':
+					image_name='image32.png'        
+					
+		if tms == 0.0:
+			if types == 'Coulissante 2VTX':
+				image_name='image34.png'
+			if types == 'Coulissante 3VTX':
+				image_name='image36.png'
+			if types == 'Coulissante 4VTX':                
+				image_name='image35.png'
+		else :
+			if types == 'Coulissante 1VTL': 
+				image_name='image42.png'
+		
+		if types == 'Coulissante 2VTX':
+			image_name='image43.png'
+			if (remplissage_vitre and remplissage_vitre!='standard') :
+				if remplissage_vitre == u'pleine_bardage':
+					if intermediaire == 'avec':
+						image_name='image38.png'
+					else : image_name='image0.png'
+				if remplissage_vitre == u'pleine_2_3':
+					image_name='image0.png'
+				if remplissage_vitre == u'pleine_1_2':
+					image_name='image39.png'
+				if remplissage_vitre == u'pleine_1_3':
+					image_name='image40.png'
+			elif intermediaire == 'avec':
+				image_name='image41.png'
+				
+		if types == 'Coulissante 3VTX':
+			image_name='image44.png'
+		
+		if types == 'Coulissante 4VTX':                
+			image_name='image45.png'
 					 
-			img_path = modules.get_module_resource('mim_module_add_image', 'static/src/img', (image_name))
-			with open(img_path, 'rb') as f:
-				image = f.read()
-			#res_image = tools.image_resize_image_big(image.encode('base64'))
-			res_image = base64.b64encode(image) #image.encode('base64') 
+		img_path = modules.get_module_resource('mim_module_add_image', 'static/src/img', (image_name))
+		with open(img_path, 'rb') as f:
+			image = f.read()
+		#res_image = tools.image_resize_image_big(image.encode('base64'))
+		res_image = base64.b64encode(image) #image.encode('base64') 
 	
 		return {'total' : val_total* quantity* 1.10 ,'totalcacher' : val_total* quantity* 1.10, 'cacher' : cacher, 'hidder_autre_option': hidder_autre_option,'image': res_image}

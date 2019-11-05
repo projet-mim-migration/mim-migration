@@ -7,8 +7,8 @@
                 <field name="arch" type="xml">
                     <form string="Saisie contre mesure" version="7.0">
                         <group colspan="2">
-                            <field name="largeur"/>
-                            <field name="hauteur"/>
+                            <field name="largeur" modifiers="{'readonly':False}"/>
+                            <field name="hauteur" modifiers="{'readonly':False}"/>
                         </group>
                         <footer>
                             <button name="update_contre_mesure" string="Valider" type="object" class="oe_highlight"/>

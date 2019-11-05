@@ -247,7 +247,7 @@ class mim_wizard(models.TransientModel):
 			#raise osv.except_osv('Error!','Please define sales journal for this company: "%s" .' % (product_ids))
 		
 		name = lxh
-		
+
 		res_image = tools.image_resize_image(image, (64, 64), 'base64', 'PNG', False)
 		sale_order_line_obj.create({'product_id':select_type.id,'name': name,'order_id':order_id, 'product_uom_qty': rec_qty, 'price_subtotal' : total['totalcacher'], 'price_unit': total['totalcacher']/rec_qty,'image':res_image})
 		return True
@@ -260,8 +260,6 @@ class mim_wizard(models.TransientModel):
 	def onchange_fields(self):
 		dict_total = self.calcul()
 		
-		#return {'total' : val_total* quantity* 1.10 ,'totalcacher' : val_total* quantity* 1.10, 'cacher' : cacher, 'hidder_autre_option': hidder_autre_option,'image': res_image}
-		
 		self.total = dict_total['total']
 		self.totalcacher = dict_total['totalcacher']
 		self.cacher = dict_total['cacher']
@@ -269,6 +267,8 @@ class mim_wizard(models.TransientModel):
 		self.image = dict_total['image']
 	####cette fonction permet de faire le calcul comme dans Excel, elle est appellÃ©e dÃ¨s qu'on veut faire un calcul####
 	def calcul(self):
+		
+
 		######################
 		largeur = self.largeur
 		hauteur = self.hauteur
@@ -514,107 +514,113 @@ class mim_wizard(models.TransientModel):
 			cacher = True
 			hidder_autre_option = True 
 			val_total = ((largeur*hauteur)/1000000)*45000/1.2 
-		
-			
 			##############################################Atout modification Ando#######################################################
-			image_name = 'image0.png'
-			if types == 'A soufflet':
-				image_name='image1.png'
-				if nb_division==2:
-					image_name='image3.png'
-					
-			if types == 'Projetant':
-				image_name='image2.png'
-				if nb_division==2:
-					image_name='image4.png'
-							
-			if types == u'Fenêtre ouvrante 1VTL':
-				image_name='image11.png'
+		
+		image_name = 'image0.png'
+			
+		if types == 'A soufflet':
+			image_name='image1.png'
+			if nb_division==2:
+				image_name='image3.png'
+				
+		if types == 'Projetant':
+			image_name='image2.png'
+			if nb_division==2:
+				image_name='image4.png'
+						
+		if types == u'Fenêtre ouvrante 1VTL':
+			image_name='image11.png'
+			if remplissage_vitre == 'pleine_bardage':
+				image_name='image12.png'
+				
+		if types == u'Fenêtre ouvrante 2VTX': 
+			image_name='image13.png'
+			if remplissage_vitre:                
 				if remplissage_vitre == 'pleine_bardage':
-					image_name='image12.png'
+					image_name='image14.png'
+		
+		if types == 'Fixe':
+			image_name='image17.png'
+			if nb_division==2:
+				image_name='image18.png'
+			if nb_division==3:
+				image_name='image19.png'
+		#intermediaire = self.browse(cr, uid, ids, context=context)[0].intermediaire
+		
+		if types == 'Porte ouvrante 1VTL':
+			image_name='image26.png'
+			if (remplissage_vitre and remplissage_vitre!='standard') :
+				if remplissage_vitre == u'pleine_bardage':
+					if intermediaire == 'avec':
+						image_name='image21.png'
+					else : image_name='image20.png'
+
+				if remplissage_vitre == u'pleine_2_3':
+					image_name='image22.png'
+
+				if remplissage_vitre == u'pleine_1_2':
+					image_name='image23.png'
+
+				if remplissage_vitre == u'pleine_1_3':
+					image_name='image24.png'
+
+			elif intermediaire == 'avec':
+					image_name='image25.png'
 					
-			if types == u'Fenêtre ouvrante 2VTX': 
-				image_name='image13.png'
-				if remplissage_vitre:                
-					if remplissage_vitre == 'pleine_bardage':
-						image_name='image14.png'
-			
-			if types == 'Fixe':
-				image_name='image17.png'
-				if nb_division==2:
-					image_name='image18.png'
-				if nb_division==3:
-					image_name='image19.png'
-			#intermediaire = self.browse(cr, uid, ids, context=context)[0].intermediaire
-			
-			if types == 'Porte ouvrante 1VTL':
-				image_name='image26.png'
-				if (remplissage_vitre and remplissage_vitre!='standard') :
-					if remplissage_vitre == u'pleine_bardage':
-						if intermediaire == 'avec':
-							image_name='image21.png'
-						else : image_name='image20.png'
-					if remplissage_vitre == u'pleine_2_3':
-						image_name='image22.png'
-					if remplissage_vitre == u'pleine_1_2':
-						image_name='image23.png'
-					if remplissage_vitre == u'pleine_1_3':
-						image_name='image24.png'
-				elif intermediaire == 'avec':
-						image_name='image25.png'
-						
-			if types == 'Porte ouvrante 2VTX':
-				image_name='image33.png'
-				if (remplissage_vitre and remplissage_vitre!='standard') :
-					if remplissage_vitre == u'pleine_bardage':
-						if intermediaire == 'avec':
-							image_name='image28.png'
-						else : image_name='image27.png'
-					if remplissage_vitre == u'pleine_2_3':
-						image_name='image29.png'
-					if remplissage_vitre == u'pleine_1_2':
-						image_name='image30.png'
-					if remplissage_vitre == u'pleine_1_3':
-						image_name='image31.png'
-				elif intermediaire == 'avec':
-						image_name='image32.png'        
-						
-			if tms == 0.0:
-				if types == 'Coulissante 2VTX':
-					image_name='image34.png'
-				if types == 'Coulissante 3VTX':
-					image_name='image36.png'
-				if types == 'Coulissante 4VTX':                
-					image_name='image35.png'
-			else :
-				if types == 'Coulissante 1VTL': 
-					image_name='image42.png'
-				if types == 'Coulissante 2VTX':
-					image_name='image43.png'
-					if (remplissage_vitre and remplissage_vitre!='standard') :
-						if remplissage_vitre == u'pleine_bardage':
-							if intermediaire == 'avec':
-								image_name='image38.png'
-							else : image_name='image0.png'
-						if remplissage_vitre == u'pleine_2_3':
-							image_name='image0.png'
-						if remplissage_vitre == u'pleine_1_2':
-							image_name='image39.png'
-						if remplissage_vitre == u'pleine_1_3':
-							image_name='image40.png'
-					elif intermediaire == 'avec':
-						image_name='image41.png'
-						
-				if types == 'Coulissante 3VTX':
-					image_name='image44.png'
-				if types == 'Coulissante 4VTX':                
-					image_name='image45.png'
-					 
-			img_path = modules.get_module_resource('mim_module_add_image', 'static/src/img', (image_name))
-			with open(img_path, 'rb') as f:
-				image = f.read()
-			#res_image = tools.image_resize_image_big(image.encode('base64'))
-			res_image = base64.b64encode(image)
+		if types == 'Porte ouvrante 2VTX':
+			image_name='image33.png'
+			if (remplissage_vitre and remplissage_vitre!='standard') :
+				if remplissage_vitre == u'pleine_bardage':
+					if intermediaire == 'avec':
+						image_name='image28.png'
+					else : image_name='image27.png'
+				if remplissage_vitre == u'pleine_2_3':
+					image_name='image29.png'
+				if remplissage_vitre == u'pleine_1_2':
+					image_name='image30.png'
+				if remplissage_vitre == u'pleine_1_3':
+					image_name='image31.png'
+			elif intermediaire == 'avec':
+					image_name='image32.png'        
+					
+		if tms == 0.0:
+			if types == 'Coulissante 2VTX':
+				image_name='image34.png'
+			if types == 'Coulissante 3VTX':
+				image_name='image36.png'
+			if types == 'Coulissante 4VTX':                
+				image_name='image35.png'
+		else :
+			if types == 'Coulissante 1VTL': 
+				image_name='image42.png'
+		
+		if types == 'Coulissante 2VTX':
+			image_name='image43.png'
+			if (remplissage_vitre and remplissage_vitre!='standard') :
+				if remplissage_vitre == u'pleine_bardage':
+					if intermediaire == 'avec':
+						image_name='image38.png'
+					else : image_name='image0.png'
+				if remplissage_vitre == u'pleine_2_3':
+					image_name='image0.png'
+				if remplissage_vitre == u'pleine_1_2':
+					image_name='image39.png'
+				if remplissage_vitre == u'pleine_1_3':
+					image_name='image40.png'
+			elif intermediaire == 'avec':
+				image_name='image41.png'
+					
+		if types == 'Coulissante 3VTX':
+			image_name='image44.png'
+		
+		if types == 'Coulissante 4VTX':                
+			image_name='image45.png'
+				 
+		img_path = modules.get_module_resource('mim_module_add_image', 'static/src/img', (image_name))
+		with open(img_path, 'rb') as f:
+			image = f.read()
+		#res_image = tools.image_resize_image_big(image.encode('base64'))
+		res_image = base64.b64encode(image)
 	
 		return {'total' : val_total* quantity* 1.10 ,'totalcacher' : val_total* quantity* 1.10, 'cacher' : cacher, 'hidder_autre_option': hidder_autre_option,'image': res_image}
 

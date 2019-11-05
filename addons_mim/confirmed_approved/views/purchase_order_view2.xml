@@ -1,5 +1,5 @@
-<?xml version="1.0"?>
-<openerp>
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
   <data>
     <record id="purchase_order_form_inherit" model="ir.ui.view">
       <field name="name">purchase.order.form.inherit</field>
@@ -7,9 +7,9 @@
       <field name="inherit_id" ref="purchase.purchase_order_form" />
       <field name="arch" type="xml">
         <xpath expr="//button[@id='bid_confirm']" position="replace">
-            <button name="button_confirm" type="object" states="sent" string="Confirm Order" class="oe_highlight" id="bid_confirm" groups="base.group_confirmation"/>
+            <button name="button_confirm" type="object" states="sent" string="Confirm Order" class="oe_highlight" id="bid_confirm" groups="confirmed_approved.group_confirmation"/>
         </xpath>
       </field>
     </record>
   </data>
-</openerp>
+</odoo>
