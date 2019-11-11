@@ -1,10 +1,4 @@
-import mrp
-import contre_mesure
-import stock_move
-import report
-import product_product
-import mim_module
-import choice_config
-import mrp_product_produce
-import stock_return_picking
-#import procurement
+# -*- coding: utf-8 -*-
+
+from . import models
+from . import data

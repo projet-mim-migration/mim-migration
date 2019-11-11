@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+    <record id="view_mo" model="res.groups">
+        <field name="name"> Stock Move-Bouton : Voir l'ordre de fabrication</field>
+    </record>
+    <record id="create_mo" model="res.groups">
+        <field name="name">Stock Move-Bouton : Créer l'ordre de fabrication</field>
+    </record>
+</odoo>

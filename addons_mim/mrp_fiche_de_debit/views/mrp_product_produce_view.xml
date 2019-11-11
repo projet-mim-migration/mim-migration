@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+	<!--  Produce -->
+    <record id="view_mrp_product_produce_wizard_inherit" model="ir.ui.view">
+		<field name="name">MRP Product Produce inherit</field>
+		<field name="model">mrp.product.produce</field>
+		<field name="inherit_id" ref="mrp.view_mrp_product_produce_wizard" />
+		<field name="arch" type="xml">
+			<xpath expr="//button[@name='do_produce']" position="replace">
+				<button name="consume" type="object" string="Consommer uniquement" class="oe_highlight"/> 
+				or 
+				<button name="consume_produce" type="object" string="Consommer et produire" class="oe_highlight"/>
+				or
+			</xpath>
+		</field>
+	</record>
+</odoo>    
