@@ -1,4 +1,5 @@
-import crm_lead
-import sale
-import sale_delete
-import wizard
+# -*- coding: utf-8 -*-
+
+from . import controllers
+from . import models
+from . import wizard

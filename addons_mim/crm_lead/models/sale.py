@@ -1,17 +1,16 @@
 # -*- coding: utf-8 -*-
 
-from openerp.osv import fields, osv
+from odoo import models, fields, api, exceptions
+from odoo.tools.translate import _
+# -*- coding: utf-8 -*-
 
-class sale_order(osv.osv):
+class sale_order(models.Model):
+    
     _inherit = "sale.order"
 
-    _columns = {
-        'to_cancel' : fields.boolean('A annuler')
-        }
-    _defaults = {
-        'to_cancel' : False,
-    }
-
+    
+    to_cancel = fields.Boolean('A annuler',default=False)
+    
     # def onchange_to_cancel(self, cr, uid, ids, to_cancel, context=None):
     #     order_obj = self.pool.get('sale.order')
     #     order_obj.write(cr, uid, ids, {'to_cancel': to_cancel}, context=context)
@@ -23,10 +22,9 @@ class sale_order(osv.osv):
         
         order_obj = self.env['sale.order']
         order = order_obj.browse()
-        order_to_delete_ids = order_obj.search([('partner_id', '=', order.partner_id.id), ('state', 'in', ('draft', 'sent')), ('user_id', '=', order.user_id.id), ('id', '!=', self.env.ids[0])]) 
-        order_obj.write(order_to_delete_ids, {'to_cancel': False})
-        
-        ctx['source_id'] = self.env.ids[0]
+        order_to_delete_ids = order_obj.search([('partner_id', '=', order.partner_id.id), ('state', 'in', ('draft', 'sent')), ('user_id', '=', order.user_id.id), ('id', '!=', self.ids[0])]) 
+        order_obj.search([('id','=',order_to_delete_ids.id)]).write({'to_cancel': False})
+        ctx['source_id'] = self.ids[0]
         return {
             'type': 'ir.actions.act_window',
             'view_type': 'form',
@@ -37,39 +35,37 @@ class sale_order(osv.osv):
             'target': 'new',
             'context': ctx,
         }
-
-    def unlink(self, cr, uid, ids, context=None):
-        order_obj = self.pool.get('sale.order')
-        sale_orders = self.browse(cr, uid, ids, context=context)
-        unlink_ids = []
-        for s in sale_orders:
-            if s.state in ['draft', 'cancel']:
-                unlink_ids.append(s.id)
-            elif s.state in ['sent']:
-                order_obj.action_cancel(cr, uid, [s.id], context=context)
-                unlink_ids.append(s.id)
-            else:
-                raise osv.except_osv(_('Invalid Action!'), _('In order to delete a confirmed sales order, you must cancel it before!'))
-
-        return super(sale_order, self).unlink(cr, uid, unlink_ids, context=context)
-
-    def copy(self, cr, uid, id, default=None, context=None):
-        default = dict(context or {})
-        order_obj = self.pool.get('sale.order')
-        order = self.browse(cr, uid, id, context=context)
-        if order.state in ['draft', 'sent']:
-            order_obj.action_cancel(cr, uid, [id], context=context)
-        return super(sale_order, self).copy(cr, uid, id, default, context=context)
-
-    def check_uncheck(self, cr, uid, ids, context=None):
-        if context == None:
-            context = {}
         
-        view_ref = self.pool.get('ir.model.data').get_object_reference(cr, uid, 'sale', 'view_order_form')
+    def unlink(self):
+        order_obj = self.env['sale.order']
+    
+        for order in self:
+            if order.state in ['draft', 'cancel']:
+                pass
+            elif order.state in ['sent']:
+                order_obj.search([('id','=',order.id)]).action_cancel()
+            else:
+                raise exceptions.Warning(_('In order to delete a confirmed sales order, you must cancel it before!'))
+
+        return super(sale_order, self).unlink()
+
+    def copy(self):
+        default = dict(self.env.context or {})
+        order_obj = self.env['sale.order']
+        order = self.browse()
+        if order.state in ['draft', 'sent']:
+            order_obj.action_cancel([self.id])
+        return super(sale_order, self).copy(self.id, default)
+
+    def check_uncheck(self):
+        if self.env.context == None:
+            self.env.context = {}
+        
+        view_ref = self.env['ir.model.data'].get_object_reference('sale', 'view_order_form')
         view_id = view_ref and view_ref[1] or False,
 
-        order_obj = self.pool.get('sale.order')
-        order = order_obj.browse(cr, uid, ids[0], context=context)
+        order_obj = self.env['sale.order']
+        order = order_obj.browse(self.ids[0])
         # order_ids = order_obj.search(cr, uid, [('partner_id', '=', order.partner_id.id), ('state', 'in', ('draft', 'sent')), ('user_id', '=', order.user_id.id), ('id', '!=', ids[0])])
         # for id in order_ids:
         #     order_obj.write(cr, uid, [id], {'to_cancel': False}, context=context)
@@ -88,11 +84,11 @@ class sale_order(osv.osv):
         #     # 'multi': "True",
         # }
         
-        order_obj.write(cr, uid, ids, {'to_cancel': not order.to_cancel}, context=context)
+        order_obj.search([('id','=',self.ids)]).write({'to_cancel': not order.to_cancel})
         
-        sale_delete_form_id = self.pool.get('ir.model.data').get_object_reference(cr, uid, 'crm_lead', 'sale_order_delete_wizard_form')[1]
+        sale_delete_form_id = self.env['ir.model.data'].get_object_reference('crm_lead', 'sale_order_delete_wizard_form')[1]
         ctx = dict()
-        ctx['source_id'] = context.get('source_id', False)
+        ctx['source_id'] = self.env.context.get('source_id', False)
         return {
             'type': 'ir.actions.act_window',
             'view_type': 'form',

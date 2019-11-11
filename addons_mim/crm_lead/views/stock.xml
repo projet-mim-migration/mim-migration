@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
+<odoo>
     <data>
-        <record model="ir.ui.view" id="view_picking_internal_search">
+        <record model="ir.ui.view" id="view_picking_internal_search2">
             <field name="name">stock.picking.internal.search</field>
             <field name="model">stock.picking</field>
-            <field name="type">form</field>
             <field name="inherit_id" ref="stock.view_picking_internal_search" />
             <field name="arch" type="xml">
                 <xpath expr="//group[last()]" position="inside">
-                    <filter string="Date de livraison" domain="[]" context="{'group_by':'date'}"/>
+                        <filter string="Date de livraison" name="groupby_date" domain="[]" context="{'group_by':'date'}"/>
                 </xpath>
             </field>
         </record>
     </data>
-</openerp>
+</odoo>

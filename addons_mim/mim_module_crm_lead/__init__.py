@@ -1,2 +1,4 @@
-import crm_lead
-import crm_make_sale
+# -*- coding: utf-8 -*-
+
+from . import controllers
+from . import models

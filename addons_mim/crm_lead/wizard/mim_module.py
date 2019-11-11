@@ -1,49 +1,48 @@
 # -*- coding: utf-8 -*-
-from openerp.osv import osv
-from openerp.osv import fields
-from openerp import tools
+from odoo import models, fields, api
+from odoo import tools
+import base64
+from odoo import modules
 
-class mim_wizard(osv.osv_memory):
+
+class mim_wizard(models.TransientModel):
     _inherit = 'mim.wizard'
 
     # update 26/11/18
-    def order_line_create(self, cr, uid, ids, context=None):
-        sale_order_line_obj = self.pool.get('sale.order.line')
-        select_type = self.browse(cr, uid, ids, context=context)[0].select_type
-        type_fix = self.browse(cr, uid, ids, context=context)[0].type_fixe
-        inegalite = self.browse(cr, uid, ids, context=context)[0].inegalite
-        vitrage = self.browse(cr, uid, ids, context=context)[0].vitre
-        type_vitre = self.browse(cr, uid, ids, context=context)[0].type_vitre
-        decoratif = self.browse(cr, uid, ids, context=context)[0].decoratif
-        serr = self.browse(cr, uid, ids, context=context)[0].serr
-        poigne = self.browse(cr, uid, ids, context=context)[0].poigne
-        nb_poigne = self.browse(cr, uid, ids, context=context)[0].nb_poigne
-        nb_serr = self.browse(cr, uid, ids, context=context)[0].nb_serr
-        oscillo_battant = self.browse(cr, uid, ids, context=context)[0].oscillo_battant
-        va_et_vient = self.browse(cr, uid, ids, context=context)[0].va_et_vient
-        butoir = self.browse(cr, uid, ids, context=context)[0].butoir
-        remplissage_vitre = self.browse(cr, uid, ids, context=context)[0].remplissage_vitre
-        cintre = self.browse(cr, uid, ids, context=context)[0].cintre
-        triangle = self.browse(cr, uid, ids, context=context)[0].triangle
-        division = self.browse(cr, uid, ids, context=context)[0].division
-        nb_division = self.browse(cr, uid, ids, context=context)[0].nb_division
-        laque = self.browse(cr, uid, ids, context=context)[0].laque
-        moustiquaire = self.browse(cr, uid, ids, context=context)[0].moustiquaire
-        type_moustiquaire = self.browse(cr, uid, ids, context=context)[0].type_moustiquaire
-        tms = self.browse(cr, uid, ids, context=context)[0].tms
-        rec_largeur = self.browse(cr, uid, ids, context=context)[0].largeur
-        rec_hauteur = self.browse(cr, uid, ids, context=context)[0].hauteur
-        intermediaire = self.browse(cr, uid, ids, context=context)[0].intermediaire
-        rec_dimension = self.browse(cr, uid, ids, context=context)[0].dimension
-        rec_pu_ttc = self.browse(cr, uid, ids, context=context)[0].pu_ttc
+    def order_line_create(self):
+        sale_order_line_obj = self.env['sale.order.line']
+        select_type = self.select_type
+        type_fix = self.type_fixe
+        inegalite = self.inegalite
+        vitrage = self.vitre
+        type_vitre = self.type_vitre
+        decoratif = self.decoratif
+        serr = self.serr
+        poigne = self.poigne
+        nb_poigne = self.nb_poigne
+        nb_serr = self.nb_serr
+        oscillo_battant = self.oscillo_battant
+        va_et_vient = self.va_et_vient
+        butoir = self.butoir
+        remplissage_vitre = self.remplissage_vitre
+        cintre = self.cintre
+        triangle = self.triangle
+        division = self.division
+        nb_division = self.nb_division
+        laque = self.laque
+        moustiquaire = self.moustiquaire
+        type_moustiquaire = self.type_moustiquaire
+        tms = self.tms
+        rec_largeur = self.largeur
+        rec_hauteur = self.hauteur
+        intermediaire = self.intermediaire
+        rec_dimension = self.dimension
+        rec_pu_ttc = self.pu_ttc
         
-        rec_qty = self.browse(cr, uid, ids, context=context)[0].quantity
-        image = self.browse(cr, uid, ids, context=context)[0].image
-        total = self.calcul(cr, uid, ids, rec_largeur, rec_hauteur,rec_dimension, rec_pu_ttc, rec_qty, select_type.id , vitrage.id,
-                type_vitre, decoratif.id,  poigne.id, serr.id,nb_poigne,nb_serr,oscillo_battant,
-                va_et_vient, butoir,remplissage_vitre, cintre, triangle,division,nb_division, laque,
-                moustiquaire, type_moustiquaire, tms, intermediaire, context)
-        order_id = self.browse(cr, uid, ids, context=context)[0].order_id
+        rec_qty = self.quantity
+        image = self.image
+        total = self.calcul()
+        order_id = self.order_id
             
         select_type0 = select_type.id
         type_fix0 = type_fix
@@ -109,7 +108,7 @@ class mim_wizard(osv.osv_memory):
             if inegalite == u'inegaux':
                 inegalit = u'inégaux,'
                 
-        if ((vitrage.name==False)or(vitrage.name is None)):
+        if ((vitrage.name==False) or (vitrage.name is None)):
                 vitre = '\n - Vitrage : standard, '
         else:
             vitre = u"\n - Vitrage : "+vitrage.name+", "
@@ -313,7 +312,7 @@ class mim_wizard(osv.osv_memory):
         name = lxh
         
         res_image = tools.image_resize_image(image, (64, 64), 'base64', 'PNG', False)
-        sale_order_line_obj.create(cr, uid, {'product_id':select_type.id,'name': name,'order_id':order_id,
+        sale_order_line_obj.create({'product_id':select_type.id,'name': name,'order_id':order_id,
         'product_uom_qty': rec_qty, 'price_subtotal' : total['totalcacher'], 'price_unit': total['totalcacher']/rec_qty,'image':res_image,
         'select_type':select_type0,'largeur':rec_largeur0,'hauteur':rec_hauteur0,'dimension':rec_dimension0,
         'vitre':vitrage0,'type_vitre':type_vitre0,'decoratif' :decoratif0,'poigne' :poigne0,'nb_poigne':nb_poigne0,'serr' :serr0,

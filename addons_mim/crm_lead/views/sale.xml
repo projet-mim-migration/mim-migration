@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
+<odoo>
     <data>
         <!-- <template id="assets_backend" name="project assets" inherit_id="web.assets_backend">
             <xpath expr="." position="inside">
@@ -7,17 +7,16 @@
             </xpath>
         </template> -->
         
-        <record model="ir.ui.view" id="view_order_form">
+        <record model="ir.ui.view" id="view_order_form2">
             <field name="name">sale.order.form</field>
             <field name="model">sale.order</field>
-            <field name="type">form</field>
             <field name="inherit_id" ref="sale.view_order_form" />
             <field name="arch" type="xml">
-                <button name="action_button_confirm" position="replace">
-                    <button name="action_button_confirm2" states="draft" string="Confirm Sale" type="object" groups="base.group_user"/>
-                </button>
-                <xpath expr="//button[@name='action_button_confirm'][1]" position="replace">
-                    <button name="action_button_confirm2" states="sent" string="Confirm Sale" class="oe_highlight" type="object" groups="base.group_user"/>
+                <xpath expr="//button[@name='action_confirm'][2]" position="replace">
+                    <button name="action_button_confirm2" string="Confirm Sale" type="object" groups="base.group_user" attrs="{'invisible': [('state', 'not in', ['draft'])]}"/>
+                </xpath>
+                <xpath expr="//button[@name='action_confirm' and @class='btn-primary']" position="replace">
+                    <button name="action_button_confirm2" string="Confirm Sale" class="oe_highlight" type="object" groups="base.group_user" attrs="{'invisible': [('state', 'not in', ['sent'])]}" id="action_confirm"/>
                 </xpath>
             </field>
         </record>
@@ -25,6 +24,7 @@
         <record id="sale_order_delete_wizard_form" model="ir.ui.view">
             <field name="name">sale.order.delete.form</field>
             <field name="model">sale.order.delete</field>
+            <field name="type">form</field>
             <field name="arch" type="xml">
                 <form>
                     <group>
@@ -58,4 +58,4 @@
             </field>
         </record>
     </data>
-</openerp>
+</odoo>

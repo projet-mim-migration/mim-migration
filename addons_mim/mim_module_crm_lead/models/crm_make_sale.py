@@ -1,17 +1,17 @@
 # -*- coding: utf-8 -*-
 
-from openerp.osv import fields, osv
+from odoo import models, fields, api,exceptions
 from openerp.tools.translate import _
 
 
-class crm_make_sale(osv.osv_memory):
+class crm_make_sale(models.TransientModel):
     """ Make sale  order for crm """
 
     _inherit = "crm.make.sale"
 
-    def makeOrder(self, cr, uid, ids, context=None):
+    def makeOrder(self):
         
-        print "makeOrder"
+        print ("makeOrder")
         """
         This function  create Quotation on given case.
         @param self: The object pointer
@@ -22,32 +22,33 @@ class crm_make_sale(osv.osv_memory):
         @return: Dictionary value of created sales order.
         """
         # update context: if come from phonecall, default state values can make the quote crash lp:1017353
-        context = dict(context or {})
+        context = dict(self.env.context or {})
         context.pop('default_state', False)        
         
-        case_obj = self.pool.get('crm.lead')
-        sale_obj = self.pool.get('sale.order')
-        partner_obj = self.pool.get('res.partner')
+        case_obj = self.env['crm.lead']
+        sale_obj = self.env['sale.order']
+        partner_obj = self.env['res.partner']
         data = context and context.get('active_ids', []) or []
 
-        for make in self.browse(cr, uid, ids, context=context):
+        for make in self.browse():
             partner = make.partner_id
-            partner_addr = partner_obj.address_get(cr, uid, [partner.id],
+            #deux paramètre au lieu de max = 1
+            partner_addr = partner_obj.address_get([partner.id],
                     ['default', 'invoice', 'delivery', 'contact'])
             pricelist = partner.property_product_pricelist.id
             fpos = partner.property_account_position and partner.property_account_position.id or False
             payment_term = partner.property_payment_term and partner.property_payment_term.id or False
             new_ids = []
-            for case in case_obj.browse(cr, uid, data, context=context):
+            for case in case_obj.browse(data):
                 if not partner and case.partner_id:
                     partner = case.partner_id
                     fpos = partner.property_account_position and partner.property_account_position.id or False
                     payment_term = partner.property_payment_term and partner.property_payment_term.id or False
-                    partner_addr = partner_obj.address_get(cr, uid, [partner.id],
+                    partner_addr = partner_obj.address_get([partner.id],
                             ['default', 'invoice', 'delivery', 'contact'])
                     pricelist = partner.property_product_pricelist.id
                 if False in partner_addr.values():
-                    raise osv.except_osv(_('Insufficient Data!'), _('No address(es) defined for this customer.'))
+                    raise exceptions.Warning(_('Insufficient Data!'), _('No address(es) defined for this customer.'))
 
                 vals = {
                     'origin': _('Opportunity: %s') % str(case.id),
@@ -61,18 +62,35 @@ class crm_make_sale(osv.osv_memory):
                     'date_order': fields.datetime.now(),
                     'fiscal_position': fpos,
                     'payment_term':payment_term,
-                    'note': sale_obj.get_salenote(cr, uid, [case.id], partner.id, context=context),
+                    'note': sale_obj.get_salenote([case.id], partner.id),
                 }
+                '''
+                    get_salenote n'existe pas
+                '''
+                '''
+                        get_salenote n'existe plus dans odoo 12
+                        dans odoo 8 :                                    
+                    def get_salenote(self, cr, uid, ids, partner_id, context=None):
+                        if context is None:
+                            context = {}
+                        context_lang = context.copy()
+                        if partner_id:
+                            partner_lang = self.pool.get('res.partner').browse(cr, uid, partner_id, context=context).lang
+                            context_lang.update({'lang': partner_lang})
+                        return self.pool.get('res.users').browse(cr, uid, uid, context=context_lang).company_id.sale_note
+
+
+                '''
                 if partner.id:
-                    vals['user_id'] = partner.user_id and partner.user_id.id or uid
-                new_id = sale_obj.create(cr, uid, vals, context=context)
-                sale_order = sale_obj.browse(cr, uid, new_id, context=context)
-                case_obj.write(cr, uid, [case.id], {'ref': 'sale.order,%s' % new_id})
+                    vals['user_id'] = partner.user_id and partner.user_id.id or self.env.uid
+                new_id = sale_obj.create(vals)
+                sale_order = sale_obj.browse(new_id)
+                case_obj.write([case.id], {'ref': 'sale.order,%s' % new_id})
                 new_ids.append(new_id)
                 message = _("Opportunity has been <b>converted</b> to the quotation <em>%s</em>.") % (sale_order.name)
                 case.message_post(body=message)
             if make.close:
-                case_obj.case_mark_won(cr, uid, data, context=context)
+                case_obj.case_mark_won(data)
             if not new_ids:
                 return {'type': 'ir.actions.act_window_close'}
             if len(new_ids)<=1:
