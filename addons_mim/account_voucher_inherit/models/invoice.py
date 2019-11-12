@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+
+from odoo import models, fields, api
+from openerp.tools.translate import _
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -18,16 +21,15 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.osv import osv
-from openerp.tools.translate import _
 
-class invoice2(osv.osv):
+
+class invoice2(models.Model):
     _inherit = 'account.invoice'
 
-    def invoice_pay_customer(self, cr, uid, ids, context=None):
-        if not ids: return []
-        dummy, view_id = self.pool.get('ir.model.data').get_object_reference(cr, uid, 'account_voucher', 'view_vendor_receipt_dialog_form')
-        inv = self.browse(cr, uid, ids[0], context=context)
+    def invoice_pay_customer(self):
+        if not self.ids: return []
+        dummy, view_id = self.env['ir.model.data'].get_object_reference('account_voucher', 'view_vendor_receipt_dialog_form')
+        inv = self.browse()
         return {
             'name':_("Pay Invoice"),
             'view_mode': 'form',
@@ -40,7 +42,7 @@ class invoice2(osv.osv):
             'domain': '[]',
             'context': {
                 'payment_expected_currency': inv.currency_id.id,
-                'default_partner_id': self.pool.get('res.partner')._find_accounting_partner(inv.partner_id).id,
+                'default_partner_id': self.env['res.partner']._find_accounting_partner(inv.partner_id).id,
                 'default_amount': inv.type in ('out_refund', 'in_refund') and -inv.residual or inv.residual,
                 'default_reference': inv.name,
                 'close_after_process': True,
@@ -52,6 +54,5 @@ class invoice2(osv.osv):
             }
         }
 
-invoice2()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

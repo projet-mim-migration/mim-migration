@@ -20,6 +20,7 @@
         # 'security/ir.model.access.csv','views/sale_report.xml',
         'views/sale_views.xml',
         'views/mim_module_view.xml',
+        'report/sale_report_mim.xml',
     ],
     'css': ['static/src/css/css.css',],
     'test':[],

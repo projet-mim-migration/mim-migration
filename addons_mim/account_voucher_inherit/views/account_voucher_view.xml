@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <data>
+    
+    <!--record id="view_vendor_receipt_dialog_form_inherit1" model="ir.ui.view">
+      <field name="name">account.voucher.receipt.dialog.form.inherit1</field>
+      <field name="model">account.voucher</field>
+      <field name="inherit_id" ref="account_voucher.view_vendor_receipt_dialog_form" />
+      <field name="arch" type="xml">    
+          <xpath expr="/form[@string='Payment']/group/group/field[@name='partner_id']" position="after">
+            <field name="user_id"/>
+        </xpath>
+      </field>
+    </record>
+    -->
+    
+    <record model="ir.ui.view" id="view_voucher_tree_inherit">
+            <field name="name">account.voucher.tree.inherit</field>
+            <field name="model">account.voucher</field>
+            <field name="inherit_id" ref="account_voucher.view_voucher_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree" position="replace">
+                    <tree colors="blue:state == 'draft';gray:state == 'cancel';" string="Voucher Entries" create="false" edit="false" editable="bottom">
+                        <button name="refresh" string="Actualiser" type="object" icon="gtk-ok" invisible="1" />
+                        <field name="date"/>
+                        <field name="number"/>
+                        <field name="reference"/>
+                        <field name="partner_id"/>
+                        <field name="user_id" string="Vendeur"/>
+                        <field name="journal_id" groups="account.group_account_user"/>
+                        <!--<field name="period_id" invisible="context.get('visible', True)"/>-->
+                        <field name="voucher_type" invisible="context.get('visible', True)"/>
+                        <field name="amount" sum="Total Amount"/>
+                        <!--<field name="audit" invisible="1"/>-->
+                        <field name="state"/>
+                    </tree>
+                </xpath>
+            </field>
+        </record>
+        
+    
+    <record id="view_voucher_filter_inherit" model="ir.ui.view">
+            <field name="name">account.voucher.select.inherit</field>
+            <field name="model">account.voucher</field>
+            <field name="priority">1</field>
+            <field name="arch" type="xml">
+                <search string="Search Vouchers">
+                    <field name="number" string="Voucher"/>
+                    <field name="date"/>
+                    <filter icon="terp-document-new" string="Draft" domain="[('state','=','draft')]" help="Draft Vouchers" name= "draft"/>
+                    <filter icon="terp-camera_test" string="Posted" domain="[('state','=','posted')]" help="Posted Vouchers" name= "posted"/>
+                    <separator/>
+                    <!--<filter icon="terp-gtk-jump-to-ltr" string="To Review" domain="[('state','=','posted'), ('audit','=',False)]" help="To Review"/>-->
+                    <field name="partner_id" filter_domain="[('partner_id', 'child_of', self)]"/>
+                    <field name="journal_id" widget="selection" context="{'journal_id': self, 'set_visible':False}" /> <!-- Keep widget=selection on this field to pass numeric `self` value, which is not the case for regular m2o widgets! -->
+                    <!--<field name="period_id"/>-->
+                    <group expand="0" string="Group By...">
+                        <filter string="Partner" icon="terp-partner" domain="[]" context="{'group_by':'partner_id'}" name= "partner"/>
+                        <filter string="Journal" icon="terp-folder-orange" domain="[]" context="{'group_by':'journal_id'}" name= "journal"/>
+                        <!--<filter string="Period" icon="terp-go-month" domain="[]" context="{'group_by':'period_id','visible':True}"/>-->
+                        <filter string="Status" icon="terp-stock_effects-object-colorize" domain="[]" context="{'group_by':'state'}" name="status"/>
+                        <filter string="Vendeur" icon="terp-partner" domain="[]" context="{'group_by':'user_id'}" name = "vendeur"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+    
+    
+     <record model="ir.actions.act_window" id="action_review_voucher_list_inherit">
+            <field name="name">Paiements client / Vendeur</field>
+            <field name="res_model">account.voucher</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" eval="view_voucher_tree_inherit"/>
+            <!--  <field name="domain">[('state','=','posted')]</field>
+            <field name="context">{'state':'posted'}</field>
+            -->
+            <field name="domain">[('journal_id.type', 'in', ['bank', 'cash']), ('voucher_type','=','receipt')]</field>
+            <field name="context">{'voucher_type':'receipt'}</field>
+            <field name="search_view_id" ref="view_voucher_filter_inherit"/>
+        </record>
+    
+    <menuitem id="menu_action_voucher_tree_inherit" name="Paiements client / Vendeur" parent="account.menu_finance" action="action_review_voucher_list_inherit" />
+    
+  </data>
+</odoo>

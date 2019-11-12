@@ -1,0 +1,19 @@
+<odoo>
+    <data>
+        <template id="report_saleorder_document_inherit_mim" inherit_id="sale.report_saleorder_document">
+            <xpath expr="//table/thead/tr/th[text()='Description']" position="after">
+                <th></th>
+            </xpath>
+            <xpath expr="//table[@class='table table-sm o_main_table']/tbody//td[1]" position="after">
+                <td><span t-if="line.image"><span t-field="line.image"/></span></td>
+            </xpath>
+            <xpath expr="//p[@t-field='doc.note']" position="before">
+                <p>
+                    <strong>Arrêtée le présent devis à la somme de : ""<br/>
+                    Il est formellement interdit d'effectuer des paiements auprès des commerciaux. En cas de souhait de paiement hors de nos
+                    locaux, merci de contacter le Siège.</strong>
+                </p>
+            </xpath>
+        </template>
+    </data>
+</odoo>

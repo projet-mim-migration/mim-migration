@@ -19,13 +19,13 @@ class crm_lead(models.Model):
     # event when date action changed
     @api.onchange('date_action')
     def _onchange_date_action(self):
-        print('**********************************************************************')
-        print('*************************{}************************'.format(self.id))
-        print('**********************************************************************')
         if len(self.ids)>0:
-            return {'value':{'date_changed': True, 'motivation': False}}
-        else: 
-            return {'value':{'date_changed': False}}
+            self.date_changed = True
+            self.motivation = False
+            #return {'value':{'date_changed': True, 'motivation': False}}
+        else:
+            self.date_changed = False 
+            #return {'value':{'date_changed': False}}
     
     def write(self, values):
         if values.get('date_changed') and values['date_changed'] == True:
