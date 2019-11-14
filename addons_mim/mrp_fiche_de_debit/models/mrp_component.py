@@ -9,9 +9,11 @@ class MrpComponent(models.Model):
     def _get_product_parent_id(self):
         context = dict(self._context or {})
         return context.get('product_parent_id', False)
+
     def _get_line_id(self):
         context = dict(self._context or {})
         return context.get('line_id', False)
+    
     def _get_component_exist(self):
         context = dict(self._context or {})
         return context.get('component_exist', False)
@@ -57,22 +59,18 @@ class MrpComponent(models.Model):
     @api.multi
     def save_component(self):
         self.ensure_one()
-        comp_obj = self.env['mrp.component']
-        bom_line_obj = self.env['mrp.bom.line']
         
-        vals = {
-                'product_parent_id': self.product_parent_id.id,
-                'line_id':self.line_id.id,
-                'component_exist':True,
-                }     
-        comp_obj.search(['id', '=', self.id]).write(vals)
+        self.write({
+            'product_parent_id': self.product_parent_id.id,
+            'line_id':self.line_id.id,
+            'component_exist': True,
+        })
         #component_id est nécéssaire pour réouvrir l'objet mrp_component (res_id) avec la fonction de mrp_bom_line open_view_component()
         #component_exist pour dire que le sous composant a déjà été créé
-        val = {
+        self.line_id.write({
             'component_exist' : True,
             'component_id' : self.id
-        }
-        bom_line_obj.search(['line_id.id', '=', self.line_id.id]).write(val)
+        })
         
         return {
             'type' : 'ir.actions.act_window_close'

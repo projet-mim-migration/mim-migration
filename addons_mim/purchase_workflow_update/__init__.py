@@ -1,3 +1,3 @@
-import purchase
-import product_category
-import account_invoice
+# -*- coding: utf-8 -*-
+
+from . import models

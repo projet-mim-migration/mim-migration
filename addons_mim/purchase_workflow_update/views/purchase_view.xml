@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+		<record id="purchase_order_form_inherit1" model="ir.ui.view">
+			<field name="name">purchase_order.form.inherit1</field>
+			<field name="model">purchase.order</field>
+			<field name="inherit_id" ref="purchase.purchase_order_form" />
+			<field name="arch" type="xml">
+			    <data>
+			        <xpath expr="/form/header/button[@name='button_approve']" position="after">
+			            	<button name="payement_not_ok" 
+			            			type="object" 
+			            			class="oe_highlight" 
+			            			string="Annuler Paiement" 
+			            			attrs="{'invisible': ['|',('paiement_etabli','!=','Oui'), ('state','not in', ('approved','done'))]}"/>
+							<button name="payement_ok" 
+									type="object" 
+									class="oe_highlight" 
+									string="Etablir Paiement" 
+									attrs="{'invisible': ['|',('paiement_etabli','=','Oui'), ('state','not in', ('approved','done'))]}"/>
+					</xpath>    
+					<xpath expr="/form/sheet/group/group/field[@name='partner_id']" position="after">
+							<field name="paiement_etabli" invisible="1"/>
+							<field name="facture_recue" invisible="1"/>
+					</xpath> 
+				</data>
+			</field>
+		</record>
+		<record id="purchase_order_tree_inherit1" model="ir.ui.view">
+			<field name="name">purchase_order.tree.inherit1</field>
+			<field name="model">purchase.order</field>
+			<field name="inherit_id" ref="purchase.purchase_order_tree" />
+			<field name="arch" type="xml">
+			    <data>
+			        <xpath expr="/tree/field[@name='state']" position="after">
+							<field name="paiement_etabli"/>
+							<field name="facture_recue"/>
+					</xpath>
+				</data>
+			</field>
+		</record>
+	</data>
+</odoo>

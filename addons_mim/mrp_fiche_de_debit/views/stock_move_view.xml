@@ -14,7 +14,6 @@
                         attrs="{'invisible': ['|',('is_mo_created','=',True),('state','not in',('contre_mesure'))]}" 
                         groups="mrp_fiche_de_debit.create_mo"/>
                     
-                    <!-- EDVE STOCK -->
                     
                     <!-- <button name="action_view_mo" 
                         states="flowsheeting" 

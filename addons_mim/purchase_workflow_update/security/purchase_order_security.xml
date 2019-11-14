@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+    <data>
+        <record id="group_annuler_paiement" model="res.groups">
+            <field name="name">Achats / Annuler paiement</field>
+        </record>
+        <record id="group_etablir_paiement" model="res.groups">
+            <field name="name">Achats / Etablir paiement</field>
+        </record>
+    </data>
+</odoo>

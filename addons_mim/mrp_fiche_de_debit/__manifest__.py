@@ -23,14 +23,16 @@
 
     'data': [
         'security/ir.model.access.csv',
-        # 'data/mrp_group.xml',
-        # 'data/stock_group.xml',
-        # 'views/choice_config_view.xml',
+        'security/mrp_security.xml',
+        # 'security/stock_security.xml',
+        'views/choice_config_view.xml',
         # 'views/contremesure_view.xml',
-        # 'views/mrp_bom_view.xml',
-        # 'views/mrp_component_view.xml',
+        'views/mrp_bom_view.xml',
+        'views/mrp_component_view.xml',
         # 'views/mrp_product_produce_view.xml',
         'views/mrp_production_view.xml',
-        # 'views/stock_move_view.xml',
+        'views/product_product_view.xml',
+        'views/stock_move_view.xml',
+        'report/mrp_production_report_view.xml',
     ],
 }

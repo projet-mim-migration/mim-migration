@@ -18,6 +18,7 @@
 
     'data': [
         'views/hr_holidays_view.xml',
+        'security/hr_holidays_advanced_security.xml',
     ],
 
     'installable':True,

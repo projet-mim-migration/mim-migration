@@ -6,14 +6,19 @@
             <field name="name">sale.order.form.inherit5</field>
             <field name="model">sale.order</field>
             <field name="inherit_id" ref="sale.view_order_form" />
-            <field name="arch" type="xml">    
+            <field name="arch" type="xml">
                 <xpath expr="//button[@name='%(sale.action_view_sale_advance_payment_inv)d']" position="replace">
-                        <button name="create_invoice_new" string="Create Invoice" type="object" states="manual" class="oe_highlight" groups="base.group_user"/>
+                        <button name="create_invoice_new" 
+                                string="Create Invoice" 
+                                type="object" 
+                                states="sale" 
+                                class="oe_highlight"/>
                 </xpath>
             </field>
         </record>
-        
-        <record id="view_order_form_inherit_new_2" model="ir.ui.view">
+
+        <!-- PROBLEM Unknow relation -->
+        <!-- <record id="view_order_form_inherit_new_2" model="ir.ui.view">
             <field name="name">sale.order.inherit</field>
             <field name="model">sale.order</field>
             <field name="inherit_id" ref="sale_crm.sale_view_inherit123" />
@@ -22,13 +27,13 @@
                     <field name="categ_ids" widget="many2many_tags" required="1" />
                 </field>
             </field>
-        </record>
-        
+        </record> -->
+                
         <record id="view_sale_advance_payment_inv_inherit" model="ir.ui.view">
             <field name="name">Invoice Order Inherit</field>
             <field name="model">sale.advance.payment.inv</field>
             <field name="inherit_id" ref="sale.view_sale_advance_payment_inv" />
-            <field name="arch" type="xml">    
+            <field name="arch" type="xml">
                 <xpath expr="//field[@name='advance_payment_method']" position="after">
                         <field name="user_id"/>
                 </xpath>
