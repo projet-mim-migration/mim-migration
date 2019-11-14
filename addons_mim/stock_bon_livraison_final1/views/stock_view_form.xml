@@ -1,0 +1,26 @@
+<odoo>
+	<data>
+		<record id="view_picking_form_inherit30" model="ir.ui.view">
+			<field name="name">stock.picking.out.form.inherit30</field>
+			<field name="model">stock.move</field>
+			<field name="inherit_id" ref="stock.view_move_form" />
+			<field name="arch" type="xml">
+			    <xpath expr="//field[@name='location_dest_id']" position="after">
+						<field name="date" string="Date de livraison"/>
+				</xpath>
+			</field>
+		</record>
+
+		<record id="view_picking_form_inherit31" model="ir.ui.view">
+			<field name="name">stock.picking.form.inherit31</field>
+			<field name="model">stock.move</field>
+			<field name="inherit_id" ref="stock.view_move_form" />
+			<field name="arch" type="xml">
+			    <xpath expr="//field[@name='location_dest_id']" position="after">
+						<field name="min_date" string="Date de contre-mesure"/>
+				</xpath>
+			</field>
+		</record>
+
+	</data>
+</odoo>

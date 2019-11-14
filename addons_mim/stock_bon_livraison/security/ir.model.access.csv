@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_stock_bon_livraison_stock_bon_livraison,stock_bon_livraison.stock_bon_livraison,model_stock_bon_livraison_stock_bon_livraison,,1,0,0,0

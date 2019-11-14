@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_stock_bon_livraison_date_prevue_stock_bon_livraison_date_prevue,stock_bon_livraison_date_prevue.stock_bon_livraison_date_prevue,model_stock_bon_livraison_date_prevue_stock_bon_livraison_date_prevue,,1,0,0,0
