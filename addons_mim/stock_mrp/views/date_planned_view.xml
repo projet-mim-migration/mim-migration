@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+<data>
+	<record id="view_date_planned_form" model="ir.ui.view">
+      <field name="name">Confirmer ordre de fabrication</field>
+      <field name="model">mrp.configuration</field>
+	  <field name="arch" type="xml">
+	      <form string="Entrer la date plannifiée de la livraison" version="7.0">
+	            <group>
+	                <field name="date_planned"/>
+	            </group>
+	            <footer>
+		  			<button name="update_move_data" string="Confirmer et Créer les ordres de fabication" type="object" class="oe_highlight"/>
+	                <button string="Annuler" class="oe_link" special="cancel" />
+	           	</footer>
+	        </form>
+      </field>
+    </record>
+
+	 <record id="date_planifier" model="ir.actions.act_window">
+                <field name="name">Date planifier</field>
+                <field name="type">ir.actions.act_window</field>
+                <field name="res_model">mrp.configuration</field>
+                <field name="view_type">form</field>
+                <field name="view_mode">form</field>
+                <field name="target">new</field>
+	 </record>
+
+	<menuitem id="date_planifier" name="Date Planifier"
+                  parent="stock.menu_warehouse_report"
+                  action="date_planifier"/>
+</data>
+</odoo>

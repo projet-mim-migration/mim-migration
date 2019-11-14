@@ -1,0 +1,124 @@
+<odoo>
+   <data>
+	    <record id="view_move_form20" model="ir.ui.view">
+			<field name="name">stock.move.form.inherit20</field>
+			<field name="model">stock.move</field>
+			<field name="inherit_id" ref="stock.view_move_form" />
+			<field name="arch" type="xml">
+					<xpath expr="//field[@name='state']" position="before">
+					    <button name="force_assign" states="draft,assigned,cancel,contre_mesure,confirmed,flowsheeting" string="Set Available" type="workflow" class="oe_highlight"/>
+				  	</xpath>
+			</field>
+		</record>
+
+	    <record id="view_move_form21" model="ir.ui.view">
+			<field name="name">stock.move.form.inherit21</field>
+			<field name="model">stock.move</field>
+			<field name="inherit_id" ref="stock.view_move_form" />
+			<field name="arch" type="xml">
+					<xpath expr="//field[@name='state']" position="before">
+						<button name="action_done" states="draft,assigned,cancel,contre_mesure,confirmed,flowsheeting" string="Process Entirely" type="workflow" class="oe_highlight"/>
+					</xpath>
+			</field>
+		</record>
+
+	    <record id="view_move_form22" model="ir.ui.view">
+			<field name="name">stock.move.form.inherit22</field>
+			<field name="model">stock.move</field>
+			<field name="inherit_id" ref="stock.view_move_form" />
+			<field name="arch" type="xml">
+					<xpath expr="//field[@name='state']" position="before">
+						<button name="action_confirm" states="draft,cancel" string="Process Later" type="workflow" class="oe_highlight"/>
+					</xpath>
+			</field>
+		</record>
+
+	    <record id="view_move_form23" model="ir.ui.view">
+			<field name="name">stock.move.form.inherit23</field>
+			<field name="model">stock.move</field>
+			<field name="inherit_id" ref="stock.view_move_form" />
+			<field name="arch" type="xml">
+					<xpath expr="//field[@name='state']" position="before">
+						<button name="293" string="Process Partially" type="action" states="assigned" class="oe_highlight"/>
+					</xpath>
+			</field>
+		</record>
+
+
+        <!-- stock.view_move_picking_form-->
+
+		<record id="view_move_picking_form26" model="ir.ui.view">
+			<field name="name">stock.move.form.inherit26</field>
+			<field name="model">stock.picking</field>
+			<field name="inherit_id" ref="stock.view_picking_form"/>
+			<field name="arch" type="xml">
+					<xpath expr="//field[@name='show_lots_text']" position="before">
+					    <button name="action_confirm" states="draft,cancel" string="Process Later" type="workflow" class="oe_highlight"/>
+					</xpath>
+			</field>
+		</record>
+	   <!--
+		<record id="view_move_picking_form27" model="ir.ui.view">
+			<field name="name">stock.move.form.inherit27</field>
+			<field name="model">stock.picking</field>
+			<field name="inherit_id" ref="stock.view_picking_form"/>
+			<field name="arch" type="xml">
+					<xpath expr="//field[@name='date_expected']" position="before">
+					    <button name="force_assign" states="draft,assigned,cancel,contre_mesure,confirmed,flowsheeting" string="Set Available" type="workflow" class="oe_highlight"/>
+					</xpath>
+			</field>
+		</record>
+        -->
+
+	    <record id="view_move_form24" model="ir.ui.view">
+			<field name="name">stock.move.form.inherit24</field>
+			<field name="model">stock.picking</field>
+			<field name="inherit_id" ref="stock.view_picking_form" />
+			<field name="arch" type="xml">
+					<xpath expr="//field[@name='show_lots_text']" position="before">
+					    <button name="force_assign" states="draft,assigned,cancel,contre_mesure,confirmed,flowsheeting" string="Set Available" type="workflow" class="oe_highlight"/>
+				  	</xpath>
+			</field>
+	    </record>
+	    -->
+         <!--
+	    <record id="view_move_form25" model="ir.ui.view">
+			<field name="name">stock.move.form.inherit25</field>
+			<field name="model">stock.picking</field>
+			<field name="inherit_id" ref="stock.view_picking_form" />
+			<field name="arch" type="xml">
+					<xpath expr="//field[@name='show_lots_text']" position="after">
+						<button name="action_done" states="draft,assigned,cancel,contre_mesure,confirmed,flowsheeting" string="Process Entirely" type="workflow" class="oe_highlight"/>
+					</xpath>
+			</field>
+		</record>
+         -->
+	   <!--
+	    <record id="view_move_form26" model="ir.ui.view">
+			<field name="name">stock.move.form.inherit26</field>
+			<field name="model">stock.picking</field>
+			<field name="inherit_id" ref="stock.view_picking_form" />
+			<field name="arch" type="xml">
+					<xpath expr="//field[@name='show_lots_text']" position="after">
+						<button name="action_confirm" states="draft,cancel" string="Process Later" type="workflow" class="oe_highlight"/>
+					</xpath>
+			</field>
+		</record>
+		-->
+        <!--
+	    <record id="view_move_form27" model="ir.ui.view">
+			<field name="name">stock.move.form.inherit27</field>
+			<field name="model">stock.picking</field>
+			<field name="inherit_id" ref="stock.view_picking_form" />
+			<field name="arch" type="xml">
+					<xpath expr="//field[@name='show_lots_text']" position="after">
+						<button name="Process_Partially" string="Process Partially" type="action" states="assigned" class="oe_highlight"/>
+					</xpath>
+			</field>
+		</record>
+         -->
+
+
+  </data>   
+  
+</odoo>

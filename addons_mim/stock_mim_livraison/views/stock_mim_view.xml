@@ -1,0 +1,15 @@
+<odoo>
+	<data>
+		<record id="stock_view_picking__out_form1" model="ir.ui.view">
+			<field name="name">stock.picking.out.form.inherit1</field>
+			<field name="model">stock.picking</field>
+			<field name="inherit_id" ref="stock.view_picking_form" />
+			<field name="arch" type="xml">
+					<xpath expr="//field[@name='show_validate']" position="before">
+						<button name="do_enter_transfer_details" states="assigned,partially_available" string="Transfer" type="object" class="oe_highlight"/>
+					</xpath>
+			</field>
+		</record>
+	</data>
+</odoo>
+

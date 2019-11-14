@@ -1,0 +1,110 @@
+<odoo>
+	<data>
+	    <!--
+	    <record id="view_picking_out_tree2" model="ir.ui.view">
+			<field name="name">stock.picking.out.tree2</field>
+			<field name="model">stock.picking.out</field>
+			<field name="inherit_id" ref="stock.view_picking_out_tree" />
+			<field name="arch" type="xml">
+			    <data>
+					<xpath expr="/tree[@string='Delivery Orders']/field[@name='backorder_id']" position="replace">
+					    <field name="backorder_id" invisible="1"/>
+					</xpath>
+					<xpath expr="/tree[@string='Delivery Orders']/field[@name='stock_journal_id']" position="replace">
+					    <field name="stock_journal_id" groups="account.group_account_user" invisible="1"/>
+					</xpath>
+					<xpath expr="/tree[@string='Delivery Orders']/field[@name='invoice_state']" position="replace">
+					    <field name="invoice_state" invisible="1"/>
+					</xpath>
+				</data>
+			</field>
+		</record>
+		<record id="view_picking_out_tree3" model="ir.ui.view">
+			<field name="name">stock.picking.out.tree3</field>
+			<field name="model">stock.picking.out</field>
+			<field name="inherit_id" ref="stock.view_picking_out_tree" />
+			<field name="arch" type="xml">
+			    <data>
+					<xpath expr="/tree[@string='Delivery Orders']/field[@name='date']" position="after">
+					   <field name="confirmed"/>
+                       <field name="contre_mesure"/>
+                       <field name="fiche_debit"/>
+                       <field name="assigned"/>
+                       <field name="done"/>
+					</xpath>
+				</data>
+			</field>
+		</record>
+
+		<record id="view_picking_out_tree4" model="ir.ui.view">
+			<field name="name">stock.picking.out.tree4</field>
+			<field name="model">stock.picking.out</field>
+			<field name="inherit_id" ref="stock.view_picking_out_tree" />
+			<field name="arch" type="xml">
+					<xpath expr="/tree[@string='Delivery Orders']/field[@name='name']" position="before">
+					    <button name="refresh" string="Actualiser" type="object" icon="gtk-ok" />
+					</xpath>
+			</field>
+		</record>
+		-->
+
+		<record model="ir.ui.view" id="view_picking_out_treeA">
+            <field name="name">stock.state.treeA</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+					<notebook>
+						<page string="Avancement de production" colors="blue:state == 'draft';grey:state == 'cancel';red:state not in ('cancel', 'done') and min_date &lt; current_date">
+							<group>
+					             <button name="refresh" string="Actualiser" type="object" icon="gtk-ok" />
+                                 <field name="name"/>
+                                 <field name="partner_id" string="Client"/>
+                                 <field name="origin"/>
+                                 <field name="min_date"/>
+                   		         <field name="date"/>
+	                             <field name="confirmed"/>
+	                             <field name="contre_mesure"/>
+	                             <field name="fiche_debit"/>
+	                             <field name="assigned"/>
+	                             <field name="done"/>
+	                             <field name="state"/>
+							</group>
+						</page>
+					</notebook>
+            </field>
+        </record>
+
+		<record model="ir.ui.view" id="view_picking_out_formA">
+			<field name="name">stock.state.formA</field>
+			<field name="model">stock.picking</field>
+			<field name="inherit_id" ref="stock.view_picking_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='show_lots_text']" position="after">
+						<button name="refresh" string="Actualiser" type="object" class="oe_highlight" />
+				</xpath>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="action_stock_state">
+			<field name="name">Avancement de production</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">stock.picking</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('picking_type_id','=',2)]</field>
+			<field name="view_id" ref="view_picking_out_treeA"/>
+		</record>
+
+        <!--
+		<menuitem id="menu_action_stock_state" parent="stock.menu_stock_product" name="Avancement de production" action="action_stock_state" />
+        -->
+		<!--
+		<menuitem id="menu_action_stock_state" name="Avancement de production"
+                  parent="stock.menu_warehouse_config"/>
+		-->
+        <menuitem id="menu_action_stock_state" name="Avancement de production"
+                  parent="stock.menu_warehouse_config"
+                  action="action_stock_state"/>
+
+	</data>
+</odoo>
