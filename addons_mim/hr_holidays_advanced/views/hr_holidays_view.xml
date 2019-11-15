@@ -20,6 +20,12 @@
 				
 				<!-- Changement de groupe pour la visualisation des champs types de congé, employé, département-->
 				<xpath expr="//field[@name='employee_id']" position="before">
+<<<<<<< HEAD
+					<field name="holiday_type" attrs="{'readonly':[('state','!=','draft')]}" string="Mode" groups="hr_holidays_advanced.group_hr_holiday" context="{'employee_id':employee_id}"/>
+			    </xpath>
+			    <xpath expr="//field[@name='employee_id']" position="replace">
+					<field name="employee_id" attrs="{'required':[('holiday_type','=','employee')],'invisible':[('holiday_type','=','category')]}" groups="hr_holidays_advanced.group_hr_holiday"/>
+=======
 					<field name="holiday_type" 
                            on_change="onchange_type(holiday_type)" 
                            attrs="{'readonly':[('state','!=','draft')]}" 
@@ -32,6 +38,7 @@
                            attrs="{'required':[('holiday_type','=','employee')],'invisible':[('holiday_type','=','category')]}" 
                            on_change="onchange_employee(employee_id)" 
                            groups="hr_holidays_advanced.group_hr_holiday"/>
+>>>>>>> 9df51df2281ea06c13dc3d8f43f5abfbc73077ec
 				</xpath>
 				<xpath expr="//field[@name='department_id']" position="replace">
 					<field name="department_id" 

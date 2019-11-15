@@ -49,13 +49,13 @@
 			  
 			  
 			  <xpath expr="/form/group/group/field[@name='vitre']" position="replace">
-			      <field name="vitre"   />
-			      </xpath>
+			      <field name="vitre" options="{'no_create': True, 'no_edit': True}"/>
+		      </xpath>
 			      <xpath expr="/form/group/group/field[@name='type_vitre']" position="replace">
 		    			<field name="type_vitre" string="Simple/Double" />
 			    </xpath>
 			    <xpath expr="/form/group/group/field[@name='decoratif']" position="replace">
-			    <field name="decoratif" />
+			    <field name="decoratif" options="{'no_create': True, 'no_edit': True}"/>
                   </xpath>
 			
 			
@@ -64,7 +64,7 @@
 			
 			
 			<xpath expr="/form/group/group/group/field[@name='poigne']" position="replace">
-				<field name="poigne" />
+				<field name="poigne" options="{'no_create': True, 'no_edit': True}"/>
 				</xpath>
 				<xpath expr="/form/group/group/group/field[@name='nb_poigne']" position="replace">
 				<field name="nb_poigne"  attrs="{'invisible':[('poigne','=',False)]}"/>
@@ -74,7 +74,7 @@
 				
 				
 				<xpath expr="/form/group/group/group/field[@name='serr']" position="replace">
-				<field name="serr"  />
+				<field name="serr" options="{'no_create': True, 'no_edit': True}"/>
 				</xpath>
 				<xpath expr="/form/group/group/group/field[@name='nb_serr']" position="replace">
 				<field name="nb_serr"  attrs="{'invisible':[('serr','=',False)]}" />

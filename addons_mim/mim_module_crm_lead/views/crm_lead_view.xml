@@ -7,7 +7,7 @@
       <field name="priority">1000</field>
       <field name="inherit_id" ref="crm.crm_case_form_view_oppor" />
       <field name="arch" type="xml">
-        <xpath expr="//button[@name='597']" position="before">
+        <xpath expr="//button[@name='action_schedule_meeting']" position="after">
             <button class="oe_inline oe_stat_button" type="object"
                                 name="action_devis" icon="fa-strikethrough"
                                 context="{'default_opportunity_id': active_id, 'search_default_opportunity_id': active_id, 'default_partner_id': partner_id, 'default_duration': 1.0}">

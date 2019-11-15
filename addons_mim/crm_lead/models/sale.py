@@ -55,7 +55,7 @@ class sale_order(models.Model):
         order = self.browse()
         if order.state in ['draft', 'sent']:
             order_obj.action_cancel([self.id])
-        return super(sale_order, self).copy(self.id, default)
+        return super(sale_order, self).copy(default)
 
     def check_uncheck(self):
         if self.env.context == None:

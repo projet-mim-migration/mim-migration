@@ -107,7 +107,7 @@
                             <field name="select_type"/>
                             <field attrs="{'invisible':[('select_type','!=','fixe')]}" name="type_fixe"/>
                             <field attrs="{'invisible':[('select_type','!=','poteau_rect_angle')]}" name="type_poteau"/>
-                            <field attrs="{'invisible':[('select_type','=','poteau_rect_angle')]}" name="largeur"/>
+                            <field attrs="{'invisible':[('select_type','=','poteau_rect_angle')]}" name="largeur" options="{'no_create': True, 'no_edit': True}"/>
                             <field attrs="{'invisible':[('select_type','!=','poteau_rect_angle')]}" name="dimension"/>
                             <field attrs="{'invisible':[('select_type','!=','poteau_rect_angle')]}" name="pu_ttc"/>
                             <field attrs="{'invisible':[('select_type','=','poteau_rect_angle')]}" name="hauteur"/>
@@ -118,18 +118,18 @@
                             <h2 class="oe_inline oe_right">
                                 <field class="oe_inline" name="total"/>Ar</h2>
                         </group>
-                        <group attrs="{'invisible':[('cacher','=',True)]}" string="Vitrage">
+                        <group attrs="{'invisible':[('cacher','=',True)]}" string="Vitrage" options="{'no_create': True, 'no_edit': True}" create="False" edit="False">
                             <field name="vitre"/>
                             <field name="type_vitre" string="Simple/Double"/>
-                            <field name="decoratif"/>
+                            <field name="decoratif" options="{'no_create': True, 'no_edit': True}"/>
                         </group>
-                        <group attrs="{'invisible':[('cacher','=',True)]}" string="Accessoires">
+                        <group attrs="{'invisible':[('cacher','=',True)]}" string="Accessoires" options="{'no_create': True, 'no_edit': True}" create="False" edit="False">
                             <group>
-                                <field name="poigne"/>
+                                <field name="poigne" options="{'no_create': True, 'no_edit': True}"/>
                                 <field attrs="{'invisible':[('poigne','=',False)]}" name="nb_poigne"/>
                             </group>
                             <group>
-                                <field name="serr"/>
+                                <field name="serr" options="{'no_create': True, 'no_edit': True}"/>
                                 <field attrs="{'invisible':[('serr','=',False)]}" name="nb_serr"/>
                             </group>
                             <group>
