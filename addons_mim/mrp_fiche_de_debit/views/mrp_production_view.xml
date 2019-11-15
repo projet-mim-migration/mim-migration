@@ -131,11 +131,6 @@
                 </group>
             </xpath>
 
-            
-            <!-- Make the raw material editable -->
-            <xpath expr="//notebook/page/field[@name='move_raw_ids']/tree" position="attributes">
-                <attribute name="delete">1</attribute>
-            </xpath>
 
             <!-- Add a new page in notebook -->
             <xpath expr="//notebook/page[2]" position="after">

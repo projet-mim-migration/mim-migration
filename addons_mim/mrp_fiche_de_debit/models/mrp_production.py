@@ -435,7 +435,13 @@ class MrpProduction(models.Model):
                 else:
                     self.move_raw_ids.filtered(lambda x: x.product_id == raw_material.product_id).product_uom_qty = total2
 
-                
+        # Delete the raw material with zero quantity
+        for raw_material in self.move_raw_ids:
+            if raw_material.product_qty <= 0:
+                raw_material.state = 'draft'
+                raw_material.sudo().unlink()
+
+
         self.is_calculated = True
 
 

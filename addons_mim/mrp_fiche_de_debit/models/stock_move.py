@@ -144,7 +144,6 @@ class StockMove(models.Model):
     def action_view_mo(self):
         self.ensure_one()
 
-        id_mo = self.browse()[0].id_mo
         view_ref = self.env['ir.model.data'].get_object_reference('mrp', 'mrp_production_form_view')
         view_id = view_ref and view_ref[1] or False,
         return {
