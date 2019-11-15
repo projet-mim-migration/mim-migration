@@ -22,12 +22,9 @@
 
     # always loaded
     'data': [
-        # 'security/ir.model.access.csv',
-         #'templates.xml',
-        'generation.xml',
-        'generate_quants.py',
+        'security/ir.model.access.csv',
+        'views/generation.xml',
+        #'views/templates.xml',
     ],
-    # only loaded in demonstration mode
-   
+    
 }
-

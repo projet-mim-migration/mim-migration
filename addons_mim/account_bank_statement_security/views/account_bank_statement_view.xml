@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <data>
+    <record id="close_group" model="res.groups">
+      <field name="name">Account(Caisses)-Fermer la caisse</field>
+    </record>
+    <record id="open_group" model="res.groups">
+      <field name="name">Account(Caisses)-Ouvrir la caisse</field>
+    </record>
+    <record id="view_bank_statement_form_inherit" model="ir.ui.view">
+      <field name="name">account.bank.statement.form.inherit</field>
+      <field name="model">account.bank.statement</field>
+      <field name="inherit_id" ref="account.view_bank_statement_form2"/>
+      <field name="arch" type="xml">
+        <xpath expr="//button[@name='button_confirm_cash']" position="replace">
+          <button class="oe_highlight" groups="account_bank_statement_security.close_group" name="button_confirm_cash" states="open" string="Close CashBox" type="object"/>
+        </xpath>
+        <xpath expr="//button[@name='button_open']" position="replace">
+          <button class="oe_highlight" groups="account_bank_statement_security.open_group" name="button_open" states="draft" string="Open CashBox" type="object"/>
+        </xpath>
+      </field>
+    </record>
+  </data>
+</odoo>

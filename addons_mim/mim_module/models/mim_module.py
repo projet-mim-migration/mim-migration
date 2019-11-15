@@ -53,7 +53,7 @@ class mim_wizard(models.TransientModel):
 	hauteur = fields.Float('Hauteur',default = 1.0)
 	dimension = fields.Float('Dimension',default= 0.0)
 	pu_ttc = fields.Float('PU TTC',default= 0.0)
-	quantity = fields.Integer('Quantité')
+	quantity = fields.Integer('Quantité',default = 1)
 	vitre = fields.Many2one('mim.article', string='Vitre', domain=[('category_ids', '=', 'Vitrage')])
 	type_vitre = fields.Selection([('simple','Simple'),('double','Double')], string="")
 	decoratif = fields.Many2one('mim.article', string='Décoratif', domain=[('category_ids', '=', 'Decoratif')])

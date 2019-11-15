@@ -29,9 +29,7 @@ class mim_wizard(models.TransientModel):
 	_inherit = 'mim.wizard'
 	
 	def calcul(self):
-		print("**************************************************************************")
 		print("******************In mim_module_majoration*********************************")
-		print("**************************************************************************")
 		######################
 		largeur = self.largeur
 		hauteur = self.hauteur
@@ -337,7 +335,7 @@ class mim_wizard(models.TransientModel):
 				if remplissage_vitre == u'pleine_1_3':
 					image_name='image31.png'
 			elif intermediaire == 'avec':
-					image_name='image32.png'        
+					image_name='image32.png'
 					
 		if tms == 0.0:
 			if types == 'Coulissante 2VTX':

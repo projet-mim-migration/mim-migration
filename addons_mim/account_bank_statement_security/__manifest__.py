@@ -10,7 +10,7 @@
     'website':'http://mim-madagascar.com',
     'depends':['account'],
     'data':[
-    'account_bank_statement_view.xml',
+    'views/account_bank_statement_view.xml',
     ],
     'test':[],
     'installable':True,
