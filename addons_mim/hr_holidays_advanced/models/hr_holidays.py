@@ -32,16 +32,13 @@ class HrHolidays(models.Model):
         for holiday in self:
             if not holiday.employee_id.parent_id:
                 manager_id = holiday.employee_id.department_id.manager_id
-                print("MANAGER\nMANAGER\nMANAGER\nMANAGER\n {}".format(manager_id))
             else: 
                 manager_id = holiday.employee_id.coach_id
-                print("COACH\nCOACH\nCOACH\nCOACH\nCOACH\n {}".format(manager_id))
             user_id = manager_id.user_id.id
             if self.env.user.id in (user_id,):
                 self.env['hr.leave'].search([('id','=',self.ids[0])]).write({'state':'validate'})
                 #netsvc.LocalService("workflow").trg_validate('hr.leave', holiday.id, 'validate')
             else:
-                print("USER\nUSER\nUSER\n {}".format(self.env.user.id)) 
                 raise exceptions.UserError((u"Seul le Résponsable hiérarchique %s a le droit d'approuver la demande de congé de  %s" \
                                          % (manager_id.name,holiday.employee_id.name)))
         return True

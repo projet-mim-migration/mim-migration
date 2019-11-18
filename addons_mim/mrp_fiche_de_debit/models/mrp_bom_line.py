@@ -31,7 +31,6 @@ class MrpBomLine(models.Model):
         self.ensure_one()
         context = dict(self.env.context or {})
 
-        product_id = self.product_id
         view_ref = self.env['ir.model.data'].get_object_reference('mrp_fiche_de_debit', 'mrp_configuration_component_form_view2')
         view_id = view_ref and view_ref[1] or False,
         component_exist = self.component_exist
@@ -47,9 +46,9 @@ class MrpBomLine(models.Model):
                 'target' : 'new',
                 'nodestroy' : True,
                 'context' : {
-                    'default_product_parent_id' : product_id.id,
-                    'default_line_id' : self.id, 
-                    'default_component_exist' : component_exist,          
+                    'default_product_parent_id' : self.product_id.id,
+                    'default_line_id' : self.id,
+                    'default_component_exist' : component_exist
                 },
             }
         else:

@@ -36,16 +36,17 @@ class ChoiceConfiguration (models.Model):
     
         # Création de l'ordre de fabrication
         self.env.cr.execute('''SELECT mrp_bom.id 
-                      FROM mrp_bom
-                      INNER JOIN product_product
-                      ON mrp_bom.product_id = product_product.id
-                      WHERE product_product.id={0}'''.format(move_data.product_id.id))
+                               FROM mrp_bom
+                               INNER JOIN product_product
+                               ON mrp_bom.product_id = product_product.id
+                               WHERE product_product.id={0}'''.format(move_data.product_id.id)
+        )
  
         res_req = self.env.cr.dictfetchone()
         largeur = move_data.largeur
         hauteur = move_data.hauteur
 
-        if (largeur!=0.0 and hauteur!=0.0):       
+        if (largeur != 0.0 and hauteur != 0.0):       
             if res_req :
                 bom_id = res_req["id"]
             else:
@@ -60,7 +61,7 @@ class ChoiceConfiguration (models.Model):
                 'origin' : move_data.origin,
                 'product_id' : move_data.product_id.id,
                 'product_qty' : move_data.product_qty,
-                'product_uom' : move_data.product_uom.id,
+                'product_uom_id' : move_data.product_uom.id,
                 # 'product_uos_qty' : move_data.product_uos and move_data.product_uos_qty or False,
                 # 'product_uos' : move_data.product_uos and move_data.product_uos.id or False,
                 'location_src_id' : move_data.location_id.id,

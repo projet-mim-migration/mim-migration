@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from odoo import fields, models, api, exceptions
-
+from odoo.tools.safe_eval import safe_eval
 
 
 class MrpProduction(models.Model):
@@ -168,7 +168,8 @@ class MrpProduction(models.Model):
          ('ready', 'Prêt à produire'),
          ('progress', 'In Progress'),
          ('done', 'Done'),
-         ('cancel', 'Cancelled')], 
+         ('cancel', 'Cancelled'),
+         ('picking_except', 'Picking Exception')], 
         string='State',
         default='draft',
         copy=False,
@@ -260,205 +261,29 @@ class MrpProduction(models.Model):
     # Function to calculate the necessary material 
     ##############################################
 
-    def round_float(self, qty):
+    def _round_float(self, qty):
         s = str(qty)
         t = s.split('.')
         dec = 0
+        
         if int(t[1]) > 0:
             dec = 1
+        
         res = int(t[0]) + dec
+        
         return res
     
     #Fonction permettant de calculer le nombre de barres en fonction de la quatité en mm de barres  
     @api.multi
-    def get_nbr_barres(self, qty_mm):
+    def _get_nbr_barres(self, qty_mm):
         self.ensure_one()
+
         len_barre = self.longueur_barre
         # len_barre est la longueur d'une barre en mm par unité
         qty_barres = qty_mm / len_barre
-        return self.round_float(qty_barres)
+        return self._round_float(qty_barres)
     
 
-    # @api.multi
-    # def _action_compute_lines(self, properties=None):
-    #     # Compute product_lines and workcenter_lines from BoM structure
-    #     #@return: product_lines
-        
-
-    #     if properties is None:
-    #         properties = []
-    #     results = []
-    #     prod_line_obj = self.env['mrp.production.product.line']
-    #     workcenter_line_obj = self.env['mrp.production.workcenter.line']
-        
-    #     #Modification ando
-    #     prod_line_obj1 = self.env['mrp.production.product.component.line']
-    #     prod_line_obj2 = self.env['mrp.production.product.accessory.line']
-    #     #prod_line_obj3 = self.pool.get('mrp.production.product.all.component.line')
-        
-    #     for production in self:
-    #         #unlink product_lines
-    #         prod_line_obj.sudo().unlink([line.id for line in production.product_lines])
-            
-            
-    #         #ando unlink product_lines1 components
-    #         prod_line_obj1.sudo().unlink([line.id for line in production.product_lines1])
-            
-    #         #unlink product_lines2 accessories
-    #         prod_line_obj2.sudo().unlink([line.id for line in production.product_lines2])
-    #         #########################
-            
-            
-    #         #unlink workcenter_lines
-    #         workcenter_line_obj.sudo().unlink([line.id for line in production.workcenter_lines])
-            
-    #         res = self._prepare_lines(production, properties=properties)
-    #         results = res[0] # product_lines
-    #         results2 = res[1] # workcenter_lines
-            
-    #         #ando Calcul dynamique de la quatité des composants
-    #         product = self.browse()[0]
-    #         parent_id = product.product_id.id
-    #         qty = product.product_qty
-    #         largeur = product.largeur
-    #         hauteur = product.hauteur
-    #         tms = product.tms
-    #         localdict = {}
-    #         localdict['largeur'] = largeur
-    #         localdict['hauteur'] = hauteur
-    #         localdict['tms'] = tms
-    #         localdict['result'] = None
-    #         localdict['style'] = product.style
-    #         localdict['vitre'] = product.remplissage_vitre
-            
-    #         #Mise à jour
-    #         if not product.vitre :
-    #             localdict['type_vitre'] = 0
-    #         else:localdict['type_vitre'] = product.vitre.id
-            
-    #         localdict['inter'] = product.intermediaire
-    #         localdict['moust'] = product.moustiquaire
-            
-    #         localdict['div'] = product.division
-            
-    #         if not product.nb_division :
-    #             localdict['nb_div'] = 1.0
-    #         else:localdict['nb_div'] = product.nb_division
-            
-    #         if not product.type_intermediaire or product.type_intermediaire=='vert':
-    #             localdict['type_inter'] = 'vert'
-    #         else:localdict['type_inter'] = 'horiz'
-            
-    #         localdict['batis'] = product.batis_id.name
-            
-    #         component = self.env['mrp.component']
-    #         #all_component = []
-    #         l = {}
-    #         for line in results:
-    #             line_id = line['line_id']
-    #             list_id = component.search([('line_id','=',line_id)])
-    #             if list_id:
-    #                 for c in component.browse():
-    #                     total1 = 0.0
-    #                     total2 = 0.0
-                        
-    #                     len_total0 = 0.0
-    #                     len_unit0 =0.0
-    #                     qty_total0 = 0.0
-    #                     #Insértion de tous les sous-composants pour l'impression
-    #                     for s in c.sub_component_ids:
-    #                         localdict['Q'] = qty
-                            
-    #                         safe_eval(s.python_product_qty, localdict, mode='exec', nocopy=True)
-    #                         product_qty = float(localdict['result'])
-    #                         ##################################
-    #                         l['production_id'] = production.id
-    #                         l['product_qty'] = product_qty
-                            
-    #                         localdict['QU'] = product_qty
-                            
-    #                         product_qty0 = product_qty
-                            
-    #                         safe_eval(s.python_product_qty_total, localdict, mode='exec', nocopy=True)
-    #                         product_qty_total = float(localdict['result'])
-                            
-    #                         l['product_qty_total'] = product_qty_total
-    #                         #l['product_qty_total'] = qty * l['product_qty']
-                            
-    #                         qty_total0 = product_qty_total
-                            
-    #                         localdict['QT'] = l['product_qty_total']
-                            
-    #                         total2 = total2 + l['product_qty_total']
-    #                         if not line['is_accessory']:
-    #                             l['ref'] = c.product_parent_id.ref
-    #                             l['name'] = s.name
-    #                             safe_eval(s.python_len_unit, localdict, mode='exec', nocopy=True)
-    #                             len_unit = float(localdict['result'])
-    #                             l['len_unit'] = len_unit
-                                
-    #                             localdict['LU'] = l['len_unit']
-                                
-    #                             #l['len_total'] = l['len_unit'] * l['product_qty_total']
-                                
-    #                             safe_eval(s.python_len_total, localdict, mode='exec', nocopy=True)
-    #                             len_total = float(localdict['result'])
-                                
-    #                             l['len_total'] = len_total
-                                
-    #                             len_total0 = len_total
-                                
-    #                             total1 = total1 + l['len_total']
-                                
-    #                             LU = l['len_unit']
-    #                             LT = l['len_total']
-                                
-    #                             len_unit0 = l['len_unit']
-                                
-    #                             if l['len_total']!=0.0:
-    #                                 prod_line_obj1.create(l.copy())
-    #                         else:
-    #                             if l['product_qty_total']!=0.0:
-    #                                 l['ref'] = c.product_parent_id.name
-    #                                 l['name'] = s.name
-    #                                 prod_line_obj2.create(l.copy())
-    #                         l = {}
-                            
-    #                     if not line['is_accessory']:
-    #                         uom = c.product_parent_id.uom_id.name
-    #                         ref = c.product_parent_id.ref
-    #                         len_barre = self.browse()[0].longueur_barre
-                            
-    #                         if uom == 'Barre':
-                                
-    #                             if ref !='P50-MB':
-    #                                 line['product_qty'] = self.get_nbr_barres(total1)
-    #                             else:
-    #                                 var = (LU/100.0)*LT*qty_total0/len_barre
-    #                                 line['product_qty'] = self.round_float(var)
-                            
-    #                         else:
-    #                             line['product_qty'] = (LU * LT * product_qty_total)/10000.0
-                            
-    #                     else: line['product_qty'] = total2
-    #                     ##########################################
-                        
-    #         #for move_lines in production.move_lines:
-    #         # reset product_lines in production order    
-    #         for line in results:
-    #             if line['product_qty'] !=0.0:
-    #                 line['production_id'] = production.id
-    #                 prod_line_obj.create(line)  
-                                
-    #         #reset workcenter_lines in production order
-    #         for line in results2:
-    #             line['production_id'] = production.id
-    #             workcenter_line_obj.create(line)
-                
-    #         prod_obj = self.env['mrp.production']
-    #         prod_obj.write({'is_calculated':True}) 
-            
-    #     return results
     
     # @api.model
     # def set_move_available(self, production_id):
@@ -492,12 +317,136 @@ class MrpProduction(models.Model):
 
 
 
+    # Calcul for the raw material of a product
+    @api.multi
+    def _calcul_raw_material(self):
+        self.ensure_one()
 
+        localdict = {
+            'Q': self.product_qty,
+            'largeur': self.largeur,
+            'hauteur': self.hauteur,
+            'tms': self.tms,
+            'result': None,
+            'style': self.style,
+            'vitre': self.remplissage_vitre,
+            'inter': self.intermediaire,
+            'moust': self.moustiquaire,
+            'div': self.division,
+            'batis': self.batis_id.name,
+        }
+        # Mise à jour
+        if not self.vitre:
+            localdict['type_vitre'] = 0
+        else:
+            localdict['type_vitre'] = self.vitre.id
+        
+        if not self.nb_division:
+            localdict['nb_div'] = 1.0
+        else:
+            localdict['nb_div'] = self.nb_division
+        
+        if not self.type_intermediaire or self.type_intermediaire=='vert':
+            localdict['type_inter'] = 'vert'
+        else:
+            localdict['type_inter'] = 'horiz'
+            
+
+        l = {}
+        # The raw material for the product
+        for raw_material in self.bom_id.bom_line_ids:
+            for component in self.env['mrp.component'].search([('line_id', '=', raw_material.product_id.id)]):
+                total1 = 0.0
+                total2 = 0.0
+                
+                len_total0 = 0.0
+                len_unit0 =0.0
+                qty_total0 = 0.0
+                for sub_component in component.sub_component_ids:
+                    safe_eval(sub_component.python_product_qty, localdict, mode='exec', nocopy=True)
+                    product_qty = float(localdict['result'])
+
+                    l['production_id'] = self.id
+                    l['product_qty'] = product_qty
+                            
+                    localdict['QU'] = product_qty
+                            
+                    product_qty0 = product_qty
+
+                    safe_eval(sub_component.python_product_qty_total, localdict, mode='exec', nocopy=True)
+                    product_qty_total = float(localdict['result'])
+                            
+                    l['product_qty_total'] = product_qty_total
+                            
+                    qty_total0 = product_qty_total
+                            
+                    localdict['QT'] = l['product_qty_total']
+
+                    total2 = total2 + l['product_qty_total']
+                    
+                    if not raw_material.is_accessory:
+                        l['ref'] = component.product_parent_id.ref
+                        l['name'] = sub_component.name
+                        
+                        safe_eval(sub_component.python_len_unit, localdict, mode='exec', nocopy=True)
+                        len_unit = float(localdict['result'])
+                        
+                        l['len_unit'] = len_unit
+                        localdict['LU'] = l['len_unit']
+                        
+                        safe_eval(sub_component.python_len_total, localdict, mode='exec', nocopy=True)
+                        len_total = float(localdict['result'])
+                        
+                        l['len_total'] = len_total
+                        len_total0 = len_total
+                        
+                        total1 = total1 + l['len_total']
+                        
+                        LU = l['len_unit']
+                        LT = l['len_total']
+                        
+                        len_unit0 = l['len_unit']
+                        
+                        if l['len_total'] != 0.0:
+                            self.env['stock.move.component.line'].create(l.copy())
+                    else:
+                        if l['product_qty_total'] != 0.0:
+                            l['ref'] = component.product_parent_id.name
+                            l['name'] = sub_component.name
+                            self.env['stock.move.accessory.line'].create(l.copy())
+                    
+                    l = {}
+                  
+                if not raw_material.is_accessory:
+                    uom = component.product_parent_id.uom_id.name
+                    ref = component.product_parent_id.ref
+                    len_barre = self.longueur_barre
+                    
+                    if uom == 'Barre':
+                        if ref != 'P50-MB':
+                            self.move_raw_ids.filtered(lambda x: x.product_id == raw_material.product_id).product_uom_qty = self._get_nbr_barres(total1)
+                        else:
+                            var = (LU / 100.0) * LT * qty_total0 / len_barre
+                            self.move_raw_ids.filtered(lambda x: x.product_id == raw_material.product_id).product_uom_qty = self._round_float(var)
+                            
+                    else:
+                        self.move_raw_ids.filtered(lambda x: x.product_id == raw_material.product_id).product_uom_qty = (LU * LT * product_qty_total) / 10000.0
+
+                else:
+                    self.move_raw_ids.filtered(lambda x: x.product_id == raw_material.product_id).product_uom_qty = total2
+
+                
+        self.is_calculated = True
 
 
     # Implementation of workflow modified
     @api.multi
     def sheet_verified(self):
+        # state_move = self.env['stock.move'].search([('production_id', '=', self.id)]).state
+        # if state_move != 'contre_mesure':
+        #     raise exceptions.UserError("Le mouvement lié à cet ordre fabrication n'est pas encore dans l'état contre-mesure")
+        # if self.hauteur == 0.0 or self.largeur == 0.0:
+        #     raise exceptions.UserError('Les contre-mesures ne doivent pas être vides. Merci de faire remplir par le responsable dans le bon de livraison lié')
         self.state = 'verified'
 
     @api.multi
@@ -519,12 +468,6 @@ class MrpProduction(models.Model):
         else:
             self.state = 'ready'
 
-    
-    # Function for produce
-    @api.multi
-    def open_produce_product(self):
-        self.state = 'progress'
-        return super(MrpProduction, self).open_produce_product()
 
     # Function for set a draft
     @api.multi
@@ -532,4 +475,9 @@ class MrpProduction(models.Model):
         self.state = 'draft'
 
         
-    
+    @api.model
+    def create(self, values):
+        production = super(MrpProduction, self).create(values)
+        
+        production._calcul_raw_material()
+        return production

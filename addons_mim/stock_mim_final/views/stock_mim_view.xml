@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+		<record id="view_move_form1" model="ir.ui.view">
+			<field name="name">stock.move.form.inherit1</field>
+			<field name="model">stock.move</field>
+			<field name="inherit_id" ref="stock.view_move_form" />
+			<field name="arch" type="xml">
+					<xpath expr="//field[@name='state']" position="after">
+					    <button name="contre_mesure" states="draft,confirmed,assigned,flowsheeting,contre_mesure" string="Contre mesure" class="oe_highlight" type="workflow"/>
+					</xpath >
+			</field>
+		</record>
+
+		<record id="view_move_form2" model="ir.ui.view">
+			<field name="name">stock.move.form.inherit2</field>
+			<field name="model">stock.move</field>
+			<field name="inherit_id" ref="stock.view_move_form" />
+			<field name="arch" type="xml">
+					<xpath expr="//field[@name='state']" position="after">
+						<button name="annuler_contre_mesure" states="contre_mesure" string="Annuler contre mesure" class="oe_highlight" type="workflow"/>
+					</xpath >
+			</field>
+		</record>
+
+		<record id="view_move_form3" model="ir.ui.view">
+			<field name="name">stock.move.form.inherit3</field>
+			<field name="model">stock.move</field>
+			<field name="inherit_id" ref="stock.view_move_form" />
+			<field name="arch" type="xml">
+					<xpath expr="//field[@name='state']" position="after">
+						<button name="flow_sheet" states="draft,confirmed,assigned,contre_mesure,flowsheeting" string="Fiche Débit" class="oe_highlight" type="workflow"/>
+					</xpath >
+			</field>
+		</record>
+
+		<record id="view_move_form4" model="ir.ui.view">
+			<field name="name">stock.move.form.inherit4</field>
+			<field name="model">stock.move</field>
+			<field name="inherit_id" ref="stock.view_move_form" />
+			<field name="arch" type="xml">
+					<xpath expr="//field[@name='state']" position="after">
+						<button name="flow_sheet_cancel" states="flowsheeting" string="Annuler Fiche Débit" class="oe_highlight" type="workflow"/>
+					</xpath >
+			</field>
+		</record>
+
+		<record id="view_move_form5" model="ir.ui.view">
+			<field name="name">stock.move.form.inherit5</field>
+			<field name="model">stock.move</field>
+			<field name="inherit_id" ref="stock.view_move_form" />
+			<field name="arch" type="xml">
+					<xpath expr="//field[@name='state']" position="replace">
+					 <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,contre_mesure,flowsheeting,assigned,done" statusbar_colors='{"waiting":"blue","confirmed":"blue"}'/>
+					</xpath >
+			</field>
+		</record>
+</odoo>

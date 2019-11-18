@@ -20,24 +20,28 @@
                 <button name="sheet_verified"
                         type="object" 
                         attrs="{'invisible': ['|','&amp;',('is_calculated','=',False),('is_printable','=',True),('state','not in',('draft'))]}" 
-                        string="Fiche vérifiée" 
+                        string="Fiche vérifiée"
                         class="oe_highlight"
+                        groups="mrp_fiche_de_debit.mrp_verifier"
                         />
                 <button name="cancel_validation"
                         type="object" 
                         string="Annuler la validation" 
-                        states="validated,confirmed" 
+                        states="validated,confirmed"
+                        groups="mrp_fiche_de_debit.mrp_valider"
                         />
                 <button name="button_validate"
                         type="object" 
                         string="Valider la fiche de débit" 
                         states="verified" 
                         class="oe_highlight" 
+                        groups="mrp_fiche_de_debit.mrp_valider"
                         />
                 <button name="set_draft" 
                         type="object" 
                         states="verified" 
                         string="Remettre à Nouveau" 
+                        groups="mrp_fiche_de_debit.mrp_set_draft"
                         />
             </xpath>
 
@@ -46,19 +50,37 @@
                 <attribute name="attrs">
                     {'invisible': ['|', '|', ('availability', 'in', ('assigned', 'none')), ('is_locked', '=', False), ('state','not in',('validated', 'confirmed', 'ready'))]}
                 </attribute>
+                <attribute name="groups">
+                    mrp_fiche_de_debit.mrp_confirmer
+                </attribute>
             </xpath>
             <xpath expr="/form/header/button[@name='button_unreserve']" position="attributes">
                 <attribute name="attrs">
                     {'invisible': ['|', ('unreserve_visible', '=', False), ('state', 'in', ('progress'))]}
                 </attribute>
             </xpath>
+            <xpath expr="/form/header/button[@name='button_mark_done']" position="replace">
+                <button name="button_mark_done" 
+                        type="object" 
+                        states="progress" 
+                        string="Marqué comme fait" 
+                        />
+            </xpath>
+            <xpath expr="/form/header/button[@name='action_cancel']" position="attributes">
+                <attribute name="groups">
+                    mrp_fiche_de_debit.mrp_annuler
+                </attribute>
+            </xpath>
+            
 
             <xpath expr="/form/header/button[@name='open_produce_product']" position="replace">
                 <button name="open_produce_product" 
                         attrs="{'invisible': ['|', '|', '|', '|', ('is_locked', '=', False), ('check_to_done', '=', True), ('availability', 'not in', ('assigned')), ('state', 'not in', ('ready')), ('routing_id', '!=', False)]}" 
                         string="Produce" 
                         type="object" 
-                        class="oe_highlight"/>
+                        class="oe_highlight"
+                        groups="mrp_fiche_de_debit.mrp_fabriquer"
+                        />
             </xpath>
 
             <!-- Workflow state -->

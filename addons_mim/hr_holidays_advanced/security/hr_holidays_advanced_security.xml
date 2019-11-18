@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+    <data>
+        <record id="group_hr_holiday" model="res.groups">
+            <field name="name">Ressources humaines / Demande de congés</field>
+        </record>
+        <record id="group_hr_holiday1" model="res.groups">
+            <field name="name">Ressources humaines / Première validation de congé</field>
+        </record>
+        <record id="group_hr_holiday2" model="res.groups">
+            <field name="name">Ressources humaines / Deuxième validation de congé</field>
+        </record>
+    </data>
+</odoo>

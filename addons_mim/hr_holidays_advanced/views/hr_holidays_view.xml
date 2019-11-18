@@ -1,24 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <odoo>
-	<data>
-	    <record id="group_hr_holiday" model="res.groups">
-            <field name="name">Ressources humaines / Demande de congés</field>
-        </record>
-        <record id="group_hr_holiday1" model="res.groups">
-            <field name="name">Ressources humaines / Première validation de congé</field>
-        </record>
-        <record id="group_hr_holiday2" model="res.groups">
-            <field name="name">Ressources humaines / Deuxième validation de congé</field>
-        </record>
-	    
+	<data>	    
    		<record model="ir.ui.view" id="edit_holiday_new_inherit">
 			<field name="name">hr.leave.form</field>
 			<field name="model">hr.leave</field>
 			<field name="inherit_id" ref="hr_holidays.hr_leave_view_form" />
 			<field name="arch" type="xml">
 				<xpath expr="//button[@name='action_validate']" position="before">
-					<button name="test_manager" string="Approuver la demande" type="object" states="confirm" class="oe_highlight" />
+					<button name="test_manager" 
+                            string="Approuver la demande" 
+                            type="object" 
+                            states="confirm" 
+                            class="oe_highlight" />
 				</xpath>
 				<xpath expr="//button[@name='action_validate']" position="replace">
 					<button name="validate" invisible="1" />
@@ -28,11 +22,14 @@
 				<xpath expr="//field[@name='employee_id']" position="before">
 					<field name="holiday_type" attrs="{'readonly':[('state','!=','draft')]}" string="Mode" groups="hr_holidays_advanced.group_hr_holiday" context="{'employee_id':employee_id}"/>
 			    </xpath>
+
 			    <xpath expr="//field[@name='employee_id']" position="replace">
 					<field name="employee_id" attrs="{'required':[('holiday_type','=','employee')],'invisible':[('holiday_type','=','category')]}" groups="hr_holidays_advanced.group_hr_holiday"/>
 				</xpath>
 				<xpath expr="//field[@name='department_id']" position="replace">
-					<field name="department_id" attrs="{'readonly':[('holiday_type','=','category')],'invisible':[('holiday_type','=','category')]}" groups="hr_holidays_advanced.group_hr_holiday"/>
+					<field name="department_id" 
+                           attrs="{'readonly':[('holiday_type','=','category')],'invisible':[('holiday_type','=','category')]}" 
+                           groups="hr_holidays_advanced.group_hr_holiday"/>
 				</xpath>
 			</field>
 		</record>
