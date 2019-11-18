@@ -24,7 +24,7 @@
     'data': [
         'security/ir.model.access.csv',
         'security/mrp_security.xml',
-        # 'security/stock_security.xml',
+        'security/stock_security.xml',
         'views/choice_config_view.xml',
         # 'views/contremesure_view.xml',
         'views/mrp_bom_view.xml',

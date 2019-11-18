@@ -15,13 +15,13 @@
                         groups="mrp_fiche_de_debit.create_mo"/>
                     
                     
-                    <!-- <button name="action_view_mo" 
+                    <button name="action_view_mo" 
                         states="flowsheeting" 
                         type ="object" 
                         string="Voir l'ordre de fabrication" 
                         class="oe_highlight" 
                         attrs="{'invisible': [('is_mo_created','=',False)]}"
-                        groups="mrp_fiche_de_debit.view_mo"/> -->
+                        groups="mrp_fiche_de_debit.view_mo"/>
                 </xpath>
                 <xpath expr="//group[@name='quants_grp']" position="before">
                     <group col="2">

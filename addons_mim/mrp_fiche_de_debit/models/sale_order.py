@@ -12,13 +12,11 @@ class SaleOrder(models.Model):
         self.ensure_one()
         
         ctx = dict()
-        sujet = self.name
-        order_id = self.id
         order_ref = sujet[2:]
         ctx.update({
-            'default_sujet' : 'Devis '+sujet,
+            'default_sujet' : 'Devis '+ self.name,
             'default_order_ref' : order_ref,
-            'default_order_id' : order_id,
+            'default_order_id' : self.id,
         })
         return {
             'name': 'Mim Wizard',

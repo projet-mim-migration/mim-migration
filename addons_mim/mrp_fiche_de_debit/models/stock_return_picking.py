@@ -13,7 +13,7 @@ class StockReturnPicking(models.TransientModel):
     def _create_returns(self):
         self.ensure_one()
 
-        context = dict(self._context or {})
+        context = dict(self.env.context or {})
         record_id = context and context.get('active_id', False) or False
         move_obj = self.env['stock.move']
         pick_obj = self.env['stock.picking']
