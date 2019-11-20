@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
 	<data>
 
@@ -9,19 +10,20 @@
 			    <xpath expr="//field[@name='origin']" position="before">
 						<field name="date" string="Date de livraison"/>
 				</xpath>
-			</field>
-		</record>
-
-		<record id="view_picking_out_form_inherit8" model="ir.ui.view">
-			<field name="name">stock.picking.out.form.inherit8</field>
-			<field name="model">stock.move</field>
-			<field name="inherit_id" ref="stock.view_move_tree_receipt_picking" />
-			<field name="arch" type="xml">
-			    <xpath expr="//field[@name='date']" position="replace">
+				<xpath expr="//field[@name='date']" position="replace">
 						<field name="min_date" string="Date de contre-mesure"/>
 				</xpath>
 			</field>
 		</record>
+
+		<!--<record id="view_picking_out_form_inherit8" model="ir.ui.view">
+			<field name="name">stock.picking.out.form.inherit8</field>
+			<field name="model">stock.move</field>
+			<field name="inherit_id" ref="stock.view_move_tree_receipt_picking" />
+			<field name="arch" type="xml">
+			    
+			</field>
+		</record>-->
 
 	</data>
 </odoo>

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "stock_bon_livraison_mim  ",
+    'name': "stock_bon_livraison_mim",
 
     'summary': """
         stock_bon_livraison_mim """,

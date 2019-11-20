@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
 	<data>
 		<record id="stock_picking_tree9" model="ir.ui.view">
@@ -8,19 +9,20 @@
 					<xpath expr="/tree/field[@name='date']" position="replace">
 						<field name="min_date" string="Date de contre-mesure"/>
 					</xpath>
-			</field>
-		</record>
-
-		<record id="stock_picking_tree11" model="ir.ui.view">
-			<field name="name">stock.picking..tree.inherit11</field>
-			<field name="model">stock.picking</field>
-			<field name="inherit_id" ref="stock.vpicktree" />
-			<field name="arch" type="xml">
-			    	<xpath expr="//field[@name='partner_id']" position="after">
+					<xpath expr="//field[@name='partner_id']" position="after">
 						<field name="date" string="Date de livraison"/>
 					</xpath>
 			</field>
 		</record>
+
+		<!--<record id="stock_picking_tree11" model="ir.ui.view">
+			<field name="name">stock.picking..tree.inherit11</field>
+			<field name="model">stock.picking</field>
+			<field name="inherit_id" ref="stock.vpicktree" />
+			<field name="arch" type="xml">
+			    	
+			</field>
+		</record>-->
 	</data>
 </odoo>
 
