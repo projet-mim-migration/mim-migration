@@ -23,9 +23,16 @@ class stock_move(models.Model):
                        "* Available: When products are reserved, it is set to \'Available\'l.\n"\
                        "* Done: When the shipment is processed, the state is \'Done\'.")
     
+    def action_done(self):
+      if self.state in ['draft','assigned','cancel','contre_mesure','confirmed','flowsheeting']:
+        self._action_done()
+      else:
+        pass
+        
     def action_confirm(self):
       if self.state in ['draft','cancel']:
-        self.state = 'confirmed'
+        #self.state = 'confirmed'
+        self._action_confirm()
       else:
         pass
 
@@ -57,6 +64,6 @@ class stock_move(models.Model):
 
     def force_assign(self):
       if self.state == 'flowsheeting':
-        self._action_assign()
+        self.state = 'assigned'
       else:
         pass

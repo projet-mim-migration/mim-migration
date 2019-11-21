@@ -7,6 +7,19 @@ class stock_move(models.Model):
 
 	_inherit = 'stock.move'
 	
+	def flow_sheet(self):
+      if self.state == 'contre_mesure':
+        self.state = 'flowsheeting'
+      else:
+        pass
+
+    def flow_sheet_cancel(self):
+      if self.state == 'flowsheeting':
+        self.state = 'contre_mesure'
+      else:
+        pass
+
+
 	state = fields.Selection([('draft', 'New'),
 								   ('cancel', 'Cancelled'),
 								   ('waiting', 'Waiting Another Move'),

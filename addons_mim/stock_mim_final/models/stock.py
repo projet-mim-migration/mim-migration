@@ -42,10 +42,9 @@ class stock_picking(models.Model):
 
     def force_assign(self):
       if self.state == 'flowsheeting':
-        self._action_assign()
+        self.state = 'assigned'
       else:
         pass
-
     
     #@api.depends('pick.move_lines', 'x.state', 'move.partially_available')
     @api.one

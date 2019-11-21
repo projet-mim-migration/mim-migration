@@ -24,7 +24,7 @@
 			<field name="inherit_id" ref="stock.view_move_form" />
 			<field name="arch" type="xml">
 					<xpath expr="//field[@name='state']" position="before">
-						<button name="_action_done" states="draft,assigned,cancel,contre_mesure,confirmed,flowsheeting" string="Process Entirely" type="object" class="oe_highlight" groups="stock_mim_buttom.group_traitement"/>
+						<button name="action_done" states="draft,assigned,cancel,contre_mesure,confirmed,flowsheeting" string="Process Entirely" type="object" class="oe_highlight" groups="stock_mim_buttom.group_traitement"/>
 					</xpath>
 			</field>
 		</record>

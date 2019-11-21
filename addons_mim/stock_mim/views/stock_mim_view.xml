@@ -7,8 +7,8 @@
             <field name="inherit_id" ref="stock.view_move_form"/>
             <field name="arch" type="xml">
                 <xpath expr="/form/header//field[@name='state']" position="after">
-                    <button name="flow_sheet" states="draft,confirmed,flowsheeting,assigned,done" string="Fiche Débit" class="oe_highlight"/>
-                    <button name="flow_sheet_cancel" states="draft,confirmed,flowsheeting,assigned,done" string="Annuler Fiche Débit"/>
+                    <button name="flow_sheet" states="draft,confirmed,flowsheeting,assigned,done" string="Fiche Débit" class="oe_highlight" type="object"/>
+                    <button name="flow_sheet_cancel" states="draft,confirmed,flowsheeting,assigned,done" string="Annuler Fiche Débit" type="object"/>
                 </xpath>
                 <xpath expr="//form/header/field[@name='state']" position="replace">
                     <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,flowsheeting,assigned,done" statusbar_colors='{"waiting":"blue","confirmed":"blue"}'/>

@@ -6,7 +6,7 @@
 			<field name="inherit_id" ref="stock.view_picking_form" />
 			<field name="arch" type="xml">
 					<xpath expr="//field[@name='is_locked']" position="after">
-						<button name="flow_sheet" states="contre_mesure" string="Fiche Débit" class="oe_highlight" />
+						<button name="flow_sheet" states="contre_mesure" string="Fiche Débit" type="object" class="oe_highlight" />
 					</xpath >
 			</field>
 		</record>
@@ -17,7 +17,7 @@
 			<field name="inherit_id" ref="stock.view_picking_form" />
 			<field name="arch" type="xml">
 					<xpath expr="//field[@name='is_locked']" position="after">
-						<button name="flow_sheet_cancel" states="flowsheeting" string="Annuler Fiche Débit" />
+						<button name="flow_sheet_cancel" states="flowsheeting" type="object" string="Annuler Fiche Débit" />
 					</xpath >
 			</field>
 		</record>
@@ -28,7 +28,7 @@
 			<field name="inherit_id" ref="stock.view_picking_form" />
 			<field name="arch" type="xml">
 					<xpath expr="//field[@name='is_locked']" position="after">
-						<button name="contre_mesure" states="confirmed" string="Contre mesure" class="oe_highlight"/>
+						<button name="contre_mesure1" states="confirmed" string="Contre mesure" class="oe_highlight" type="object"/>
 					</xpath >
 			</field>
 		</record>
@@ -39,7 +39,7 @@
 			<field name="inherit_id" ref="stock.view_picking_form" />
 			<field name="arch" type="xml">
 					<xpath expr="//field[@name='is_locked']" position="after">
-						<button name="annuler_contre_mesure" states="contre_mesure" string="Annuler contre mesure"/>
+						<button name="annuler_contre_mesure" states="contre_mesure" string="Annuler contre mesure" type="object"/>
 					</xpath >
 			</field>
 		</record>
