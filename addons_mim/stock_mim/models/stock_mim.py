@@ -22,3 +22,5 @@ class stock_move(models.Model):
 					   "* Available: When products are reserved, it is set to \'Available\'l.\n"\
 					   "* Done: When the shipment is processed, the state is \'Done\'.")
 
+
+	

@@ -2,7 +2,7 @@
 import time
 from datetime import datetime
 
-from odoo import models, fields, api
+from odoo import models, fields, api, exceptions
 
 
 class stock_picking(models.Model):
@@ -15,7 +15,7 @@ class stock_picking(models.Model):
     # Evenement losrque la date de livraison est modifié
     @api.one
     def onchange_fields(self):
-        if len(ids) > 0:
+        if len(self.ids) > 0:
             return {'value': {'date_changed': True}}
         else:
             return {'value': {'date_changed': False}}
@@ -36,17 +36,17 @@ class stock_picking(models.Model):
                             'model': 'stock.picking',
                             # 'record_name':picking_data.name,
                             'date': time.strftime('%Y-%m-%d %H:%M:%S'),
-                            'author_id': user.partner_id.id,
-                            'res_id': ids[0],
+                            'author_id': self.env.user.partner_id.id,
+                            'res_id': self.ids[0],
                             'type': 'comment',
                         }
                         self.env['mail.message'].create(vals2)
                         vals['date_changed'] = False
                         vals['motivation'] = False
                     else:
-                        raise self.env.osv.except_osv(('Erreur'), ('Veuillez saisir la motivation de votre modification'))
+                        raise exceptions.Warning(('Veuillez saisir la motivation de votre modification'))
                 else:
-                    raise self.env.osv.except_osv(('Erreur'), ('Veuillez saisir la motivation de votre modification'))
+                    raise exceptions.Warning(('Veuillez saisir la motivation de votre modification'))
 
         super(stock_picking, self).write(vals)
 

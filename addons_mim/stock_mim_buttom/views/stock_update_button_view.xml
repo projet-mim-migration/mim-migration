@@ -1,15 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <odoo>
    <data>
-	    <record id="view_move_form20" model="ir.ui.view">
+   		<record id="group_disponible" model="res.groups">
+            <field name="name">Utilisteurs Rendre disponible</field>
+        </record>
+        <record id="group_traitement" model="res.groups">
+            <field name="name">Utilisteurs Traitement</field>
+        </record>
+	    <!--<record id="view_move_form20" model="ir.ui.view">
 			<field name="name">stock.move.form.inherit20</field>
 			<field name="model">stock.move</field>
 			<field name="inherit_id" ref="stock.view_move_form" />
 			<field name="arch" type="xml">
 					<xpath expr="//field[@name='state']" position="before">
-					    <button name="force_assign" states="draft,assigned,cancel,contre_mesure,confirmed,flowsheeting" string="Set Available" type="workflow" class="oe_highlight"/>
+					    <button name="force_assign" states="draft,assigned,cancel,contre_mesure,confirmed,flowsheeting" string="Set Available" type="object" class="oe_highlight" groups="group_disponible"/>
 				  	</xpath>
 			</field>
-		</record>
+		</record>-->
 
 	    <record id="view_move_form21" model="ir.ui.view">
 			<field name="name">stock.move.form.inherit21</field>
@@ -17,21 +24,21 @@
 			<field name="inherit_id" ref="stock.view_move_form" />
 			<field name="arch" type="xml">
 					<xpath expr="//field[@name='state']" position="before">
-						<button name="action_done" states="draft,assigned,cancel,contre_mesure,confirmed,flowsheeting" string="Process Entirely" type="workflow" class="oe_highlight"/>
+						<button name="_action_done" states="draft,assigned,cancel,contre_mesure,confirmed,flowsheeting" string="Process Entirely" type="object" class="oe_highlight" groups="stock_mim_buttom.group_traitement"/>
 					</xpath>
 			</field>
 		</record>
 
-	    <record id="view_move_form22" model="ir.ui.view">
+	    <!--<record id="view_move_form22" model="ir.ui.view">
 			<field name="name">stock.move.form.inherit22</field>
 			<field name="model">stock.move</field>
 			<field name="inherit_id" ref="stock.view_move_form" />
 			<field name="arch" type="xml">
 					<xpath expr="//field[@name='state']" position="before">
-						<button name="action_confirm" states="draft,cancel" string="Process Later" type="workflow" class="oe_highlight"/>
+						<button name="_action_confirm" states="draft,cancel" string="Process Later" type="object" class="oe_highlight"/>
 					</xpath>
 			</field>
-		</record>
+		</record>-->
 
 	    <record id="view_move_form23" model="ir.ui.view">
 			<field name="name">stock.move.form.inherit23</field>
@@ -39,7 +46,7 @@
 			<field name="inherit_id" ref="stock.view_move_form" />
 			<field name="arch" type="xml">
 					<xpath expr="//field[@name='state']" position="before">
-						<button name="293" string="Process Partially" type="action" states="assigned" class="oe_highlight"/>
+						<button name="293" string="Process Partially" type="action" states="assigned" class="oe_highlight" groups="stock_mim_buttom.group_traitement"/>
 					</xpath>
 			</field>
 		</record>
@@ -53,7 +60,7 @@
 			<field name="inherit_id" ref="stock.view_picking_form"/>
 			<field name="arch" type="xml">
 					<xpath expr="//field[@name='show_lots_text']" position="before">
-					    <button name="action_confirm" states="draft,cancel" string="Process Later" type="workflow" class="oe_highlight"/>
+					    <button name="action_confirm" states="draft,cancel" string="Process Later" type="object" class="oe_highlight"/>
 					</xpath>
 			</field>
 		</record>
@@ -76,11 +83,11 @@
 			<field name="inherit_id" ref="stock.view_picking_form" />
 			<field name="arch" type="xml">
 					<xpath expr="//field[@name='show_lots_text']" position="before">
-					    <button name="force_assign" states="draft,assigned,cancel,contre_mesure,confirmed,flowsheeting" string="Set Available" type="workflow" class="oe_highlight"/>
+					    <button name="force_assign" states="draft,assigned,cancel,contre_mesure,confirmed,flowsheeting" string="Set Available" type="object" class="oe_highlight"/>
 				  	</xpath>
 			</field>
 	    </record>
-	    -->
+	    
          <!--
 	    <record id="view_move_form25" model="ir.ui.view">
 			<field name="name">stock.move.form.inherit25</field>

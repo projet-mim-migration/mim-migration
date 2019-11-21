@@ -7,7 +7,7 @@
 			<field name="arch" type="xml">
 					<xpath expr="//field[@name='state']" position="after">
 						<button name="flow_sheet" states="contre_mesure" string="Fiche Débit" class="oe_highlight" />
-					</xpath >
+					</xpath>
 			</field>
 		</record>
 

@@ -233,7 +233,7 @@ class MrpProduction(models.Model):
     
     # #champ permettant de prendre le nom du client
     partner_name = fields.Char(
-        string='Nom du client',
+        string='Nom du client', 
         compute=_get_partner_name
     )
     
@@ -487,3 +487,4 @@ class MrpProduction(models.Model):
         
         production._calcul_raw_material()
         return production
+        

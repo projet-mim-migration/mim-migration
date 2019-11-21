@@ -23,10 +23,10 @@ class stock_mrp (models.Model):
     
     def update_move_data(self):
         # TODO
-        picking_id = self.browse()[0].picking_id
+        picking_id = self.picking_id #?????????????
         picking_obj = self.env["stock.picking"]
         # recuperer
-        new_date_planned = self.browse()[0].date_planned
+        new_date_planned = self.date_planned
         for pick in picking_obj.browse([picking_id]):
             for move in pick.move_lines:
                 stock_move_id = move.id

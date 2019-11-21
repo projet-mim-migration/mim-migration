@@ -17,7 +17,6 @@ class mim_wizard(models.TransientModel):
 
 	####cette fonction permet la crÃ©ation d'une ligne de commande grÃ¢ce Ã  sale_order_line_obj.create(cr, uid, {'name': name,'order_id':rec_ref, 'price_unit' : rec_total})####
 	def order_line_create(self):
-		
 		sale_order_line_obj = self.env['sale.order.line']#on recupÃ¨re l'objet sale.order.line pour l'utiliser avec la fonction ORM create 
 		#### dÃ©but de la rÃ©cupÃ¨ration des diffÃ©rents paramÃ¨tres saisi sur le pop-up####
 		select_type = self.select_type
@@ -660,7 +659,12 @@ class sale_order(models.Model):
 	####cette fonction permet de rÃ©cupÃ©rer la rÃ©fÃ©rence du devis en cours de modification par ex SO003####
 	@api.multi
 	def action_mim_wizard(self):
-	  
+		print('######################################################################')
+		print('######################################################################')
+		print('##CORRECTION_ID##')
+		print('######################################################################')
+		print('######################################################################')
+			  
 		mod_obj = self.env['ir.model.data']
 		res = mod_obj.get_object_reference('mim_module', 'view_mim_wizard')
 		res_id = res and res[1] or False,

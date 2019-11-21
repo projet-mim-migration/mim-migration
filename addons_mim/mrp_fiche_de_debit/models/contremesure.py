@@ -7,8 +7,8 @@ class ContreMesure(models.Model):
     _name = 'contremesure'
 
 
-    def _get_stock_move_id():
-        context = dict(self._context or {})
+    def _get_stock_move_id(self):
+        context = dict(self.env.context or {})
         return context.get('stock_move_id', False)
 
     largeur = fields.Float(

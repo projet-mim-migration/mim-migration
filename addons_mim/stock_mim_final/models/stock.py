@@ -6,8 +6,49 @@ from odoo import models, fields, api
 class stock_picking(models.Model):
     _inherit = 'stock.picking'
 
-    @api.one
+
+    
+    def action_confirm(self):
+      if self.state in ['draft','cancel']:
+        self.state = 'confirmed'
+      else:
+        pass
+
+    def contre_mesure1(self):
+      if self.state in ['draft','confirmed']:
+        self.state = 'contre_mesure'
+      else:
+        pass
+
+    def annuler_contre_mesure(self):
+      
+      if self.state == 'contre_mesure':
+        self.state = 'confirmed'
+      else:
+        pass
+
+    def flow_sheet(self):
+      if self.state == 'contre_mesure':
+        self.state = 'flowsheeting'
+      else:
+        pass
+
+    def flow_sheet_cancel(self):
+      if self.state == 'flowsheeting':
+        self.state = 'contre_mesure'
+      else:
+        pass
+
+
+    def force_assign(self):
+      if self.state == 'flowsheeting':
+        self._action_assign()
+      else:
+        pass
+
+    
     #@api.depends('pick.move_lines', 'x.state', 'move.partially_available')
+    @api.one
     def _state_get_new(self, field_name, arg):
         '''The state of a picking depends on the state of its related stock.move
             draft: the picking has no line or any one of the lines is draft
@@ -71,22 +112,18 @@ class stock_picking(models.Model):
         return list(res)
 
     
-    state = fields.Selection(compute=_state_get_new, copy=False,
-                                 selection=[
-                                     ('draft', 'Draft'),
-                                     ('cancel', 'Cancelled'),
-                                     ('waiting', 'Waiting Another Operation'),
-                                     ('confirmed', 'Waiting Availability'),
-                                     ('partially_available', 'Partially Available'),
-                                     ('assigned', 'Ready to Transfer'),
-                                     ('done', 'Transferred'),
-                                 ], string='Status', readonly=True, select=True,
-                                 help="""
-                * Draft: not confirmed yet and will not be scheduled until confirmed\n
-                * Waiting Another Operation: waiting for another move to proceed before it becomes automatically available (e.g. in Make-To-Order flows)\n
-                * Waiting Availability: still waiting for the availability of products\n
-                * Partially Available: some products are available and reserved\n
-                * Ready to Transfer: products reserved, simply waiting for confirmation.\n
-                * Transferred: has been processed, can't be modified or cancelled anymore\n
-                * Cancelled: has been cancelled, can't be confirmed anymore"""
-                                 )
+    state = fields.Selection([('draft', 'New'),
+                                   ('cancel', 'Cancelled'),
+                                   ('waiting', 'Waiting Another Move'),
+                                   ('confirmed', 'Waiting Availability'),
+                                   ('contre_mesure', 'Contre mesure'),
+                                   ('flowsheeting',u'Fiche de Débit'),
+                                   ('assigned', 'Available'),
+                                   ('done', 'Done'),
+                                   ], 'Status', readonly=True, select=True,
+                 help= "* New: When the stock move is created and not yet confirmed.\n"\
+                       "* Waiting Another Move: This state can be seen when a move is waiting for another one, for example in a chained flow.\n"\
+                       "* Waiting Availability: This state is reached when the procurement resolution is not straight forward. It may need the scheduler to run, a component to me manufactured...\n"\
+               "* Fiche de Debit: the state is \'Fiche de Debit\'.\n"
+                       "* Available: When products are reserved, it is set to \'Available\'l.\n"\
+                       "* Done: When the shipment is processed, the state is \'Done\'.")

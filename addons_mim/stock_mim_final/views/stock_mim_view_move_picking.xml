@@ -1,49 +1,18 @@
 <odoo>
 	<data>
-		<record id="view_move_form10" model="ir.ui.view">
+		<record id="view_move_form01" model="ir.ui.view">
 			<field name="name">stock.move.form.inherit10</field>
 			<field name="model">stock.picking</field>
 			<field name="inherit_id" ref="stock.view_picking_form" />
 			<field name="arch" type="xml">
 					<xpath expr="//field[@name='is_locked']" position="before">
-					    <button name="contre_mesure" states="draft,confirmed,assigned,flowsheeting,contre_mesure" string="Contre mesure" class="oe_highlight" type="workflow"/>
+					    <button name="contre_mesure1" states="draft,confirmed,assigned,flowsheeting,contre_mesure" string="Contre mesure" class="oe_highlight" type="object" groups="stock_mim_final.group_contre_mesure"/>
+					    <button name="annuler_contre_mesure" states="contre_mesure" string="Annuler contre mesure" class="oe_highlight" type="object" groups="stock_mim_final.group_contre_mesure"/>
+					    <button name="flow_sheet" states="draft,confirmed,assigned,contre_mesure,flowsheeting" string="Fiche Débit" class="oe_highlight" type="object" groups="stock_mim_final.group_fiche_debit"/>
+					    <button name="flow_sheet_cancel" states="flowsheeting" string="Annuler Fiche Débit" class="oe_highlight" type="object" groups="stock_mim_final.group_fiche_debit"/>
 					</xpath >
 			</field>
 		</record>
-
-		<record id="view_move_form7" model="ir.ui.view">
-			<field name="name">stock.move.form.inherit7</field>
-			<field name="model">stock.picking</field>
-			<field name="inherit_id" ref="stock.view_picking_form" />
-			<field name="arch" type="xml">
-					<xpath expr="//field[@name='is_locked']" position="before">
-						<button name="annuler_contre_mesure" states="contre_mesure" string="Annuler contre mesure" class="oe_highlight" type="workflow"/>
-					</xpath >
-			</field>
-		</record>
-
-		<record id="view_move_form8" model="ir.ui.view">
-			<field name="name">stock.move.form.inherit8</field>
-			<field name="model">stock.picking</field>
-			<field name="inherit_id" ref="stock.view_picking_form" />
-			<field name="arch" type="xml">
-					<xpath expr="//field[@name='is_locked']" position="before">
-						<button name="flow_sheet" states="draft,confirmed,assigned,contre_mesure,flowsheeting" string="Fiche Débit" class="oe_highlight" type="workflow"/>
-					</xpath >
-			</field>
-		</record>
-
-		<record id="view_move_form9" model="ir.ui.view">
-			<field name="name">stock.move.form.inherit9</field>
-			<field name="model">stock.picking</field>
-			<field name="inherit_id" ref="stock.view_picking_form" />
-			<field name="arch" type="xml">
-					<xpath expr="//field[@name='is_locked']" position="before">
-						<button name="flow_sheet_cancel" states="flowsheeting" string="Annuler Fiche Débit" class="oe_highlight" type="workflow"/>
-					</xpath >
-			</field>
-		</record>
-
 		<record id="view_move_form10" model="ir.ui.view">
 			<field name="name">stock.move.form.inherit10</field>
 			<field name="model">stock.picking</field>

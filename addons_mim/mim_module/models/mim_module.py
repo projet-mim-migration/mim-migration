@@ -88,6 +88,11 @@ class mim_wizard(models.TransientModel):
 	####cette fonction permet la crÃ©ation d'une ligne de commande grÃ¢ce Ã  sale_order_line_obj.create(cr, uid, {'name': name,'order_id':rec_ref, 'price_unit' : rec_total})####
 	@api.multi
 	def order_line_create(self):
+		print('######################################################################')
+		print('######################################################################')
+		print('##MIM MODULE##')
+		print('######################################################################')
+		print('######################################################################')
 		
 		sale_order_line_obj = self.env['sale.order.line']#on recupÃ¨re l'objet sale.order.line pour l'utiliser avec la fonction ORM create 
 		#### dÃ©but de la rÃ©cupÃ¨ration des diffÃ©rents paramÃ¨tres saisi sur le pop-up####

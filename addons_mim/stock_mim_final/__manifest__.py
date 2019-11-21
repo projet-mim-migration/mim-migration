@@ -26,7 +26,7 @@
     'data': [
         # 'security/ir.model.access.csv',        
          'views/stock_mim_view.xml',
-         #'views/stock_update_button.xml',
+         'views/stock_update_button.xml',
         'views/stock_mim_view_move_picking.xml',
          #'views/workflow_session.xml',
     ],

@@ -10,6 +10,12 @@ class mim_wizard(models.TransientModel):
 
     # update 26/11/18
     def order_line_create(self):
+        print('######################################################################')
+        print('######################################################################')
+        print('##CRM LEAD##')
+        print('######################################################################')
+        print('######################################################################')
+        
         sale_order_line_obj = self.env['sale.order.line']
         select_type = self.select_type
         type_fix = self.type_fixe
