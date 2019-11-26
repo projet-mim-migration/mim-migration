@@ -1,16 +1,17 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "stock_move_split",
+    'name': "Stock Move Split 2.0",
 
     'summary': """
-       stock_move_split""",
+        Short (1 phrase/line) summary of the module's purpose, used as
+        subtitle on modules listing or apps.openerp.com""",
 
     'description': """
-        stock_move_split
+        Long description of module's purpose
     """,
 
-    'author': "MIM",
-    'website': "http://www.mim-madagascar.com",
+    'author': "My Company",
+    'website': "http://www.yourcompany.com",
 
     # Categories can be used to filter modules in modules listing
     # Check https://github.com/odoo/odoo/blob/12.0/odoo/addons/base/data/ir_module_category_data.xml
@@ -19,24 +20,16 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['stock'],
+    'depends': ['base', 'stock'],
 
     # always loaded
     'data': [
         # 'security/ir.model.access.csv',
-        'views/stock_move_view.xml',
-        #'views/templates.xml',
+        'views/views.xml',
+        'views/templates.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
         'demo/demo.xml',
     ],
-
-    'test': [],
-    'installable': True,
-    'application': True,
-    'auto_install': False,
-    'images': [],
-    'icon': "mim_module/static/src/img/icon.png",
-
 }
