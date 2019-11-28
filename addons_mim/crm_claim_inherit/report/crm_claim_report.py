@@ -8,7 +8,6 @@ class ClaimReport(models.AbstractModel):
 
     @api.model
     def _get_report_values(self, docids, data=None):
-        print("POINS BE\nPOINS BE\nPOINS BE\nPOINS BE\nPOINS BE\nPOINS BE\n")
         return{
             'doc_ids': docids,
             'doc_model': 'crm.claim',
@@ -35,5 +34,5 @@ class ClaimReport(models.AbstractModel):
             res = 'Basse'
         if val == 'Lowest':
             res = 'La plus basse'
-        print("AZERTY : {}".format(res))
+            
         return res
