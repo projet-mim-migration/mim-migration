@@ -1,0 +1,77 @@
+<odoo>
+    <data>
+
+        <record id="track_line" model="ir.actions.act_window">
+            <field name="name">Split in Serial Numbers</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">stock.move.split</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="context">{'form_view_ref': False}</field>
+        </record>
+
+        <record id="view_move_picking_form9" model="ir.ui.view">
+            <field name="name">stock.move.form.inherit9</field>
+            <field name="model">stock.move</field>
+            <field name="inherit_id" ref="stock.view_move_picking_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='quants_grp']" position="before">
+                    <group string="Traçabilité">
+                        <button name="%(track_line)d"
+                                states="confirmed"
+                                string="Diviser" type="action" icon="gtk-justify-fill" class="oe_inline"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_split_in_lots" model="ir.ui.view">
+            <field name="name">Split in Serial Numbers</field>
+            <field name="model">stock.move.split</field>
+            <field name="arch" type="xml">
+                <form string="Split in Serial Numbers" version="7.0">
+                    <group>
+                        <field name="product_id" readonly="1"/>
+                        <label for="qty"/>
+                        <div>
+                            <field name="qty" readonly="1" class="oe_inline"/>
+                            <field name="product_uom" readonly="1" class="oe_inline"/>
+                        </div>
+                        <field name="location_id" invisible="1"/>
+                        <field name="use_exist" invisible="1"/>
+                    </group>
+                    <field name="line_ids" attrs="{'invisible':[('use_exist','=',True)]}">
+                        <tree string="Serial Numbers" editable="bottom">
+                            <field name="name"/>
+                            <field name="quantity"/>
+                        </tree>
+                        <form string="Serial Number" version="7.0">
+                            <group>
+                                <field name="name"/>
+                                <field name="quantity"/>
+                            </group>
+                        </form>
+                    </field>
+                    <field name="line_exist_ids" attrs="{'invisible':[('use_exist','!=',True)]}">
+                        <tree string="Serial Numbers" editable="bottom">
+                            <field name="prodlot_id"/>
+                            <field name="quantity"/>
+                        </tree>
+                        <form string="Serial Number" version="7.0">
+                            <group>
+                                <field name="prodlot_id"/>
+                                <field name="quantity" />
+                            </group>
+                        </form>
+                    </field>
+                    <footer>
+                        <button name="split_lot" string="Split" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

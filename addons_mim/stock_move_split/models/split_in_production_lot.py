@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api, exceptions
+import odoo.addons.decimal_precision as dp
 
 
-class split_in_production(models.TransientModel):
+class split_in_production_lot(models.TransientModel):
     _name = 'stock.move.split'
     _description = 'Split in serial numbers'
 
@@ -33,7 +34,8 @@ class split_in_production(models.TransientModel):
         return res
 
     def split_lot(self):
-        new_move = self.split()
+        new_move = self.split(self, self._context.get('active_ids'))
+        return {'type': 'ir.actions.act_window_close'}
 
     def split(self, move_ids):
         uom_obj = self.env['uom.uom']
@@ -50,7 +52,8 @@ class split_in_production(models.TransientModel):
                 lines = [l for l in date.line_ids if l]
 
                 if not lines:
-                    raise exceptions.ValidationError('Erreur, Impossible de diviser le mouvement car aucune ligne n\'a été ajoutée.')
+                    raise exceptions.ValidationError(
+                        'Erreur, Impossible de diviser le mouvement car aucune ligne n\'a été ajoutée.')
                 total_move_qty = 0.0
 
                 for line in lines:
@@ -84,5 +87,21 @@ class split_in_production(models.TransientModel):
                         new_move.append(current_move)
 
                         if move.id_mo:
-                            prod_id = prod_obj.copy()
+                            prod_id = prod_obj.browse(move.id_mo).copy({'product_qty': uom_qty,
+                                                                        'move_prod_id': current_move,
+                                                                        'origin': move.origin,
+                                                                        })
+                            move_obj.browse(current_move).write({'id_mo', prod_id})
 
+                    update_val = {}
+                    if quantity_rest > 0:
+                        update_val['product_uom_qty'] = quantity_rest
+                        update_val['product_uos_qty'] = uos_qty_rest
+                        update_val['state'] = move.state
+                        move_obj.browse(move.id).write(update_val)
+
+                        if move.id_mo:
+                            prod_obj.browse(move.id_mo).write({'product_qty':quantity_rest})
+
+                move_obj.action_confirm()
+        return new_move
