@@ -21,7 +21,7 @@
                                         <th style="text-align:left;"><strong> BC :</strong></th>
                                         <td><span t-field="o.name"/></td>
                                         <td style="text-align:center;"><strong>Tel :</strong></td>
-                                        <td style="width:350px;"> </td>
+                                        <td style="width:350px;"><t t-if="o.partner_id.phone"><span t-field="o.partner_id.phone"/></t></td>
                                         <td style="text-align:right;width:100px"><strong>POSEUR &#160;</strong></td>
                                         <td> </td>
                                     </tr>
