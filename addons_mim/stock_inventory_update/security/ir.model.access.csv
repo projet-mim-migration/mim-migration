@@ -1,2 +1,2 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_stock_inventory_update_stock_inventory_update,stock_inventory_update.stock_inventory_update,model_stock_inventory_update_stock_inventory_update,,1,0,0,0
+access_stock_inventory_update,stock.test,model_stock_test,,1,1,1,1
