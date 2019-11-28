@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+        <template id="report_stock_move">
+            <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2 class="text-center">Mouvements de stock</h2>
+                        <br/>
+                        <table class="table table-bordered">
+                            <tr>
+                                <th class="align-middle">Description</th>
+                                <th class="align-middle">Référence</th>
+                                <th class="align-middle">Origine</th>
+                                <th class="align-middle">Type de préparation</th>
+                                <th class="align-middle">Article</th>
+                                <th class="align-middle">Quantité</th>
+                                <th class="align-middle">Unité de mesure</th>
+                                <th class="align-middle">Emplacement source</th>
+                                <th class="align-middle">Emplacement de destination</th>
+                                <th class="align-middle">Date</th>
+                                <th class="align-middle">Date prévue</th>
+                                <th class="align-middle">État</th>
+                            </tr>
+                            <t t-foreach="docs" t-as="o">
+                                <tr>
+                                    <td class="align-middle"><span t-field="o.name"/></td>
+                                    <td class="align-middle"><span t-field="o.picking_id.name"/></td>
+                                    <td class="align-middle"><span t-field="o.origin"/></td>
+                                    <td class="align-middle"><span t-field="o.picking_type_id.name"/></td>
+                                    <td class="align-middle"><span t-field="o.product_id.name"/></td>
+                                    <td class="align-middle"><span t-field="o.product_uom_qty"/></td>
+                                    <td class="align-middle"><span t-field="o.product_uom.name"/></td>
+                                    <td class="align-middle"><span t-field="o.location_id.location_id.name"/> / <span t-field="o.location_id.name"/></td>
+                                    <td class="align-middle"><span t-field="o.location_dest_id.location_id.name"/> / <span t-field="o.location_dest_id.name"/></td>
+                                    <td class="align-middle"><span t-field="o.date"/></td>
+                                    <td class="align-middle"><span t-field="o.date_expected"/></td>
+                                    <td class="align-middle"><span t-esc="get_state_value('stock.move','state',o.state)"/></td>
+                                </tr>
+                            </t>
+                        </table>
+                    </div>
+                </t>
+             </t>
+        </template>
+    </data>
+</odoo>
