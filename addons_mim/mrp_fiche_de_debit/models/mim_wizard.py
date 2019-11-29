@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 
 from odoo import fields, models, api
-from odoo import tools
+
 
 class MimWizard(models.TransientModel):
     _inherit = 'mim.wizard'
 
-    def _get_order_id(self):
+    def _get_order_id():
         context = dict(self._context or {})
         return context.get('order_id', False)
     
@@ -19,12 +19,6 @@ class MimWizard(models.TransientModel):
     
     @api.multi
     def order_line_create(self):
-        print('######################################################################')
-        print('######################################################################')
-        print('##MRP FICHE DE DEBIT##')
-        print('######################################################################')
-        print('######################################################################')
-        
         self.ensure_one()
 
         sale_order_line_obj = self.env['sale.order.line']
@@ -58,7 +52,10 @@ class MimWizard(models.TransientModel):
         
         rec_qty = self.quantity
         image = self.image
-        total = self.calcul()
+        total = self.calcul(rec_largeur, rec_hauteur,rec_dimension, rec_pu_ttc, rec_qty, select_type.id , vitrage.id,
+                type_vitre, decoratif.id,  poigne.id, serr.id,nb_poigne,nb_serr,oscillo_battant,
+                va_et_vient, butoir,remplissage_vitre, cintre, triangle,division,nb_division, laque,
+                moustiquaire, type_moustiquaire, tms, intermediaire)
         order_id = self.order_id
             
         select_type0 = select_type.id
