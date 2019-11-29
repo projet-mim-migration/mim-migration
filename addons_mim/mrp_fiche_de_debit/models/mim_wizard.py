@@ -6,8 +6,8 @@ from odoo import fields, models, api
 class MimWizard(models.TransientModel):
     _inherit = 'mim.wizard'
 
-    def _get_order_id():
-        context = dict(self._context or {})
+    def _get_order_id(self):
+        context = dict(self.env.context or {})
         return context.get('order_id', False)
     
     
@@ -52,10 +52,7 @@ class MimWizard(models.TransientModel):
         
         rec_qty = self.quantity
         image = self.image
-        total = self.calcul(rec_largeur, rec_hauteur,rec_dimension, rec_pu_ttc, rec_qty, select_type.id , vitrage.id,
-                type_vitre, decoratif.id,  poigne.id, serr.id,nb_poigne,nb_serr,oscillo_battant,
-                va_et_vient, butoir,remplissage_vitre, cintre, triangle,division,nb_division, laque,
-                moustiquaire, type_moustiquaire, tms, intermediaire)
+        total = self.calcul()
         order_id = self.order_id
             
         select_type0 = select_type.id
