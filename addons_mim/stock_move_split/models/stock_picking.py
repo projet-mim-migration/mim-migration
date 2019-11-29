@@ -6,6 +6,18 @@ from odoo import models, fields, api
 class stock_picking(models.Model):
     _inherit = 'stock.picking'
 
+    state = fields.Selection(selection=lambda self: self._state_get2(),
+                             string='Status',
+                             default=[
+                                 ('draft', 'Draft'),
+                                 ('cancel', 'Cancelled'),
+                                 ('waiting', 'Waiting Another Operation'),
+                                 ('confirmed', 'Waiting Availability'),
+                                 ('partially_available', 'Partially Available'),
+                                 ('assigned', 'Ready to Transfer'),
+                                 ('done', 'Transferred'),
+                             ])
+
     @api.multi
     def _state_get2(self):
         res = {}
@@ -60,15 +72,3 @@ class stock_picking(models.Model):
             if move.picking_id:
                 res.add(move.pickin_id.id)
         return list(res)
-
-    state = fields.Selection(selection=lambda self: self._state_get2(),
-                             string='Status',
-                             default=[
-                                 ('draft', 'Draft'),
-                                 ('cancel', 'Cancelled'),
-                                 ('waiting', 'Waiting Another Operation'),
-                                 ('confirmed', 'Waiting Availability'),
-                                 ('partially_available', 'Partially Available'),
-                                 ('assigned', 'Ready to Transfer'),
-                                 ('done', 'Transferred'),
-                             ])

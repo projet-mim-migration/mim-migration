@@ -7,7 +7,7 @@
     'website': "http://www.ingenosya.com",
 
     # Tous les autres modules nécessaires aux autre modules
-    'depends': ['base', 'stock'],
+    'depends': ['base', 'stock', 'uom'],
 
     # Les fichiers chargés
     'data': [
