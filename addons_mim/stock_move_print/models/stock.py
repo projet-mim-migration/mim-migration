@@ -8,7 +8,12 @@ class stock_move(models.Model):
      
     def print_move(self):
         move_obj = self
-        self.env.cr.execute("SELECT id,date FROM stock_move WHERE date >= '%s' AND date <= '%s' ORDER BY date asc" % ('2016-01-01 00:00:00', '2016-12-31 23:59:59'))
+        self.env.cr.execute("""SELECT id,date 
+                               FROM stock_move 
+                               WHERE date >= '%s' 
+                               AND date <= '%s' 
+                               ORDER BY date 
+                               ASC""" % ('2016-01-01 00:00:00', '2016-12-31 23:59:59'))
         res = self.env.cr.fetchall()
         move_ids = []
         for id in range(len(res)):
@@ -23,12 +28,3 @@ class stock_move(models.Model):
             'datas': datas,
             'nodestroy': True
         }
-
-        #return self.env.ref('stock_move_reports').report_action(self)
-
-
-   # @api.multi
-    #def print_quotation(self):
-     #   self.write({'state': "sent"})
-    #    return self.env.ref('purchase.report_purchase_quotation').report_action(self)
-
