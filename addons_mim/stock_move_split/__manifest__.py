@@ -3,8 +3,8 @@
     'name': "Stock Move Split 2.0",
 
     'summary': """
-        Short (1 phrase/line) summary of the module's purpose, used as
-        subtitle on modules listing or apps.openerp.com""",
+        The main purpose is that it splits a stock move by its quantity
+        """,
 
     'description': """
         Long description of module's purpose

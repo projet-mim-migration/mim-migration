@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api
+from odoo import models, api
 
 
 class stock_move(models.Model):
@@ -20,7 +20,7 @@ class stock_move(models.Model):
             'state': 'draft',
         })
 
-        prod_data = product_obj.browse(move_data.product_id.id)[0]
+        prod_data = product_obj.browse(move_data.product_id.id)
 
         if prod_data.qty_available <= 0.0:
             qty_available = move_data.product_uom_qty

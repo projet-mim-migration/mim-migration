@@ -16,6 +16,6 @@ class stock_move_split_lines_exist(models.TransientModel):
                                                                                         "parent.product_id)]")
     quantity = fields.Float(default=0.1)
 
-    @api.onchange('prodlot_id')
+    @api.onchange('prod_lot_id')
     def onchange_lot_id(self):
         return self.env['stock.move'].onchange_lot_id()

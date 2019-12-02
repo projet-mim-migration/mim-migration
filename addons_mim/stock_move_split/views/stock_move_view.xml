@@ -18,9 +18,7 @@
             <field name="arch" type="xml">
                 <xpath expr="//group[@name='quants_grp']" position="before">
                     <group string="Traçabilité">
-                        <button name="%(track_line)d"
-                                states="confirmed"
-                                string="Diviser" type="action" icon="gtk-justify-fill" class="oe_inline"/>
+                        <button string="Diviser" type="action" name="%(track_line)d" class="btn btn-info"/>
                     </group>
                 </xpath>
             </field>
@@ -61,7 +59,7 @@
                         <form string="Serial Number" version="7.0">
                             <group>
                                 <field name="prodlot_id"/>
-                                <field name="quantity" />
+                                <field name="quantity"/>
                             </group>
                         </form>
                     </field>

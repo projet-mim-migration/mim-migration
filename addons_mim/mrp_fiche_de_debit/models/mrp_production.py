@@ -6,8 +6,7 @@ from odoo.tools.safe_eval import safe_eval
 
 class MrpProduction(models.Model):
     _inherit = 'mrp.production'
-    
-        
+
     @api.depends('partner_id')
     def _get_partner_name(self):
         for production in self:

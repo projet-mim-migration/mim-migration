@@ -6,8 +6,7 @@ from odoo import models, fields, api
 class stock_picking(models.Model):
     _inherit = 'stock.picking'
 
-    state = fields.Selection(selection=lambda self: self._state_get2(),
-                             string='Status',
+    state = fields.Selection(compute='_state_get2', string='Status',
                              default=[
                                  ('draft', 'Draft'),
                                  ('cancel', 'Cancelled'),
@@ -18,24 +17,23 @@ class stock_picking(models.Model):
                                  ('done', 'Transferred'),
                              ])
 
-    @api.multi
+    @api.depends('move_lines')
     def _state_get2(self):
-        res = {}
         for pick in self:
-            if (not pick.move) or any([x.state == 'draft' for x in pick.move_lines]):
-                res[pick.id] = 'draft'
+            if (not pick.move_lines) or any([x.state == 'draft' for x in pick.move_lines]):
+                pick.state = 'draft'
                 continue
 
             if all([x.state == 'cancel' for x in pick.move_lines]):
-                res[pick.id] = 'cancel'
+                pick.state = 'cancel'
                 continue
 
             if all([x.state in ('cancel', 'done') for x in pick.move_lines]):
-                res[pick.id] = 'done'
+                pick.state = 'done'
                 continue
 
             if all([x.state in ('contre_mesure', 'flowsheeting') for x in pick.move_lines]):
-                res[pick.id] = 'confirmed'
+                pick.state = 'confirmed'
                 continue
             order = {'confirmed': 0, 'waiting': 1, 'assigned': 2}
             order_inv = {0: 'confirmed', 1: 'waiting', 2: 'assigned'}
@@ -47,23 +45,22 @@ class stock_picking(models.Model):
                 continue
 
             if pick.move_type == 'one':
-                res[pick.id] = order_inv[min(lst)]
+                pick.state = order_inv[min(lst)]
             else:
                 # we are in the case of partial delivery, so if all move are assigned, picking
                 # should be assign too, else if one of the move is assigned, or partially available, picking should be
                 # in partially available state, otherwise, picking is in waiting or confirmed state
-                res[pick.id] = order_inv[max(lst)]
+                pick.state = order_inv[max(lst)]
                 if not all(x == 2 for x in lst) or any(
                         x.state in ('contre_mesure', 'flowsheeting') for x in pick.move_lines):
                     if any(x == 2 for x in lst):
-                        res[pick.id] = 'partially_available'
+                        pick.state = 'partially_available'
                     else:
                         # if all moves aren't assigned, check if we have one product partially available
                         for move in pick.move_lines:
                             if move.partially_available:
-                                res[pick.id] = 'partially_available'
+                                pick.state = 'partially_available'
                                 break
-        return res
 
     @api.multi
     def _get_picking(self):
