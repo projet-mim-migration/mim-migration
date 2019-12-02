@@ -10,8 +10,7 @@
     'website':'http://mim-madagascar.com',
     'depends':['stock'],
     'data':[
-            'stock.py',
-            'stock_view.xml',
+            'views/stock_view.xml',
             #'stock_view2.xml',
     ],
     'test':[],

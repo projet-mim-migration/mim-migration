@@ -11,7 +11,7 @@
     # always loaded
     'data': [
         # 'security/ir.model.access.csv',
-        'views/stock_mim_view.xml',
+        #'views/stock_mim_view.xml',
         'views/stock_mim_view_move_picking.xml',
     ],
     'test':[],
