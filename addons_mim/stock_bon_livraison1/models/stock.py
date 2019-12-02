@@ -13,22 +13,23 @@ class stock_picking(models.Model):
 
 
     # Evenement losrque la date de livraison est modifié
-    @api.one
+    @api.onchange('date')
     def onchange_fields(self):
-        if len(self.ids) > 0:
-            return {'value': {'date_changed': True}}
+        #return {'value': {'date_changed': True}}
+        if self.ids != None:
+            print('atoooooooooooooooooooo')
+            self.date_changed = True
         else:
-            return {'value': {'date_changed': False}}
+            self.date_changed = False
 
-    @api.one
+    @api.multi
     def write(self, vals):
         # picking_data = self.browse(cr, uid, ids, context=context)[0]
         user_obj = self.env['res.users']
         # uids = user_obj.search(cr, uid, [('id','=',uid)], context=context)
         user = user_obj.browse()
-
-        if 'date_changed' in vals:
-            if vals['date_changed'] == True:
+        if self.date_changed:
+            if self.date_changed == True:
                 if 'motivation' in vals:
                     if vals['motivation']:
                         vals2 = {

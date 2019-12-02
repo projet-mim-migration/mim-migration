@@ -51,26 +51,21 @@
 		<record model="ir.ui.view" id="view_picking_out_treeA">
             <field name="name">stock.state.treeA</field>
             <field name="model">stock.picking</field>
-            <field name="inherit_id" ref="stock.view_picking_form"/>
             <field name="arch" type="xml">
-					<notebook>
-						<page string="Avancement de production" colors="blue:state == 'draft';grey:state == 'cancel';red:state not in ('cancel', 'done') and min_date &lt; current_date">
-							<group>
-					             <button name="refresh" string="Actualiser" type="object" icon="gtk-ok" />
-                                 <field name="name"/>
-                                 <field name="partner_id" string="Client"/>
-                                 <field name="origin"/>
-                                 <field name="min_date"/>
-                   		         <field name="date"/>
-	                             <field name="confirmed"/>
-	                             <field name="contre_mesure"/>
-	                             <field name="fiche_debit"/>
-	                             <field name="assigned"/>
-	                             <field name="done"/>
-	                             <field name="state"/>
-							</group>
-						</page>
-					</notebook>
+					<tree string="Avancement de production" colors="blue:state == 'draft';grey:state == 'cancel';red:state not in ('cancel', 'done') and min_date &lt; current_date">
+				             <button name="refresh" string="Actualiser" type="object" icon="gtk-ok" />
+                             <field name="name"/>
+                             <field name="partner_id" string="Client"/>
+                             <field name="origin"/>
+                             <field name="min_date"/>
+               		         <field name="date"/>
+                             <field name="confirmed"/>
+                             <field name="contre_mesure"/>
+                             <field name="fiche_debit"/>
+                             <field name="assigned"/>
+                             <field name="done"/>
+                             <field name="state"/>
+					</tree>
             </field>
         </record>
 

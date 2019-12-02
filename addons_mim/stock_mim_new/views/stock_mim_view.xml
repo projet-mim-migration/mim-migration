@@ -1,60 +1,24 @@
 <odoo>
 	<data>
-		<record id="view_move_form1" model="ir.ui.view">
-			<field name="name">stock.move.form.inherit1</field>
+		<record id="group_frederic" model="res.groups">
+            <field name="name">Groupe de Frederic</field>
+        </record>
+		<record id="new_view_move_form1" model="ir.ui.view">
+			<field name="name">stock.move.new</field>
 			<field name="model">stock.move</field>
 			<field name="inherit_id" ref="stock.view_move_form" />
 			<field name="arch" type="xml">
 					<xpath expr="//field[@name='state']" position="after">
 						<button name="flow_sheet" states="contre_mesure" string="Fiche Débit" type="object" class="oe_highlight" />
-					</xpath>
-			</field>
-		</record>
-
-		<record id="view_move_form2" model="ir.ui.view">
-			<field name="name">stock.move.form.inherit2</field>
-			<field name="model">stock.move</field>
-			<field name="inherit_id" ref="stock.view_move_form" />
-			<field name="arch" type="xml">
-					<xpath expr="//field[@name='state']" position="after">
 						<button name="flow_sheet_cancel" states="flowsheeting" type="object" string="Annuler Fiche Débit" />
-					</xpath >
-			</field>
-		</record>
-
-		<record id="view_move_form3" model="ir.ui.view">
-			<field name="name">stock.move.form.inherit3</field>
-			<field name="model">stock.move</field>
-			<field name="inherit_id" ref="stock.view_move_form" />
-			<field name="arch" type="xml">
-					<xpath expr="//field[@name='state']" position="after">
-						<button name="contre_mesure" states="confirmed" string="Contre mesure" type="object" class="oe_highlight"/>
-					</xpath >
-			</field>
-		</record>
-
-		<record id="view_move_form4" model="ir.ui.view">
-			<field name="name">stock.move.form.inherit4</field>
-			<field name="model">stock.move</field>
-			<field name="inherit_id" ref="stock.view_move_form" />
-			<field name="arch" type="xml">
-					<xpath expr="//field[@name='state']" position="after">
-						<button name="annuler_contre_mesure" states="contre_mesure" type="object" string="Annuler contre mesure"/>
-					</xpath >
-			</field>
-		</record>
-
-		<record id="view_move_form5" model="ir.ui.view">
-			<field name="name">stock.move.form.inherit5</field>
-			<field name="model">stock.move</field>
-			<field name="inherit_id" ref="stock.view_move_form" />
-			<field name="arch" type="xml">
-					<xpath expr="//field[@name='state']" position="before">
+						<button name="contre_mesure" states="confirmed" string="Contre mesure" type="object" class="oe_highlight" groups="stock_mim_new.group_frederic"/>
+						<button name="annuler_contre_mesure" states="contre_mesure" type="object" string="Annuler contre mesure" groups="stock_mim_new.group_frederic"/>
+					</xpath>
+					<xpath expr="//field[@name='state']" position="replace">
 						<field name="state" widget="statusbar" statusbar_visible="draft,confirmed,contre_mesure,flowsheeting,assigned,done" statusbar_colors='{"waiting":"blue","confirmed":"blue"}'/>
 					</xpath >
 			</field>
 		</record>
-
 
 	</data>
 </odoo>

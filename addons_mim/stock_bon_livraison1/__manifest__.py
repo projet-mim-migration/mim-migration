@@ -28,7 +28,7 @@
         #'views/templates.xml',
         #'views/stock_picking_out_view_form.xml'
         'views/stock_view_form2.xml',
-        'views/stock_view_tree.xml',
+        #'views/stock_view_tree.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

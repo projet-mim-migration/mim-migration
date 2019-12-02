@@ -18,4 +18,37 @@
 				  	</xpath>
 			</field>
 		</record>
+		<record id="view_move_form23" model="ir.ui.view">
+			<field name="name">stock.move.form.inherit23</field>
+			<field name="model">stock.move</field>
+			<field name="inherit_id" ref="stock.view_move_form" />
+			<field name="arch" type="xml">
+					<xpath expr="//field[@name='state']" position="before">
+						<button name="293" string="Process Partially" type="action" states="assigned" class="oe_highlight" groups="stock_mim_buttom.group_traitement"/>
+					</xpath>
+			</field>
+		</record>
+		<!-- stock.view_move_picking_form-->
+
+		<record id="view_move_picking_form26" model="ir.ui.view">
+			<field name="name">stock.move.form.inherit26</field>
+			<field name="model">stock.move</field>
+			<field name="inherit_id" ref="stock.view_move_picking_form"/>
+			<field name="arch" type="xml">
+					<xpath expr="//field[@name='state']" position="after">
+					    <button name="action_confirm" states="draft,cancel" string="Process Later" type="object" class="oe_highlight"/>
+					</xpath>
+			</field>
+		</record>
+		
+	    <record id="view_move_form24" model="ir.ui.view">
+			<field name="name">stock.move.form.inherit24</field>
+			<field name="model">stock.move</field>
+			<field name="inherit_id" ref="stock.view_move_picking_form" />
+			<field name="arch" type="xml">
+					<xpath expr="//field[@name='state']" position="after">
+					    <button name="force_assign" states="draft,assigned,cancel,contre_mesure,confirmed,flowsheeting" string="Set Available" type="object" class="oe_highlight"/>
+				  	</xpath>
+			</field>
+	    </record>
 </odoo>
