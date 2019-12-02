@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 
 from odoo import fields, models, api
-from odoo import tools
+
 
 class MimWizard(models.TransientModel):
     _inherit = 'mim.wizard'
 
     def _get_order_id(self):
-        context = dict(self._context or {})
+        context = dict(self.env.context or {})
         return context.get('order_id', False)
     
     
@@ -19,12 +19,6 @@ class MimWizard(models.TransientModel):
     
     @api.multi
     def order_line_create(self):
-        print('######################################################################')
-        print('######################################################################')
-        print('##MRP FICHE DE DEBIT##')
-        print('######################################################################')
-        print('######################################################################')
-        
         self.ensure_one()
 
         sale_order_line_obj = self.env['sale.order.line']

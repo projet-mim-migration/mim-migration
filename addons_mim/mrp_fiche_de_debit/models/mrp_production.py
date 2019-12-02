@@ -180,39 +180,8 @@ class MrpProduction(models.Model):
         states={'draft': [('readonly', False)]})
 
 
-    # 'state': fields.selection(
-    #         [('draft', 'New'), 
-    #         :::::::
-    #         ('cancel', 'Cancelled'), 
-    #         ('confirmed', 'Awaiting Raw Materials'),
-    #         ('ready', 'Ready to Produce'), 
-    #         ('in_production', 'Production Started'), 
-    #         ('done', 'Done')],
     
-
-
-    # state = fields.Selection(
-    #     [('draft', 'New'), 
-    #      ('verified', 'Fiche vérifiée'),
-    #      ('validated', 'Fiche de débit validée'), 
-    #      ('cancel', 'Cancelled'), 
-    #      ('picking_except', 'Picking Exception'), 
-    #      ('confirmed', 'Awaiting Raw Materials'),
-    #      ('ready', 'Ready to Produce'), 
-    #      ('in_production', 'Production Started'), 
-    #      ('done', 'Done')],
-    #     string='Status', 
-    #     readonly=True,
-    #     default='draft',
-    #     track_visibility='onchange',
-    #     help="When the production order is created the status is set to 'Draft'.\n\
-    #             If the order is confirmed the status is set to 'Waiting Goods'.\n\
-    #             If any exceptions are there, the status is set to 'Picking Exception'.\n\
-    #             If the stock is available then the status is set to 'Ready to Produce'.\n\
-    #             When the production gets started then the status is set to 'In Production'.\n\
-    #             When the production is over, the status is set to 'Done'."
-    # )
-    # #date plannifie modifiable dans tous les etats sauf dans Termine
+    # date plannifie modifiable dans tous les etats sauf dans Termine
     date_planned_start = fields.Datetime(
         'Scheduled Date', 
         required=True, 
@@ -221,18 +190,9 @@ class MrpProduction(models.Model):
         states={'done':[('readonly',True)]}
     )
     
-    # #permettre dediter les lignes des articles prevus
-    # # product_lines = fields.One2many(
-    # #     'mrp.production.product.line', 
-    # #     'production_id', 
-    # #     'Scheduled goods',
-    # #     readonly=True, 
-    # #     states={'draft':[('readonly',False)]}
-    # # )
-    
-    # #champ permettant de prendre le nom du client
+    # champ permettant de prendre le nom du client
     partner_name = fields.Char(
-        string='Nom du client', 
+        string='Nom du client',
         compute=_get_partner_name
     )
     
@@ -300,21 +260,6 @@ class MrpProduction(models.Model):
     #         raise exceptions.UserError(('Erreur'), (u'Cette ordre de fabrication n\'est liée à aucun mouvement de stock (stock.move)'))
     #     return True
     
-       
-
-       
-
-    # @api.multi
-    # def sheet_verified(self):        
-    #     for prod in self:
-    #         state_move = self.env['stock.move'].browse(prod.move_prod_id.id).state
-    #         if state_move != 'contre_mesure':
-    #             raise exceptions.UserError("Le mouvement lié à cet ordre fabrication n'est pas encore dans l'état contre-mesure")
-    #         if prod.hauteur == 0.0 or prod.largeur == 0.0:
-    #             raise exceptions.UserError('Les contre-mesures ne doivent pas être vides. Merci de faire remplir par le responsable dans le bon de livraison lié')
-    #     self.state = 'verified'
-
-
 
     # Calcul for the raw material of a product
     @api.multi
@@ -447,11 +392,11 @@ class MrpProduction(models.Model):
     # Implementation of workflow modified
     @api.multi
     def sheet_verified(self):
-        # state_move = self.env['stock.move'].search([('production_id', '=', self.id)]).state
-        # if state_move != 'contre_mesure':
-        #     raise exceptions.UserError("Le mouvement lié à cet ordre fabrication n'est pas encore dans l'état contre-mesure")
-        # if self.hauteur == 0.0 or self.largeur == 0.0:
-        #     raise exceptions.UserError('Les contre-mesures ne doivent pas être vides. Merci de faire remplir par le responsable dans le bon de livraison lié')
+        state_move = self.env['stock.move'].search([('production_id', '=', self.id)]).state
+        if state_move != 'contre_mesure':
+            raise exceptions.UserError("Le mouvement lié à cet ordre fabrication n'est pas encore dans l'état contre-mesure")
+        if self.hauteur == 0.0 or self.largeur == 0.0:
+            raise exceptions.UserError('Les contre-mesures ne doivent pas être vides. Merci de faire remplir par le responsable dans le bon de livraison lié')
         self.state = 'verified'
 
     @api.multi
@@ -486,4 +431,3 @@ class MrpProduction(models.Model):
         
         production._calcul_raw_material()
         return production
-        

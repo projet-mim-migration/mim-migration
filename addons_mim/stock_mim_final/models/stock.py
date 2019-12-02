@@ -6,14 +6,25 @@ from odoo import models, fields, api
 class stock_picking(models.Model):
     _inherit = 'stock.picking'
 
-
-    
-    def action_confirm(self):
-      if self.state in ['draft','cancel']:
-        self.state = 'confirmed'
+    def action_done(self):
+      if self.state in ['draft','assigned','cancel','contre_mesure','confirmed','flowsheeting']:
+        self._action_done()
       else:
         pass
-
+        
+    def action_confirm(self):
+      if self.state in ['draft','cancel']:
+        #self.state = 'confirmed'
+        self._action_confirm()
+      else:
+        pass
+    
+    '''def action_confirm(self):
+                  if self.state in ['draft','cancel']:
+                    self.state = 'confirmed'
+                  else:
+                    pass
+            '''
     def contre_mesure1(self):
       if self.state in ['draft','confirmed']:
         self.state = 'contre_mesure'
@@ -111,18 +122,19 @@ class stock_picking(models.Model):
         return list(res)
 
     
-    state = fields.Selection([('draft', 'New'),
-                                   ('cancel', 'Cancelled'),
-                                   ('waiting', 'Waiting Another Move'),
-                                   ('confirmed', 'Waiting Availability'),
-                                   ('contre_mesure', 'Contre mesure'),
-                                   ('flowsheeting',u'Fiche de Débit'),
-                                   ('assigned', 'Available'),
-                                   ('done', 'Done'),
-                                   ], 'Status', readonly=True, select=True,
-                 help= "* New: When the stock move is created and not yet confirmed.\n"\
-                       "* Waiting Another Move: This state can be seen when a move is waiting for another one, for example in a chained flow.\n"\
-                       "* Waiting Availability: This state is reached when the procurement resolution is not straight forward. It may need the scheduler to run, a component to me manufactured...\n"\
-               "* Fiche de Debit: the state is \'Fiche de Debit\'.\n"
-                       "* Available: When products are reserved, it is set to \'Available\'l.\n"\
-                       "* Done: When the shipment is processed, the state is \'Done\'.")
+    '''state = fields.Selection([('draft', 'New'),
+                                               ('cancel', 'Cancelled'),
+                                               ('waiting', 'Waiting Another Move'),
+                                               ('confirmed', 'Waiting Availability'),
+                                               ('contre_mesure', 'Contre mesure'),
+                                               ('flowsheeting',u'Fiche de Débit'),
+                                               ('assigned', 'Available'),
+                                               ('done', 'Done'),
+                                               ], 'Status', readonly=True, select=True,
+                             help= "* New: When the stock move is created and not yet confirmed.\n"\
+                                   "* Waiting Another Move: This state can be seen when a move is waiting for another one, for example in a chained flow.\n"\
+                                   "* Waiting Availability: This state is reached when the procurement resolution is not straight forward. It may need the scheduler to run, a component to me manufactured...\n"\
+                           "* Fiche de Debit: the state is \'Fiche de Debit\'.\n"
+                                   "* Available: When products are reserved, it is set to \'Available\'l.\n"\
+                                   "* Done: When the shipment is processed, the state is \'Done\'.")
+            '''
