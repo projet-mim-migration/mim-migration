@@ -12,7 +12,7 @@ class SaleOrder(models.Model):
         self.ensure_one()
         
         ctx = dict()
-        order_ref = sujet[2:]
+        order_ref = self.name[2:]
         ctx.update({
             'default_sujet' : 'Devis '+ self.name,
             'default_order_ref' : order_ref,
