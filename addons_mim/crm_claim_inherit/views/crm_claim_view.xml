@@ -2,18 +2,6 @@
 <odoo>
     <data>
         
-        <record id="group_confirmer_reclamation" model="res.groups">
-            <field name="name">Groupe confirmer reclamation</field>
-        </record>
-        
-        <record id="group_mettre_reclamation" model="res.groups">
-            <field name="name">Groupe mettre en cours reclamation</field>
-        </record>
-        
-        <record id="group_resoudre_reclamation" model="res.groups">
-            <field name="name">Groupe resoudre reclamation</field>
-        </record>
-        
         <record model="crm.claim.stage" id="stage_claim4">
             <field name="name">Attente d'affectation</field>
             <field name="sequence">26</field>
@@ -26,7 +14,6 @@
 			<field name="inherit_id" ref="bi_crm_claim.crm_case_claims_form_view1" />
 			<field name="arch" type="xml">
 			    <data> 
-			         <!-- track_visibility bug :(  -->
 			        <xpath expr="/form/header/field[@name='stage_id']" position="before">
 					    <button 
 					    	name="action_confirm" 
@@ -34,6 +21,7 @@
 					    	class="oe_highlight"
 					    	type="object"
 					    	attrs="{'invisible':[('stage_id','not in',(1))]}"
+					    	groups="crm_claim_inherit.group_confirmer_reclamation"
 					    	/>
 					    <button 
 					    	name="action_open" 
@@ -41,6 +29,7 @@
 					    	class="oe_highlight"
 					    	type="object"
 					    	attrs="{'invisible':[('stage_id','not in',(%(crm_claim_inherit.stage_claim4)d))]}"
+					    	groups="crm_claim_inherit.group_mettre_reclamation"
 					    	/>
 					    <button 
 					    	name="action_done" 
@@ -48,6 +37,7 @@
 					    	class="oe_highlight"
 					    	type="object" 
 							attrs="{'invisible':[('stage_id','not in',(2))]}"
+							groups="crm_claim_inherit.group_resoudre_reclamation"
 					    	/>
 					    <button 
 					    	name="action_cancel" 

@@ -10,7 +10,8 @@ class CrmClaim(models.Model):
         'crm.claim.stage', 
         'Stage', 
         domain="['|', ('team_ids', '=', team_id), ('case_default', '=', True)]",
-        default=1
+        default=1,
+        track_visibility='onchange'
     )
                 
     @api.multi

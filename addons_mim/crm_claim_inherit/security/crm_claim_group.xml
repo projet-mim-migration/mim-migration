@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="group_confirmer_reclamation" model="res.groups">
+            <field name="name">Groupe confirmer reclamation</field>
+        </record>
+        
+        <record id="group_mettre_reclamation" model="res.groups">
+            <field name="name">Groupe mettre en cours reclamation</field>
+        </record>
+        
+        <record id="group_resoudre_reclamation" model="res.groups">
+            <field name="name">Groupe resoudre reclamation</field>
+        </record>
+    </data>
+</odoo>
