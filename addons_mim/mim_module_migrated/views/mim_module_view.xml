@@ -1,0 +1,167 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <!-- Categories Search View-->
+        <record id="view_categorie_search" model="ir.ui.view">
+            <field name="name">categorie.search</field>
+            <field name="model">article.categorie</field>
+            <field name="arch" type="xml">
+                <search string="Categories">
+                    <field name="name" string="Categorie"/>
+                </search>
+            </field>
+        </record>
+        <!-- Categories Form View -->
+        <record id="view_categorie_form" model="ir.ui.view">
+            <field name="name">categorie.form</field>
+            <field name="model">article.categorie</field>
+            <field name="arch" type="xml">
+                <form string="Categorie des articles" version="7.0">
+                    <group>
+                        <field name="name"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <!-- Categorie Tree View -->
+        <record id="view_categorie_tree" model="ir.ui.view">
+            <field name="name">categorie.tree</field>
+            <field name="model">article.categorie</field>
+            <field name="field_parent"/>
+            <field name="arch" type="xml">
+                <tree string="Categorie d'articles">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <!-- Categorie Action -->
+        <record id="action_categorie" model="ir.actions.act_window">
+            <field name="name">Categories</field>
+            <field name="res_model">article.categorie</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_categorie_search"/>
+        </record>
+        <menuitem id="menu_mim" name="Articles MIM" parent="sale.sale_menu_root" sequence="20"/>
+        <menuitem action="action_categorie" id="menu_categorie" name="Categories" parent="menu_mim"/>
+        <!-- Mim article Form View -->
+        <record id="view_mim_article_form" model="ir.ui.view">
+            <field name="name">mim.article.form</field>
+            <field name="model">mim.article</field>
+            <field name="arch" type="xml">
+                <form string="Article MIM" version="7.0">
+                    <header/>
+                    <sheet>
+                        <label class="oe_edit_only" for="name"/>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                        <label class="oe_edit_only" for="price"/>
+                        <field name="price"/>
+                        <label class="oe_edit_only" for="category_ids"/>
+                        <field name="category_ids"/>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <!-- Mim article Tree View -->
+        <record id="view_mim_article_tree" model="ir.ui.view">
+            <field name="name">mim.article.tree</field>
+            <field name="model">mim.article</field>
+            <field name="arch" type="xml">
+                <tree string="Articles">
+                    <field name="name"/>
+                    <field name="price"/>
+                </tree>
+            </field>
+        </record>
+        <!--  Mim article search  -->
+        <record id="view_mim_article_search" model="ir.ui.view">
+            <field name="name">mim.article.search</field>
+            <field name="model">mim.article</field>
+            <field name="arch" type="xml">
+                <search string="Mim article">
+                    <field name="name" string="Mim article"/>
+                    <field name="category_ids"/>
+                </search>
+            </field>
+        </record>
+        <record id="action_mim_article" model="ir.actions.act_window">
+            <field name="name">Mim articles</field>
+            <field name="res_model">mim.article</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_mim_article_search"/>
+        </record>
+        <menuitem action="action_mim_article" id="menu_mim_article" name="Articles" parent="menu_mim" sequence="1"/>
+        <record id="view_mim_wizard" model="ir.ui.view">
+            <field name="name">Mim wizard</field>
+            <field name="model">mim.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Mim wizard" version="7.0">
+                    <h1>
+                        <field name="sujet"/>
+                    </h1>
+                    <group>
+                        <group string="Désignation">
+                            <field name="image" widget="image" class="style_image"/>
+                            <field name="select_type"/>
+                            <field attrs="{'invisible':[('select_type','!=','fixe')]}" name="type_fixe"/>
+                            <field attrs="{'invisible':[('select_type','!=','poteau_rect_angle')]}" name="type_poteau"/>
+                            <field attrs="{'invisible':[('select_type','=','poteau_rect_angle')]}" name="largeur" options="{'no_create': True, 'no_edit': True}"/>
+                            <field attrs="{'invisible':[('select_type','!=','poteau_rect_angle')]}" name="dimension"/>
+                            <field attrs="{'invisible':[('select_type','!=','poteau_rect_angle')]}" name="pu_ttc"/>
+                            <field attrs="{'invisible':[('select_type','=','poteau_rect_angle')]}" name="hauteur"/>
+                            <field attrs="{'invisible':[('select_type','!=','moustiquaire_independant')]}" name="type_moustiquaire"/>
+                            <field name="quantity"/>
+                        </group>
+                        <group class="oe_right" string="Total en Ariary">
+                            <h2 class="oe_inline oe_right">
+                                <field class="oe_inline" name="total"/>Ar</h2>
+                        </group>
+                        <group attrs="{'invisible':[('cacher','=',True)]}" string="Vitrage" options="{'no_create': True, 'no_edit': True}" create="False" edit="False">
+                            <field name="vitre"/>
+                            <field name="type_vitre" string="Simple/Double"/>
+                            <field name="decoratif" options="{'no_create': True, 'no_edit': True}"/>
+                        </group>
+                        <group attrs="{'invisible':[('cacher','=',True)]}" string="Accessoires" options="{'no_create': True, 'no_edit': True}" create="False" edit="False">
+                            <group>
+                                <field name="poigne" options="{'no_create': True, 'no_edit': True}"/>
+                                <field attrs="{'invisible':[('poigne','=',False)]}" name="nb_poigne"/>
+                            </group>
+                            <group>
+                                <field name="serr" options="{'no_create': True, 'no_edit': True}"/>
+                                <field attrs="{'invisible':[('serr','=',False)]}" name="nb_serr"/>
+                            </group>
+                            <group>
+                                <field name="oscillo_battant"/>
+                                <field name="va_et_vient"/>
+                                <field name="butoir"/>
+                            </group>
+                        </group>
+                        <group attrs="{'invisible':[('hidder_autre_option','=',True)]}" string="Autres options">
+                            <field attrs="{'invisible':[('cacher','=',True)]}" name="remplissage_vitre"/>
+                            <field attrs="{'invisible':[('remplissage_vitre','=',None)]}" name="intermediaire"/>
+                            <field name="type_fixe"/>
+                            <field name="inegalite"/>
+                            <field attrs="{'invisible':[('cacher','=',True)]}" name="cintre"/>
+                            <field attrs="{'invisible':[('cacher','=',True)]}" name="triangle"/>
+                            <field name="division"/>
+                            <field attrs="{'invisible':[('division','=',False)]}" name="nb_division"/>
+                            <field attrs="{'invisible':[('select_type','=','moustiquaire_independant')]}" name="laque"/>
+                            <field attrs="{'invisible':[('cacher','=',True)]}" name="moustiquaire"/>
+                            <field attrs="{'invisible':[('cacher','=',True)]}" name="tms"/>
+                        </group>
+                    </group>
+                    <field class="oe_inline" invisible="1" name="totalcacher"/>
+                    <field class="oe_inline" invisible="1" name="cacher"/>
+                    <field class="oe_inline" invisible="1" name="hidder_autre_option"/>
+                    <footer>
+                        <button class="oe_highlight" name="order_line_create" string="Ajouter" type="object"/>or
+                        
+                        <button class="oe_link" special="cancel" string="Cancel"/></footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

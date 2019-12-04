@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="stock_picking_tree_migrated" model="ir.ui.view">
+			<field name="name">stock.picking.tree.inherit9</field>
+			<field name="model">stock.picking</field>
+			<field name="inherit_id" ref="stock.vpicktree" />
+			<field name="arch" type="xml">
+					<xpath expr="/tree/field[@name='date']" position="replace">
+						<field name="min_date" string="Date de contre-mesure"/>
+					</xpath>
+					<xpath expr="//field[@name='partner_id']" position="after">
+						<field name="date" string="Date de livraison"/>
+					</xpath>
+			</field>
+		</record>
+		<!--A verifier-->
+		<record id="stock_picking_tree9" model="ir.ui.view">
+			<field name="name">stock.view.move.tree</field>
+			<field name="model">stock.move</field>
+			<field name="inherit_id" ref="stock.view_move_tree" />
+			<field name="arch" type="xml">
+					<xpath expr="//field[@name='create_date']" position="replace">
+						<field name="min_date" string="Date de contre-mesure"/>
+					</xpath>
+					<xpath expr="//field[@name='date']" position="replace">
+						<field name="date" string="Date de livraison"/>
+					</xpath>
+			</field>
+		</record>
+		<!--////////////////////////////////////////////////-->
+		<record model="ir.ui.view" id="view_picking_out_treeA">
+            <field name="name">stock.state.treeA</field>
+            <field name="model">stock.picking</field>
+            <field name="arch" type="xml">
+					<tree string="Avancement de production" colors="blue:state == 'draft';grey:state == 'cancel';red:state not in ('cancel', 'done') and min_date &lt; current_date">
+				             <button name="refresh" string="Actualiser" type="object" icon="gtk-ok" />
+                             <field name="name"/>
+                             <field name="partner_id" string="Client"/>
+                             <field name="origin"/>
+                             <field name="min_date"/>
+               		         <field name="date"/>
+                             <field name="confirmed"/>
+                             <field name="contre_mesure"/>
+                             <field name="fiche_debit"/>
+                             <field name="assigned"/>
+                             <field name="done"/>
+                             <field name="state"/>
+					</tree>
+            </field>
+        </record>
+
+		
+		<record model="ir.actions.act_window" id="action_stock_state">
+			<field name="name">Avancement de production</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">stock.picking</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('picking_type_id','=',2)]</field>
+			<field name="view_id" ref="view_picking_out_treeA"/>
+		</record>
+
+        <menuitem id="menu_action_stock_state" name="Avancement de production"
+                  parent="stock.menu_warehouse_config"
+                  action="action_stock_state"/>
+
+
+	</data>
+</odoo>
+

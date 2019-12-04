@@ -1,0 +1,27 @@
+<odoo>
+    <data>
+        <template id="report_saleorder_document_inherit_mim" inherit_id="sale.report_saleorder_document">
+            <xpath expr="//table/thead/tr/th[text()='Description']" position="after">
+                <th></th>
+            </xpath>
+            <xpath expr="//table[@class='table table-sm o_main_table']/tbody//td[1]" position="after">
+                <td><img t-if="line.image" t-att-src="image_data_uri(line.image)"/></td>
+            </xpath>
+            <xpath expr="//p[@t-field='doc.note']" position="before">
+                <p>
+                    <strong>Arrêtée le présent devis à la somme de : ""<br/>
+                    Il est formellement interdit d'effectuer des paiements auprès des commerciaux. En cas de souhait de paiement hors de nos
+                    locaux, merci de contacter le Siège.</strong>
+                </p>
+            </xpath>
+        </template>
+        <template id="report_saleorder_footer" inherit_id="web.external_layout_standard">
+            <xpath expr="//div[@class='footer o_standard_footer']/div[@class='text-center']" position="before">
+                <div class="text-center"><p>COMME 80% DES EUROPÉENS, ADOPTEZ LA MENUISERIE EN PVC</p></div>
+            </xpath>
+            <xpath expr="//div[@class='footer o_standard_footer']/div[@class='text-center']/ul[@class='list-inline mb4']" position="replace">
+                <div class="text-center"><p>SA au capital de MGA 129 980 000 - RC 2007B0079 - Stat 46633 11 2007 0 10082 - NIF 2 000 011 646</p></div>
+            </xpath>
+        </template>
+    </data>
+</odoo>

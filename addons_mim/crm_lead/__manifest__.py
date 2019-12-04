@@ -6,7 +6,7 @@
     'author': 'Ingenosya Madagascar',
     'sequence':1,
     'website': 'www.ingenosya.com',
-    'depends': ['crm', 'sale', 'stock', 'mim_module'],
+    'depends': ['crm', 'sale', 'stock'],
 
     # always loaded
     'data': [

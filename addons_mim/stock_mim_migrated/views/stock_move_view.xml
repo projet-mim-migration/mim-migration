@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="group_disponible" model="res.groups">
+            <field name="name">Utilisteurs Rendre disponible</field>
+        </record>
+        <record id="group_traitement" model="res.groups">
+            <field name="name">Utilisteurs Traitement</field>
+        </record>
+        <record id="group_frederic" model="res.groups">
+            <field name="name">Groupe de Frederic</field>
+        </record>
+
+        <record id="group_fiche_debit" model="res.groups">
+            <field name="name">Utilisteurs fiche debit</field>
+        </record>
+        <record id="view_move_form" model="ir.ui.view">
+            <field name="name">stock.move.form.inherit</field>
+            <field name="model">stock.move</field>
+            <field name="inherit_id" ref="stock.view_move_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='state']" position="after">
+                        <!--<button name="force_assign" states="draft,assigned,cancel,contre_mesure,confirmed,flowsheeting" string="Set Available" type="object" class="oe_highlight" groups="stock_mim_migrated.group_disponible"/>-->
+                        <!--##################################       ts miexiste      ###########################"-->
+                        <button name="_action_done" states="assigned" string="Process Entirely" type="object" class="oe_highlight" groups="stock_mim_migrated.group_traitement"/>
+                        <button name="_action_confirm" states="draft,cancel" string="Process Later" type="object" class="oe_highlight"/> 
+                        <button name="flow_sheet" states="contre_mesure" string="Fiche Débit" type="object" class="oe_highlight" />
+                        <!--<button name="293" string="Process Partially" type="action" states="assigned" groups="stock_mim_migrated.group_traitement" class="oe_highlight"/>-->
+                        <!--##########################################################-->
+                        <button name="flow_sheet_cancel" states="flowsheeting" type="object" string="Annuler Fiche Débit" />
+                        <button name="contre_mesure1" states="draft,waiting,confirmed" string="Contre mesure" type="object" class="oe_highlight" groups="stock_mim_migrated.group_frederic"/>
+                        <button name="annuler_contre_mesure" states="contre_mesure" type="object" string="Annuler contre mesure" groups="stock_mim_migrated.group_frederic"/>
+                    </xpath>
+                <xpath expr="//field[@name='state']" position="replace">
+                        <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,contre_mesure,flowsheeting,assigned,done" statusbar_colors='{"waiting":"blue","confirmed":"blue"}'/>
+                    </xpath >
+                <xpath expr="//field[@name='date_expected']" position="replace">
+                    <field name="date_prevue"/>
+                </xpath>
+                <xpath expr="//field[@name='location_dest_id']" position="after">
+                        <field name="date" string="Date de livraison"/>
+                        <field name="min_date" string="Date de contre-mesure"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
