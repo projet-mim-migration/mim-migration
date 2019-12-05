@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_message,access_message,dash_board.model_message,,1,1,1,1
+access_monthyear,access_monthyear,dash_board.model_monthyear,,1,1,1,1
+access_menuwizard,access_menuwizard,dash_board.model_menuwizard,,1,1,1,1

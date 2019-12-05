@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="wizard_form_view">
+            <field name="name">Wizard Dashboard form</field>
+            <field name="model">menuwizard</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Add date">
+                    <group rowspan="2">
+                        <field string="Choix mois fin" name="mois_user"/>
+                        <field string="A afficher" name="choix_devis_bon_commande"/>
+                        <field string="Mesures" name="choix_context_measures" attrs="{'required':[('graph','=',True)],'invisible':[('graph','=',False)]}"/>
+                    </group>
+                    <group>
+                        <field string="Dernier mois" name="mois_afficher" attrs="{'required':[('mois_user','=',True)],'invisible':[('mois_user','=',False)]}"/>
+                        <field string="Année début" name="annee_debut"/>
+                        <field string="Année fin" name="annee_fin"/>
+                        <field string="Vue graphique" name="graph"/>
+                        <field name="id_action_to_delete" attrs="{'invisible':True}"/>
+                        <field name="id_view_to_delete" attrs="{'invisible':True}"/>
+                        <field name="ajout_dashboard" string="Ajouter au tableau de bord"/>
+                        <field name="nom_board" string="Nom tableau de bord " attrs="{'required':[('ajout_dashboard','=',True)],'invisible':[('ajout_dashboard','=',False)]}"/>
+                    </group>
+                    <footer>
+                        <field string="Where to put the dashboard" name="nom_dashboard" attrs="{'required':[('ajout_dashboard','=',True)],'invisible':[('ajout_dashboard','=',False)]}"/>
+                        <button name='creation_vue' string='Valider' class='oe_highlight' type='object'/>
+                        <button string='Cancel' class='btn-default' special='cancel'/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record id="view_sale_order_form_inherit" model="ir.ui.view">
+            <field name="name">sale.order.form.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='amount_total']" position="after">
+                    <field name="total_bon_de_commande" sum="Total bon de commande" attrs="{'invisible':True}"/>
+                </xpath>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="message_dashboard_form_view">
+            <field name="name">message Dashboard form</field>
+            <field name="model">message</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="message Dashboard">
+                    <separator string="Message" colspan="6"/>
+                        <field name="message" colspan="4" nolabel="1" readonly="1"  widget="html"/>
+                    <newline/>
+                    <separator colspan="6"/>
+                    <footer>
+                        <button string='Ok' class='btn-default' special='cancel'/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <act_window id="action_menuwizard" name="Dashboard bon de commande" res_model="menuwizard" view_mode="form" target="new"/>
+        <menuitem id="menu_menuwizard" action="action_menuwizard"  sequence="20"/>
+    </data>
+</odoo>
