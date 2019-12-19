@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+    <record id="mrp_verifier" model="res.groups">
+        <field name="name">MRP-Bouton : Mettre à fiche de débit vérifiée</field>
+    </record>
+    
+    <record id="mrp_confirmer" model="res.groups">
+        <field name="name">MRP-Bouton : Vérifier la disponibilidé</field>
+    </record>
+    <record id="mrp_annuler" model="res.groups">
+        <field name="name">MRP-Bouton : Annuler la production</field>
+    </record>
+    <record id="mrp_fabriquer" model="res.groups">
+        <field name="name">MRP-Bouton : Fabriquer</field>
+    </record>
+       
+    <record id="mrp_valider" model="res.groups">
+        <field name="name">MRP-Bouton : Valider la fiche de débit</field>
+    </record>    
+    <record id="mrp_set_draft" model="res.groups">
+        <field name="name">MRP-Bouton : Remettre à nouveau</field>
+    </record>
+</odoo>
+

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+        <record id="view_picking_form_inherit7" model="ir.ui.view">
+            <field name="name">stock.picking.out.form.inherit7</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='scheduled_date']" position="after">
+                    <!-- <label for="date"
+                           attrs="{'invisible': [('picking_type_id', '=', 2)]}"/>
+                    <label for="date" 
+                           string="Date de livraison" 
+                           attrs="{'invisible': [('picking_type_id', '!=', 2)]}"/> -->
+                    <field name="date"/>
+                </xpath>
+
+                <xpath expr="//field[@name='date_done']" position="replace">
+                    <field name="min_date" 
+                           string="Date de contre-mesure"/>
+                </xpath>
+                <xpath expr="//field[@name='origin']" position="before">
+                    <field name="date_changed"/>
+                    <field name="motivation" 
+                           class="oe_edit_only" 
+                           placeholder="Veuillez saisir la motivation de la modification" 
+                           attrs="{'invisible': [('date_changed','=',False)]}"/>
+                </xpath>
+                <xpath expr="//field[@name='show_lots_text']" position="after">
+                    <button name="refresh" 
+                            string="Actualiser" 
+                            type="object" 
+                            class="oe_highlight" />
+                </xpath>
+
+                <!-- Hide the button "Check Availability" and "Unreserve" -->
+                <xpath expr="//button[@name='action_assign']" position="attributes">
+                    <attribute name="attrs">{'invisible':True}</attribute>
+                </xpath>
+                <xpath expr="//button[@name='do_unreserve']" position="attributes">
+                    <attribute name="attrs">{'invisible':True}</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

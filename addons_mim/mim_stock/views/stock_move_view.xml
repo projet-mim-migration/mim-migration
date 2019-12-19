@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_move_form" model="ir.ui.view">
+            <field name="name">stock.move.form.inherit</field>
+            <field name="model">stock.move</field>
+            <field name="inherit_id" ref="stock.view_move_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='state']" position="after">
+                    <button name="_action_done" 
+                            states="assigned" 
+                            string="Process Entirely" 
+                            type="object" class="oe_highlight" 
+                            groups="mim_stock.group_traitement"/>
+                    <button name="_action_confirm" 
+                            states="draft,cancel" 
+                            string="Process Later" 
+                            type="object" 
+                            class="oe_highlight"/> 
+                    <button name="flow_sheet" 
+                            states="contre_mesure" 
+                            string="Fiche Débit" 
+                            type="object" 
+                            class="oe_highlight" />
+                    <button name="flow_sheet_cancel" 
+                            states="flowsheeting" 
+                            type="object" 
+                            string="Annuler Fiche Débit" />
+                    <button name="contre_mesure1" 
+                            states="draft,waiting,confirmed" 
+                            string="Contre mesure" 
+                            type="object" 
+                            class="oe_highlight" 
+                            groups="mim_stock.group_frederic"/>
+                    <button name="annuler_contre_mesure" 
+                            states="contre_mesure" 
+                            type="object" 
+                            string="Annuler contre mesure" 
+                            groups="mim_stock.group_frederic"/>
+                </xpath>
+
+                <xpath expr="//field[@name='state']" position="replace">
+                    <field name="state" 
+                           widget="statusbar" 
+                           statusbar_visible="draft,confirmed,contre_mesure,flowsheeting,assigned,done" statusbar_colors='{"waiting":"blue","confirmed":"blue"}'/>
+                </xpath>
+
+                <xpath expr="//field[@name='date_expected']" position="replace">
+                    <field name="date_prevue"/>
+                </xpath>
+                
+                <xpath expr="//field[@name='location_dest_id']" position="after">
+                    <field name="date" 
+                           string="Date de livraison"/>
+                    <field name="min_date" 
+                           string="Date de contre-mesure"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

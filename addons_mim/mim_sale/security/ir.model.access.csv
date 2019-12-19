@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_article_categorie,access_article_categorie,mim_sale.model_article_categorie,,1,1,1,1
+access_mim_article,access_mim_article,mim_sale.model_mim_article,,1,1,1,1
+access_mim_wizard,access_mim_wizard,mim_sale.model_mim_wizard,,1,1,1,1
+access_sale_order,access_sale_order,mim_sale.model_sale_order,,1,1,1,1
+access_contremesure,access_contremesure,mim_sale.model_contremesure,,1,1,1,1

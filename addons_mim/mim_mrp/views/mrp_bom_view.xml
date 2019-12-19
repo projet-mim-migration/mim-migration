@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+    <record id="mrp_bom_fiche_debit_form_view1" model="ir.ui.view">
+        <field name="name">mrp.bom.fiche_debit.form1</field>
+        <field name="model">mrp.bom</field>
+        <field name="inherit_id" ref="mrp.mrp_bom_form_view" />
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="/form/sheet/notebook/page/field/tree/field[@name='sequence']" position="replace">
+                    <field name="sequence" string="Sequence" style="width:5%%"/>
+                </xpath>
+                <xpath expr="/form/sheet/notebook/page/field/tree/field[@name='product_id']" position="after">
+                    <button name="open_view_component" type="object" string="Ajouter les sous-composants" icon="fa-list"/>
+                </xpath>
+                
+                <xpath expr="/form/sheet/notebook/page/field[@name='bom_line_ids']/tree/field[@name='product_uom_id']" position="after">
+                        <field name="is_accessory"/>
+                </xpath>
+            </data>
+        </field>
+    </record>
+</odoo>

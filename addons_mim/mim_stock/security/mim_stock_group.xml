@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <record id="group_disponible" model="res.groups">
+        <field name="name">Utilisteurs Rendre disponible</field>
+    </record>
+    <record id="group_traitement" model="res.groups">
+        <field name="name">Utilisteurs Traitement</field>
+    </record>
+    <record id="group_frederic" model="res.groups">
+        <field name="name">Groupe de Frederic</field>
+    </record>
+    <record id="group_fiche_debit" model="res.groups">
+        <field name="name">Utilisteurs fiche debit</field>
+    </record>
+
+    <record id="group_date_livraison" model="res.groups">
+        <field name="name">Ecriture Date de livraison</field>
+    </record>
+
+    <record id="stock_mrp_mamy" model="res.groups">
+        <field name="name">Stock MRP Mamy</field>
+    </record>
+</odoo>

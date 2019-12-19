@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+        <record id="view_picking_split_form_inherit" model="ir.ui.view">
+            <field name="name">Diviser un bon de livraison</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form" />
+
+            <field name="arch" type="xml">
+                <field name="partner_id" position="after">
+            	   <field name ="mo_created" readonly="1"/>
+                </field>
+                <field name="date" position="after">
+            	   <field name ="production_date" />
+            	   <field name ="late_production" />
+            	   <field name ="delivery_date" />
+            	   <field name ="late_delivery" />  
+                </field>
+                <field name ="state" position="before">
+                    <button name="split_picking"
+                            states="draft,confirmed,assigned,partially_available"
+                            string="Diviser"
+                            class="oe_highlight"
+                            groups="mim_stock.stock_mrp_mamy"
+                            type="object"/>
+                      
+                    <button name="confirm_config_mo"
+    		                string="Créer les ordres de fabrication"
+    		                class="oe_highlight"
+    		                groups="mim_stock.stock_mrp_mamy"
+    		                type="object"
+    		                attrs="{'invisible': ['|',('mo_created','=',True),('state','not in',('confirmed'))]}"
+    		         />
+    
+                    <button name="view_all_mo"
+        		            string="Voir les ordres de fabrication"
+        		            class="oe_highlight"
+        		            type="object"
+        		            attrs="{'invisible': ['|',('mo_created','=',False),('state','not in',('confirmed','partially_available','assigned','done'))]}"
+        		         />
+    		    </field>
+            </field>
+        </record>
+
+        <record id="view_move_picking_tree_inherit1" model="ir.ui.view">
+            <field name="name">Liste mouvement de stock avec description</field>
+            <field name="model">stock.move</field>
+            <field name="inherit_id" ref="stock.view_move_picking_tree" />
+          
+            <field name="arch" type="xml">
+                <field name="product_id" position="after">
+    		        <field name="name" string="Description"/>         
+                </field>
+            </field>
+        </record>
+    
+        <!-- retard de production, retard de livraison -->
+        <record id="vpicktree_inherit_late_prod_del" model="ir.ui.view">
+            <field name="name">Retard de production, retard de livraison</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.vpicktree" />
+            <field name="arch" type="xml">
+                <field name ="date" position="after">
+    			    <field name ="late_production" />
+    			    <field name ="late_delivery" />
+    			    <field name ="mo_created" />
+    		    </field>
+            </field>
+        </record>
+        
+        <!-- filtre ordres de fabrication non créés -->
+        <record id="view_picking_internal_search_inherit2" model="ir.ui.view">
+    	    <field name="name">stock.picking.internal.search.inherit</field>
+    	    <field name="model">stock.picking</field>
+    	    <field name="inherit_id" ref="stock.view_picking_internal_search"/>
+    	    <field name="arch" type="xml">
+    	        <xpath expr="//filter[@name='done']" position="after">
+                	<separator/>
+                	<filter name="mo_not_exist" 
+                	    	string="Ordre de fabrication non créé" 
+                	    	domain="[('mo_created_copy','=',False)]" 
+                	    	help="Ordre de fabrication non créé"/>
+                	<separator/>
+                	<filter name="mo_exist" 
+                	    	string="Ordre de fabrication créé" 
+                	    	domain="[('mo_created_copy','=',True)]" 
+                	    	help="Ordre de fabrication créé"/>
+    	        </xpath>
+    	    </field>
+    	</record>
+    </data>
+</odoo>

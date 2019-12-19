@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--<>-->
+
+<odoo>
+    <report 
+        id="mim_mrp_report"
+        model="mrp.production"
+        string="Fiche de débit"
+        name="mim_mrp.report_mrp_production"
+        file="mim_mrp.report_mrp_production"
+        report_type="qweb-pdf" 
+        />
+
+    <template id="report_mrp_production">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <style>
+                            h3, h5{
+                                text-align: center;
+                            }
+                        </style>
+                        <h3>FICHE DE DEBIT</h3>    
+                        <table class="table table-bordered table-sm ">
+                            <tr>
+                                <th style="width:25%;">CT</th>
+                                <td style="width:25%;"><span t-field="doc.partner_id.name"/></td>
+                                <th style="width:25%;">Date</th>
+                                <td style="width:25%;"><span t-field="doc.date_planned_start"/></td>
+                            </tr>
+                            <tr>
+                                <th style="width:25%;">AFF</th>
+                                <td style="width:25%;"></td>
+                                <th style="width:25%;">Liv</th>
+                                <td style="width:25%;"></td>
+                            </tr>
+                            <tr>
+                                <th style="width:25%;">BC</th>
+                                <td style="width:25%;"><span t-field="doc.origin"/></td>
+                                <th style="width:25%;">N°</th>
+                                <td style="width:25%;"></td>
+                            </tr>
+                        </table>
+                        <br/>
+                        <div>
+                            <div>
+                                 <span>Quantité : </span><span t-field="doc.product_qty"/>
+                            </div>
+                            <div>
+                                <span>Déscription : </span><span t-field="doc.description"/>
+                            </div>    
+                        </div>
+                        <div>
+                            <span>CM : </span><span t-field="doc.largeur"/> x <span t-field="doc.hauteur"/> 
+                        </div>
+                        <br/>
+                        <br/>
+                        <h5>ARTICLES</h5>
+                        <table class="table table-sm">
+                             <tr>
+                                <th scope="row">Référence</th>
+                                <th scope="row">Désignation</th>
+                                <th scope="row">Qté U</th>
+                                <th scope="row">Qté T</th>
+                                <th scope="row">L U</th>
+                                <th scope="row">L T</th>
+                                <th scope="row">Obs</th>
+                            </tr>
+                            <t t-foreach="doc.product_lines1" t-as="component_line">
+                                <tr>
+                                    <td><span t-field="component_line.ref"/></td>
+                                    <td><span t-field="component_line.name"/></td>
+                                    <td><span t-field="component_line.product_qty"/></td>
+                                    <td><span t-field="component_line.product_qty_total"/></td>
+                                    <td>
+                                        <t t-if="doc.is_printable">
+                                            <span t-field="component_line.len_unit"/>
+                                        </t>  
+                                    </td>
+                                    <td>
+                                        <t t-if="doc.is_printable">
+                                            <span t-field="component_line.len_total"/>
+                                        </t>  
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            </t>
+                        </table>
+                        <br/>
+                        <h5>ACCESSOIRES</h5>
+                        <table class="table table-sm">
+                             <tr>
+                                <th scope="row">Référence</th>
+                                <th scope="row">Qté U</th>
+                                <th scope="row">Qté T</th>
+                                <th scope="row">Date de sortie</th>
+                                <th scope="row">Nom</th>
+                                <th scope="row">Signature</th>
+                                <th scope="row">Obs</th>
+                            </tr>
+                            <t t-foreach="doc.product_lines2" t-as="accessory_line">
+                                <tr>
+                                    <td><span t-field="accessory_line.ref"/></td>
+                                    <td><span t-field="accessory_line.product_qty"/></td>
+                                    <td><span t-field="accessory_line.product_qty_total"/></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </t>
+                        </table>
+                        <br/>
+                        <h5>VISA</h5>
+                        <table class="table table-bordered table-sm">
+                             <tr>
+                                <th class="text-center">Mr Mamy</th>
+                                <th class="text-center">Mme Tiana</th>
+                                <th class="text-center">Mme Lalaharisoa</th>
+                                <th class="text-center">Mme Norosoa</th>
+                            </tr>
+                            <tr>
+                                <td style="height: 30px;"></td>
+                                <td style="height: 30px;"></td>
+                                <td style="height: 30px;"></td>
+                                <td style="height: 30px;"></td>
+                            </tr>
+                        </table>
+                    </div>
+                </t> 
+            </t>    
+        </t>
+    </template>
+</odoo>

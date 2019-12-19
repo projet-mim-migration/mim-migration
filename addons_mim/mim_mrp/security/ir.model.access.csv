@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_stock_move_accessory_line,access.stock.move.accessory.line,model_stock_move_accessory_line,,1,1,1,1
+access_stock_move_component_line,access.stock.move.component.line,model_stock_move_component_line,,1,1,1,1
+access_mrp_component,access.mrp.component,model_mrp_component,,1,1,1,1
+access_mrp_sub_component,access.mrp.sub.component,model_mrp_sub_component,,1,1,1,1
+access_choice_configuration,access.choice.configuration,model_choice_configuration,,1,1,1,1
