@@ -194,17 +194,17 @@ class StockPicking(models.Model):
 
 
     @api.cr_uid_ids_context
-    def split_picking(self, picking):
+    def split_picking(self):
         ctx = {
             'active_model': self._name,
-            'active_ids': picking['active_ids'],
-            'active_id': picking['active_id'],
+            'active_pick_ids': self.ids,
+            'active_pick_id': len(self.ids) and self.ids[0] or False,
             'do_only_split': True,
         }
 
         self = self.with_context(ctx)
         
-        created_id = self.env['stock.split_details'].create({'picking_id': picking['active_id']})
+        created_id = self.env['stock.split_details'].create({'picking_id': len(self.ids) and self.ids[0] or False})
         
         return self.env['stock.split_details'].browse(created_id).wizard_view()
     
@@ -483,12 +483,3 @@ class StockPicking(models.Model):
             if move.picking_id:
                 res.add(move.picking_id.id)
         return list(res)
-
-    # Make the product unavaillable 
-    # @api.model
-    # def create(self, values):
-    #     pick = super(StockPicking, self).create(values)
-    #     print("\nstock_picking\n")
-    #     print(pick)
-    #     print(pick.state)
-    #     return pick

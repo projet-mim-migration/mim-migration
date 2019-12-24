@@ -17,4 +17,5 @@ class Contre_mesure (models.Model):
     def update_contre_mesure(self):
         stock_move_id = self.stock_move_id
         self.env['stock.move'].search([('id','=',stock_move_id)]).write({'largeur':self.largeur,'hauteur': self.hauteur})
+        self.env['stock.move'].browse(stock_move_id).contre_mesure1()
         

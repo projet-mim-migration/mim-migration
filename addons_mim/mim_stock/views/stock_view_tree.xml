@@ -14,6 +14,22 @@
 					<field name="date" 
                            string="Date de livraison"/>
 				</xpath>
+
+                <!-- From stock_update -->
+                <xpath expr="//tree" position="attributes">
+                    <attribute name="decoration-success">
+                        state == 'assigned'
+                    </attribute>
+                    <attribute name="decoration-danger">
+                        state not in ('cancel', 'done') and date &lt; current_date
+                    </attribute>
+                    <attribute name="decoration-muted">
+                        state in ('cancel', 'done')
+                    </attribute>
+                    <attribute name="decoration-info">
+                        state == 'draft' and date &gt;= current_date
+                    </attribute>
+                </xpath>
 			</field>
 		</record>
 
@@ -41,8 +57,11 @@
             <field name="name">stock.state.treeA</field>
             <field name="model">stock.picking</field>
             <field name="arch" type="xml">
-					<tree string="Avancement de production" colors="blue:state == 'draft';grey:state == 'cancel';red:state not in ('cancel', 'done') and min_date &lt; current_date">
-                        <button name="refresh" string="Actualiser" type="object" icon="gtk-ok" />
+					<tree string="Avancement de production" 
+                          decoration-info="state in ('draft', 'confirmed')"
+                          decoration-muted="state == 'cancel'"
+                          decoration-danger="state not in ('cancel', 'done') and min_date &lt; current_date">
+                        <button name="refresh" string="Actualiser" type="object" icon="fa-refresh" />
                         <field name="name"/>
                         <field name="partner_id" string="Client"/>
                         <field name="origin"/>

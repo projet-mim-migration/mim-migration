@@ -87,6 +87,18 @@
                 	    	domain="[('mo_created_copy','=',True)]" 
                 	    	help="Ordre de fabrication créé"/>
     	        </xpath>
+
+                <!-- From stock_update -->
+                <xpath expr="//filter[@name='done']" position="after">
+                        <separator/>
+                        <filter name="late_and_next_7_days" 
+                                string="En retard ou dans les 7 jours à venir" 
+                                domain="[('date', '&lt;=', (context_today() + datetime.timedelta(days=7)).strftime('%%Y-%%m-%%d')), ('state','not in',('done','cancel'))]" 
+                                help="Livraisons des 7 jours à venir ou en retard"/>
+                </xpath>
+                <xpath expr="//filter[@name='late']" position="replace">
+                    <filter name="late" string="Late" domain="[('date','&lt;', time.strftime('%%Y-%%m-%%d %%H:%%M:%%S'))]" help="Pickings that are late on scheduled time"/>
+                </xpath>
     	    </field>
     	</record>
     </data>

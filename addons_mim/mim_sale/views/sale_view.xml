@@ -44,6 +44,10 @@
             <field name="model">sale.order</field>
             <field name="inherit_id" ref="sale.view_order_form"/>
             <field name="arch" type="xml">
+                <xpath expr="//tree/field[@name='name']" position="after">
+                        <field name="mesure" readonly="1"/>
+                </xpath>
+
                 <xpath expr="//field[@name='partner_id']" position="after">
                     <field name="crm_lead_id" required="1"/>
                 </xpath>
@@ -80,6 +84,18 @@
             <field name="arch" type="xml">
                 <xpath expr="/form" position="attributes">
                     <attribute name="edit">0</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_order_form" model="ir.ui.view">
+            <field name="name">sale.order.form.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form" />
+            <field name="groups_id" eval="[(4, ref('mim_sale.group_noro'))]"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='price_unit']" position="attributes">
+                    <attribute name="attrs">{'readonly': True}</attribute>
                 </xpath>
             </field>
         </record>

@@ -11,7 +11,12 @@
         <field name="name">Groupe voir majoration vendeur</field>
     </record> 
 
+    <!-- Group for hide "edit" -->
     <record id="tiana_ventes" model="res.groups">
         <field name="name">Tiana-ventes</field>
+    </record>
+    <!-- Group for make "price_unit" readonly -->
+    <record id="group_noro" model="res.groups">
+        <field name="name">Ventes</field>
     </record>
 </odoo>

@@ -35,6 +35,7 @@
         'views/stock_split_details_view.xml',
         'views/stock_view.xml',
         'report/rapport_stock.xml',
+        'report/report_stock_move.xml',
     ],
 
     'application': True

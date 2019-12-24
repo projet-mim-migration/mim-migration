@@ -241,24 +241,6 @@ class MrpProduction(models.Model):
         return self._round_float(qty_barres)
     
 
-    
-    # @api.model
-    # def set_move_available(self, production_id):
-    #     #Rendre disponible la stock_move lié à l'ordre de fabrication
-    #     production = self.browse(production_id)
-    #     wf_service = netsvc.LocalService("workflow")
-    #     move_obj = self.env['stock.move']
-    #     if production.move_prod_id.id:
-    #         #===================================================================
-    #         # #creation du mouvement de l'emplacement inventaire vers WH/STOCK, mise à jour inventaire
-    #         # move_obj.modifier_inventaire(cr, uid, [production.move_prod_id.id], context=context)
-    #         #===================================================================
-    #         wf_service.trg_validate('stock.move', production.move_prod_id.id, 'force_assign')
-    #     else:
-    #         raise exceptions.UserError(('Erreur'), (u'Cette ordre de fabrication n\'est liée à aucun mouvement de stock (stock.move)'))
-    #     return True
-    
-
     # Calcul for the raw material of a product
     @api.multi
     def _calcul_raw_material(self):
@@ -432,6 +414,10 @@ class MrpProduction(models.Model):
     # Function for re-calculate the raw material
     @api.multi
     def calculate(self):
+        for x in self.env['stock.move.component.line'].search([('production_id', '=', self.id)]):
+            x.unlink()
+        for x in self.env['stock.move.accessory.line'].search([('production_id', '=', self.id)]):
+            x.unlink()
         self._calcul_raw_material()
 
     # Function to mark the production done

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from . import stock_move
-from . import mim_module
-from . import contre_mesure
 from . import company
-from . import crm_lead
+from . import contre_mesure
+from . import mim_module
+from . import sale_delete
+from . import stock_move

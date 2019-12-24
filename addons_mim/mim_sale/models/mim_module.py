@@ -27,6 +27,7 @@ class res_users(models.Model):
 
 class sale_order_line(models.Model):
 	_inherit = "sale.order.line"
+
 	image = fields.Binary('Image')
 	select_type = fields.Many2one('product.product', 'Type',domain=[('categ_id','=','Types')], change_default=True)
 	largeur = fields.Float('Largeur')
@@ -62,7 +63,16 @@ class sale_order_line(models.Model):
 	#'cacher' : fields.boolean('Cacher'),
 	intermediaire = fields.Selection([('sans',u'Sans intermédiaire'),('avec',u'Avec intermédiaire')], string=u"Intermédiaire")
 	
+	mesure = fields.Char(string='Dimension', compute='_get_mesure')
 
+
+	@api.depends('largeur', 'hauteur')
+	def _get_mesure(self):
+		for so_line in self:
+			if so_line.largeur and so_line.hauteur:
+				so_line.mesure = str(int(so_line.largeur)) +"x"+ str(int(so_line.hauteur))
+			else:
+				so_line.mesure = False
 
 
 class article_categorie(models.Model):
