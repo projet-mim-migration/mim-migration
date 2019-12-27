@@ -14,12 +14,12 @@
     'category': 'Uncategorized',
     'version': '2.0',
 
-    'depends': ['account_voucher'],
+    'depends': ['account'],
 
     'data': [
         'views/account_voucher_view.xml',
     ],
 
-    'installable':True,
-    'application':True,
+    'installable': True,
+    'application': True,
 }

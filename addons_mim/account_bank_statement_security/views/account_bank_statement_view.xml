@@ -10,12 +10,12 @@
     <record id="view_bank_statement_form_inherit" model="ir.ui.view">
       <field name="name">account.bank.statement.form.inherit</field>
       <field name="model">account.bank.statement</field>
-      <field name="inherit_id" ref="account.view_bank_statement_form2"/>
+      <field name="inherit_id" ref="account.view_bank_statement_form"/>
       <field name="arch" type="xml">
-        <xpath expr="//button[@name='button_confirm_cash']" position="replace">
+        <xpath expr="//button[@name='check_confirm_bank']" position="replace">
           <button class="oe_highlight" groups="account_bank_statement_security.close_group" name="button_confirm_cash" states="open" string="Close CashBox" type="object"/>
         </xpath>
-        <xpath expr="//button[@name='button_open']" position="replace">
+        <xpath expr="//header" position="inside">
           <button class="oe_highlight" groups="account_bank_statement_security.open_group" name="button_open" states="draft" string="Open CashBox" type="object"/>
         </xpath>
       </field>
