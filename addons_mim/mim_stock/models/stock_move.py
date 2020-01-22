@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+    # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api, exceptions
 
@@ -15,6 +15,7 @@ class StockMove(models.Model):
          ('cancel', 'Cancelled'),
          ('waiting', 'Waiting Another Move'),
          ('confirmed', 'Waiting Availability'),
+        ('partially_available', 'Partially Available'),
          ('contre_mesure', 'Contre mesure'),
          ('flowsheeting', u'Fiche de Débit'),
          ('assigned', 'Available'),
