@@ -38,4 +38,3 @@ class account_voucher(models.Model):
                 self.env.cr.execute(query)
         res = { 'type': 'ir.actions.client', 'tag': 'reload' }
         return res  
- 

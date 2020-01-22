@@ -27,11 +27,11 @@ class StockSplitDetails(models.TransientModel):
     def default_get(self, fields):
         context = self.env.context or {}
         res = super(StockSplitDetails, self).default_get(fields)
-        picking_ids = context.get('active_ids', [])
+        picking_ids = context.get('active_pick_ids', [])
         
         if not picking_ids or len(picking_ids) != 1:
             return res
-        picking_id, = picking_ids
+        picking_id = picking_ids
         picking = self.env['stock.picking'].browse(picking_id)
         items = []
         if not picking.move_lines:
@@ -83,12 +83,12 @@ class StockSplitDetails(models.TransientModel):
                
                 #workflow
                 if state_origin=='contre_mesure':
-                    new_move.contre_mesure()
+                    new_move.contre_mesure1()
                 if state_origin=='flowsheeting':
-                    new_move.contre_mesure()
+                    new_move.contre_mesure1()
                     new_move.flow_sheet()
                 if state_origin=='assigned':
-                    new_move.contre_mesure()
+                    new_move.contre_mesure1()
                     new_move.flow_sheet()
                     new_move.force_assign()
                     
