@@ -24,6 +24,7 @@ class MrpConfiguration(models.Model):
 
     @api.multi
     def update_move_data(self):
+        
         self.ensure_one()
         # TODO
         picking_id = self.picking_source_id
@@ -62,7 +63,7 @@ class MrpConfiguration(models.Model):
                 sale_line_id = move_data.sale_line_id
             else:
                 raise exceptions.UserError(u"Ce movement de stock n'est lié à aucune ligne de bons de commande (sale.order.line)")
-
+            
             vals = {
                 'origin': move_data.origin,
                 'product_id': move_data.product_id.id,
@@ -121,7 +122,7 @@ class MrpConfiguration(models.Model):
             val['id_mo'] = id_mo
             val['user_id'] = self.env.user.id
             val['is_mo_created'] = True
-            
             stock_move_obj.browse(stock_move_id).write(val)
+            
             
         return True

@@ -103,7 +103,6 @@ class ChoiceConfiguration (models.Model):
                 'type_moustiquaire' : sale_line_id.type_moustiquaire,
                 'intermediaire' : sale_line_id.intermediaire,
             }
-
             id_mo = self.env['mrp.production'].create(vals)
             val = {
                 'id_mo' : id_mo,

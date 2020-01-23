@@ -244,7 +244,7 @@ class MrpProduction(models.Model):
     # Calcul for the raw material of a product
     @api.multi
     def _calcul_raw_material(self):
-        self.ensure_one()
+        #self.ensure_one()
 
         localdict = {
             'Q': self.product_qty,
@@ -339,7 +339,7 @@ class MrpProduction(models.Model):
                             self.env['stock.move.accessory.line'].create(l.copy())
                     
                     l = {}
-                  
+
                 if not raw_material.is_accessory:
                     uom = component.product_parent_id.uom_id.name
                     ref = component.product_parent_id.ref
@@ -347,17 +347,18 @@ class MrpProduction(models.Model):
                     
                     if uom == 'Barre':
                         if ref != 'P50-MB':
-                            self.move_raw_ids.filtered(lambda x: x.product_id == raw_material.product_id).product_uom_qty = self._get_nbr_barres(total1)
+                            print(self.move_raw_ids.filtered(lambda x: x.product_id == raw_material.product_id))
+                            print("******************")
+                            self.move_raw_ids.filtered(lambda x: x.product_id == raw_material.product_id)[0].product_uom_qty = self._get_nbr_barres(total1)
                         else:
                             var = (LU / 100.0) * LT * qty_total0 / len_barre
-                            self.move_raw_ids.filtered(lambda x: x.product_id == raw_material.product_id).product_uom_qty = self._round_float(var)
+                            self.move_raw_ids.filtered(lambda x: x.product_id == raw_material.product_id)[0].product_uom_qty = self._round_float(var)
                             
                     else:
-                        self.move_raw_ids.filtered(lambda x: x.product_id == raw_material.product_id).product_uom_qty = (LU * LT * product_qty_total) / 10000.0
+                        self.move_raw_ids.filtered(lambda x: x.product_id == raw_material.product_id)[0].product_uom_qty = (LU * LT * product_qty_total) / 10000.0
 
                 else:
-                    self.move_raw_ids.filtered(lambda x: x.product_id == raw_material.product_id).product_uom_qty = total2
-
+                    self.move_raw_ids.filtered(lambda x: x.product_id == raw_material.product_id)[0].product_uom_qty = total2
         
         self.is_calculated = True
 
